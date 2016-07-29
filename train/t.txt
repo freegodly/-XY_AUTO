@@ -1,0 +1,6 @@
+
+.\bin\opencv_createsamples.exe -info pos\pos.txt -bg neg\neg.txt -vec pos.vec -num 2000 -w 24 -h 24 -show
+
+
+.\bin\opencv_traincascade.exe -data xml -vec pos.vec -bg neg\neg.txt  -numPos 2 -numNeg 2 -nstages 1 -mode ALL -w 24 -h 24
+
