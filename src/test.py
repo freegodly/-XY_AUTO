@@ -4,7 +4,7 @@ import cv2
 from cv2 import cv 
 import numpy as np
 from matplotlib import pyplot as plt
-
+from Tools import *
 
 def filter_matches(kp1, kp2, matches, ratio = 0.75):
     mkp1, mkp2 = [], []
@@ -287,108 +287,7 @@ def image_match(img1,img2):
     return vis
 
 
-def read_feature_file(filename):
 
-    feature_info = []
-
-    file_object = open(filename,'r')
-    try:
-        for line in file_object:
-            line = line.strip('\n')
-            sl = line.split(" ")
-            feature_info.append((sl[0],sl[1]))
-    finally:
-        file_object.close()
-
-    return feature_info
-
-
-def comparehits_min(image,featureimage):
-    h, w = image.shape[:2]
-    h_f, w_f = featureimage.shape[:2]
-
-    bins = w_f
-
-    # image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-    # fer_gray = cv2.cvtColor(featureimage, cv2.COLOR_BGR2HSV)
-
-    fer_gray = cv2.cvtColor(featureimage,cv2.COLOR_BGR2GRAY) 
-    image_gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY) 
-
-
-    hist_fer = cv2.calcHist([fer_gray],[0],None,[bins],[0,255.0]) 
-    #hist_fer = cv2.normalize(hist_fer).flatten()
-
-
-    image1M = cv.fromarray(image_gray)
-    image1Ip = cv.GetImage(image1M)
-    
-    bc_min = 1
-    start_px = -1 
-    for i in xrange(int(w-w_f)):
-        rc = (i, 0, w_f, h_f)
-        #rc = (0, 0, w_f, h_f)
-        cv.SetImageROI(image1Ip,rc)  
-        imageCopy = cv.CreateImage((rc[2], rc[3]),cv2.IPL_DEPTH_8U,1)  
-        cv.Copy(image1Ip,imageCopy)  
-        cv.ResetImageROI(image1Ip) 
-        simg = np.asarray(cv.GetMat(imageCopy))
-       
-        cv2.imwrite("tmp.jpg", simg)
-        sub_img = cv2.imread("tmp.jpg")
-        hist_sub = cv2.calcHist([sub_img],[0],None,[bins],[0,255.0]) 
-        #hist_sub = cv2.normalize(hist_sub).flatten()
-       
-        #相关：CV_COMP_CORREL    
-        #卡方：CV_COMP_CHISQR
-        #直方图相交：CV_COMP_INTERSECT
-        # Bhattacharyya距离：CV_COMP_BHATTACHARYYA
-        inter = cv2.compareHist(hist_fer, hist_sub, cv2.cv.CV_COMP_BHATTACHARYYA)
-        if( inter < bc_min):
-            bc_min = inter
-            start_px = i
-       
-    return start_px
-
-def comparehits(image,featureimage,startx = 0,endx=0):
-    h, w = image.shape[:2]
-    h_f, w_f = featureimage.shape[:2]
-
-    fer_gray = cv2.cvtColor(featureimage,cv2.COLOR_BGR2GRAY) 
-    image_gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY) 
-
-    hist_fer = cv2.calcHist([fer_gray],[0],None,[w_f],[0,255.0]) 
-   
-
-
-    image1M = cv.fromarray(image_gray)
-    image1Ip = cv.GetImage(image1M)
-    
-    bc_min = 0.04
-    start_px = -1 
-    for i in xrange(int(w-w_f-endx+startx)):
-        rc = (i+startx, 0, w_f, h_f)
-        cv.SetImageROI(image1Ip,rc)  
-        imageCopy = cv.CreateImage((rc[2], rc[3]),cv2.IPL_DEPTH_8U, 1)  
-        cv.Copy(image1Ip,imageCopy)  
-        cv.ResetImageROI(image1Ip) 
-        simg = np.asarray(cv.GetMat(imageCopy))
-       
-        cv2.imwrite("tmp.jpg", simg)
-        sub_img = cv2.imread("tmp.jpg")
-        hist_sub = cv2.calcHist([sub_img],[0],None,[w_f],[0,255.0]) 
-
-        #相关：CV_COMP_CORREL    
-        #卡方：CV_COMP_CHISQR
-        #直方图相交：CV_COMP_INTERSECT
-        # Bhattacharyya距离：CV_COMP_BHATTACHARYYA
-        inter = cv2.compareHist(hist_fer, hist_sub, cv2.cv.CV_COMP_BHATTACHARYYA)
-        if( inter < bc_min):
-            start_px = i+startx
-            print inter
-            break
-       
-    return start_px
 
 
 
@@ -396,25 +295,34 @@ def find_point(image):
     mach_list = []
     match_info = []
 
-    feature_point = read_feature_file("point.txt")
-    feature_map = read_feature_file("mapname.txt")
+    feature_names = read_feature_file("feature/coordinates/names.txt")
+    feature_numbers = read_feature_file("feature/coordinates/numbers.txt")
 
+
+    image_bin = img_gray_and_bin(image,200,255)
+
+  
     #先查找数字和汉字的分隔符
-    img_left = cv2.imread("left.png")
-    left_x = comparehits_min(image,img_left)
-    left_x =left_x-1
-    img_right = cv2.imread("right.png")
-    right_x = comparehits_min(image,img_right)
+    img_left = cv2.imread("feature/coordinates/left.png")
+    img_left_bin = img_gray_and_bin(img_left,200,255)
+    find_list = comparehits_bin_min(image_bin,img_left_bin,255)
+    left_x = find_list[0][0]
+
+    img_right = cv2.imread("feature/coordinates/right.png")
+    img_right_bin = img_gray_and_bin(img_right,200,255)
+    find_list = comparehits_bin_min(image_bin,img_right_bin,255)
+    right_x = find_list[0][0]
 
     print "left:",left_x," right:",right_x
 
     #匹配地图名字
-    for i in xrange(len(feature_map)):
-        img = cv2.imread(feature_map[i][0])
-        start_px = comparehits(image,img,0,left_x)
-        if start_px > -1 :
-           mach_list.append((start_px,feature_map[i][1]))
-           print start_px,":",feature_map[i][1].decode('utf-8')
+    for i in xrange(len(feature_names)):
+        feature_img = cv2.imread("feature/coordinates/"+feature_names[i][0])
+        feature_img_bin = img_gray_and_bin(feature_img,200,255)
+        find_list = comparehits_bin_min(image_bin,feature_img_bin,2,0,left_x)
+        for m in find_list:
+           mach_list.append((m[0],feature_names[i][1]))
+           #print m[0],":",feature_names[i][1].decode('utf-8')," bc_min:",m[1]
 
     mach_list.sort(cmp = lambda x ,y : cmp(x[0],y[0]))        
     for m in mach_list:
@@ -422,13 +330,14 @@ def find_point(image):
 
     #匹配坐标
     mach_list =[]
-    for i in xrange(len(feature_point)):
-        img = cv2.imread(feature_point[i][0])
-        start_px = comparehits(image,img,left_x+6,right_x)
-        if start_px > -1 :
-           mach_list.append((start_px,feature_point[i][1]))
-           print start_px,":",feature_point[i][1].decode('utf-8')
-    
+    for i in xrange(len(feature_numbers)):
+        feature_img = cv2.imread("feature/coordinates/"+feature_numbers[i][0])
+        feature_img_bin = img_gray_and_bin(feature_img,200,255)
+        find_list = comparehits_bin_min(image_bin,feature_img_bin,1,left_x,0)
+        for m in find_list:
+           mach_list.append((m[0],feature_numbers[i][1]))
+           #print m[0],":",feature_numbers[i][1].decode('utf-8')," bc_min:",m[1]
+
     mach_list.sort(cmp = lambda x ,y : cmp(x[0],y[0]))        
     for m in mach_list:
        match_info.append(m[1])
@@ -442,17 +351,20 @@ def split_point(title_image):
     #title_image = get_screen_sub_pilimage(20, 20,110,18)
     #title_image = Image.open('point.jpg')
     cv_title_image = pil_to_cv2(title_image)
+    cv_title_image_bin = img_gray_and_bin(cv_title_image,200,255)
 
     h, w = cv_title_image.shape[:2]
 
     img_left = cv2.imread("left.png")
-    left_x = comparehits_min(cv_title_image,img_left)
+    img_left_bin = img_gray_and_bin(img_left,200,255)
+    left_x,_ = comparehits_bin_min(cv_title_image_bin,img_left_bin)
     img_right = cv2.imread("right.png")
-    right_x = comparehits_min(cv_title_image,img_right) 
+    img_right_bin = img_gray_and_bin(img_right,200,255)
+    right_x,_ = comparehits_bin_min(cv_title_image_bin,img_right_bin) 
 
     print "left:",left_x," right:",right_x
 
-    #切割汉字11个像素
+    #切割汉字11个像素 H=12
     endx = left_x - 2
     while endx > 12:
         bounds = (endx-11,0,endx,h)
@@ -462,13 +374,15 @@ def split_point(title_image):
         endx = endx -11 -1
 
     #切割数字5个像素
-    endx = right_x - 2
+    endx = right_x - 1
     while endx-left_x > 6:
         bounds = (endx-5,0,endx,h)
         sub_img = title_image.crop(bounds) 
         sub_img.save("point/s_"+str(endx)+".png") 
         print endx
         endx = endx -5 -1    
+
+
 
 if __name__ == '__main__':
 
@@ -481,32 +395,30 @@ if __name__ == '__main__':
     #hwnd = get_window("RCImageViewerFrame")
     hwnd = get_window("WSGAME")
 
+    #time.png
+    # img = cv2.imread('time.png')
+    # img_left_bin = img_gray_and_bin(img,150,255)
+    # cv2.imwrite('time_bin.png',img_left_bin)
+    # exit()
 
     #open_cv_image = get_window_image(hwnd)
     #img = image_despose(open_cv_image)
-    title_image1 = Image.open('point.jpg')
-    title_image2 = Image.open('point1.png')
-    split_point(title_image1)
-    split_point(title_image2)
-    exit()
+    # title_image1 = Image.open('point1.png')
+    # title_image2 = Image.open('point.jpg')
+    # split_point(title_image1)
+    # split_point(title_image2)
+    # exit()
     
-    img = cv2.imread('point.jpg')
-    fer_gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY) 
-
-    hist_fer = cv2.calcHist([fer_gray],[0],None,[1100],[0,255]) 
-    plt.figure()
-    plt.plot(range(len(hist_fer)),hist_fer)
-    plt.show()
-    exit()
-    #comparehits(img)
+    img = cv2.imread('point1.png')
+    
     mach_list = find_point(img)
     info = ""
     for m in mach_list:
         info+=m
     #print x.decode('utf-8')
     print info.decode('utf-8')
-    cv2.imshow('frame',img)
-    cv2.waitKey(0) 
+    #cv2.imshow('frame',img)
+    #cv2.waitKey(0) 
     exit()
 
 
