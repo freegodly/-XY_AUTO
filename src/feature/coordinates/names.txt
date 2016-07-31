@@ -1,3 +1,6 @@
 tao.png 桃
 yuan.png 源
 cun.png 村
+dong.png 东
+hai.png 海
+wan.png 湾
