@@ -12,7 +12,7 @@ import win32con,win32api
 import pythoncom, pyHook
 from FindImageProcess import *
 import time
-
+from DD import DD
 
 screen_image = None
 fi_mouse = FindImage("feature/other/mouse_s.png","WSGAME",max_sum=2,move_px = 10,move_py = 10,prox_num=1,proy_num=1)
@@ -20,19 +20,37 @@ fi_mouse = FindImage("feature/other/mouse_s.png","WSGAME",max_sum=2,move_px = 10
 
 
 def find_contours(img):
-    #img = cv2.imread('xy0030.jpg',0)
-    #img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
+    """
+    cv2.RETR_EXTERNAL 表示只检测外轮廓
+    cv2.RETR_LIST 检测的轮廓不建立等级关系
+    cv2.RETR_CCOMP 建立两个等级的轮廓，上面的一层为外边界，里面的一层为内孔的边界信息。如果内孔内还有一个连通物体，这个物体的边界也在顶层。
+    cv2.RETR_TREE 建立一个等级树结构的轮廓。
+
+    第三个参数method为轮廓的近似办法
+    cv2.CHAIN_APPROX_NONE 存储所有的轮廓点，相邻的两个点的像素位置差不超过1，即max（abs（x1-x2），abs（y2-y1））==1
+    cv2.CHAIN_APPROX_SIMPLE 压缩水平方向，垂直方向，对角线方向的元素，只保留该方向的终点坐标，例如一个矩形轮廓只需4个点来保存轮廓信息
+    cv2.CHAIN_APPROX_TC89_L1 ， CV_CHAIN_APPROX_TC89_KCOS 使用teh-Chinl chain 近似算法
+    """
+    img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    r,g,b = cv2.split(img)
+    #cv2.imshow("b",b)
+    ret, img_binary = cv2.threshold(img_gray,50,110,cv2.THRESH_BINARY_INV)
+
+    cv2.imshow("bin",img_binary)
+
     h, w = img.shape[:2]
 
-    contours0, hierarchy = cv2.findContours( img.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
-    contours = [cv2.approxPolyDP(cnt, 3, True) for cnt in contours0]
+    contours, hierarchy = cv2.findContours(img_binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    perimeter_max = 0
+    for cnt in contours:
+        perimeter = cv2.arcLength(cnt, True)
+        print perimeter
+        if perimeter_max < perimeter : perimeter_max = perimeter
+    print perimeter_max
 
-    vis = np.zeros((h, w, 3), np.uint8)
-    levels = 3
-    cv2.drawContours( vis, contours, (-1, 3)[levels <= 0], (128,255,255),
-            3, cv2.CV_AA, hierarchy, abs(levels) )
-    #cv2.imshow('contours', vis)
-    return vis
+    cv2.drawContours(img,contours,-1,(0,0,255),2)
+
+    return img
 
 
 def get_window(classname):
@@ -100,41 +118,19 @@ def image_despose(image):
 
     window_hwnd = get_window_hwnd("WSGAME")
     #screen_pos = win32gui.ClientToScreen(hwnd,start_point)
-    screen_pos = win32gui.ClientToScreen(window_hwnd,(200,200))
+    screen_pos = win32gui.ClientToScreen(window_hwnd,(100,100))
     win32api.SetCursorPos(screen_pos)
-
-    client_pos=(200,200)
     win32gui.SetForegroundWindow(window_hwnd)
-    #拼接鼠标位置坐标
-    tmp = win32api.MAKELONG(client_pos[0], client_pos[1])
 
     time.sleep(1)
-    x = screen_pos[0]
-    y = screen_pos[1]
-    #win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN | win32con.MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0 )
 
-    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0)
-    time.sleep(0.1)
-    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,0,0)
-    time.sleep(0.05)
-
-    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0)
-    time.sleep(0.1)
-    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,0,0)
-    time.sleep(0.05)
-
-
-    # win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTDOWN,0,0)
-    # time.sleep(0.05)
-    # win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTUP,0,0)
-    # time.sleep(0.05)
+    DD.DD_btn_click(1)
+    DD.DD_str("122345678")
+    DD.DD_key_click(313)
 
     fi_mouse.stop()
     exit()
     return image
-
-
-
 
 def find_point(image):
     mach_list = []
@@ -231,7 +227,6 @@ def split_point(title_image):
         print endx
         endx = endx -5 -1
 
-
 def print_coordinates():
     rol_image = get_screen_sub_pilimage(20, 24,110,12)
     img = pil_to_cv2(rol_image)
@@ -242,35 +237,12 @@ def print_coordinates():
         info+=m
     print info.decode('utf-8')
 
-
-
 def test():
-    image = cv2.imread("bg1.png")
-    #查找光标位置
-    img_mouse = cv2.imread("feature/other/mouse_s.png")
+    image = cv2.imread("img/xy0004.jpg")
+    #cv2.imshow('frame',image)
+    myimage = find_contours(image)
 
-    cornerMask = np.zeros(image.shape[:2], dtype = "uint8")
-    cv2.rectangle(cornerMask, (200, 200), (300, 300), 255, -1)
-
-    # image_gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)  # queryImage
-    # img_mouse_gray = cv2.cvtColor(img_mouse,cv2.COLOR_BGR2GRAY)  # trainImage
-    # bin_min = 180
-    # bin_max = 255
-    # ret, image_bin = cv2.threshold(image_gray,bin_min,bin_max,cv2.THRESH_BINARY) #将灰度图像转成二值图像
-    # ret, img_mouse_bin = cv2.threshold(img_mouse_gray,bin_min,bin_max,cv2.THRESH_BINARY) #将灰度图像转成二值图像
-
-    # find_list = comparehits_bin_min_x(image_bin,img_mouse_bin,max_sum=200055,move_px = 1,move_py = 1)
-    # print find_list[0]
-
-    #find_list = find_obj_hist(image,img_mouse,max_sum=1,move_px = 10,move_py = 10)
-    #print find_list[0]
-
-    # x1,y1,x2,y2 = find_obj(image_b,img_mouse_b,0.75,True,150,220)
-    # print "x1:",x1," y1:",y1
-    # cv2.rectangle(image, (x1, y1), (x2, y2), (0,0,255), 2)
-
-
-    cv2.imshow('frame',cornerMask)
+    cv2.imshow('frame',myimage)
 
     cv2.waitKey()
     exit()
@@ -278,30 +250,14 @@ def test():
 if __name__ == '__main__':
     multiprocessing.freeze_support()
     #fi_mouse.run()
-
-
     hm = pyHook.HookManager()
     hm.KeyDown = KeyStroke
     hm.HookKeyboard()
-    #RCImageViewerFrame
-    #WSGAME
+
     #hwnd = get_window("RCImageViewerFrame")
     hwnd = get_window("WSGAME")
 
-
-
-    # open_cv_image = get_window_image(hwnd)
-    # img = image_despose(open_cv_image)
-    # cv2.imwrite("bg.png",img)
-    # print_coordinates()
-    #exit()
-
-
-
-
-    #test()
-
-
+    test()
     while(True):
         open_cv_image = get_window_image(hwnd)
         #cv2.imshow('frame',open_cv_image)
