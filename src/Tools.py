@@ -23,14 +23,6 @@ def comparehits_bin_min(image_bin,featureimage_bin,max_sum=255,startx = 0 ,endx 
     h, w = image_bin.shape[:2]
     h_f, w_f = featureimage_bin.shape[:2]
 
-    # featureimage_gray = cv2.cvtColor(featureimage,cv2.COLOR_BGR2GRAY)
-    # ret , featureimage_bin = cv2.threshold(featureimage_gray, 200,255, cv2.THRESH_BINARY)
-
-    # image_gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
-    # ret , image_bin = cv2.threshold(image_gray, 200,255, cv2.THRESH_BINARY)
-
-    image1M = cv.fromarray(image_bin)
-    image1Ip = cv.GetImage(image1M)
     bc_min = max_sum
     start_px = -1
 
@@ -38,11 +30,7 @@ def comparehits_bin_min(image_bin,featureimage_bin,max_sum=255,startx = 0 ,endx 
     for i in xrange(int(endx-startx-w_f)/move_px):
         start_px = i*move_px+startx
         rc = (start_px, 0, w_f, h_f)
-        cv.SetImageROI(image1Ip,rc)
-        imageCopy = cv.CreateImage((rc[2], rc[3]),cv2.IPL_DEPTH_8U,1)
-        cv.Copy(image1Ip,imageCopy)
-        cv.ResetImageROI(image1Ip)
-        simg_bin = np.asarray(cv.GetMat(imageCopy))
+        simg_bin = image_bin[rc[1]:rc[1]+rc[3],rc[0]:rc[0]+rc[2]]
 
         inter = sum(sum(abs(featureimage_bin - simg_bin)))
         if( inter < bc_min):
@@ -64,14 +52,7 @@ def comparehits_bin_min_x(image_bin,featureimage_bin,max_sum=255,startx = 0 ,end
     h, w = image_bin.shape[:2]
     h_f, w_f = featureimage_bin.shape[:2]
 
-    # featureimage_gray = cv2.cvtColor(featureimage,cv2.COLOR_BGR2GRAY)
-    # ret , featureimage_bin = cv2.threshold(featureimage_gray, 200,255, cv2.THRESH_BINARY)
 
-    # image_gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
-    # ret , image_bin = cv2.threshold(image_gray, 200,255, cv2.THRESH_BINARY)
-
-    image1M = cv.fromarray(image_bin)
-    image1Ip = cv.GetImage(image1M)
     bc_min = max_sum
     start_px = -1
     start_py = -1
@@ -82,12 +63,7 @@ def comparehits_bin_min_x(image_bin,featureimage_bin,max_sum=255,startx = 0 ,end
         for i in xrange(int(endx-startx-w_f)/move_px):
             start_px = i*move_px+startx
             rc = (start_px, start_py, w_f, h_f)
-            cv.SetImageROI(image1Ip,rc)
-            imageCopy = cv.CreateImage((rc[2], rc[3]),cv2.IPL_DEPTH_8U,1)
-            cv.Copy(image1Ip,imageCopy)
-            cv.ResetImageROI(image1Ip)
-            simg_bin = np.asarray(cv.GetMat(imageCopy))
-
+            simg_bin = image_bin[rc[1]:rc[1]+rc[3],rc[0]:rc[0]+rc[2]]
             inter = sum(sum(abs(featureimage_bin - simg_bin)))
             #print "X:",start_px," Y:",start_py," M:",inter
             if( inter < bc_min):
@@ -208,8 +184,7 @@ def find_obj_hist(trainImage,queryImage,max_sum=255, bins = 30,startx = 0 ,endx 
     queryImage_g_hist = cv2.normalize(queryImage_g_hist).flatten()
     queryImage_r_hist = cv2.calcHist([queryImage_r], [0], None, [bins],[0,256])
     queryImage_r_hist = cv2.normalize(queryImage_r_hist).flatten()
-    image1M = cv.fromarray(trainImage)
-    image1Ip = cv.GetImage(image1M)
+
     bc_min = max_sum
     start_px = -1
     start_py = -1
@@ -220,11 +195,7 @@ def find_obj_hist(trainImage,queryImage,max_sum=255, bins = 30,startx = 0 ,endx 
         for i in xrange(int(endx-startx-w_f)/move_px):
             start_px = i*move_px+startx
             rc = (start_px, start_py, w_f, h_f)
-            cv.SetImageROI(image1Ip,rc)
-            imageCopy = cv.CreateImage((rc[2], rc[3]),cv2.IPL_DEPTH_8U,3)
-            cv.Copy(image1Ip,imageCopy)
-            cv.ResetImageROI(image1Ip)
-            simg_bin = np.asarray(cv.GetMat(imageCopy))
+            simg_bin = trainImage[rc[1]:rc[1]+rc[3],rc[0]:rc[0]+rc[2],:]
             simg_b, simg_g, simg_r = cv2.split(simg_bin)
             simg_b_hist = cv2.calcHist([simg_b], [0], None, [bins],[0,256])
             simg_b_hist = cv2.normalize(simg_b_hist).flatten()
@@ -256,23 +227,20 @@ def find_obj_hist_mask(trainImage,queryImage,max_sum=255, bins = 30,startx = 0 ,
     queryImage_g_hist = cv2.normalize(queryImage_g_hist).flatten()
     queryImage_r_hist = cv2.calcHist([queryImage_r], [0], mask, [bins],[0,256])
     queryImage_r_hist = cv2.normalize(queryImage_r_hist).flatten()
-    image1M = cv.fromarray(trainImage)
-    image1Ip = cv.GetImage(image1M)
+
     bc_min = max_sum
     start_px = -1
     start_py = -1
     if endx==0 : endx = w
     if endy==0 : endy = h
+
     for j in xrange(int(endy-starty-h_f)/move_py):
         start_py = j*move_py+starty
         for i in xrange(int(endx-startx-w_f)/move_px):
             start_px = i*move_px+startx
             rc = (start_px, start_py, w_f, h_f)
-            cv.SetImageROI(image1Ip,rc)
-            imageCopy = cv.CreateImage((rc[2], rc[3]),cv2.IPL_DEPTH_8U,3)
-            cv.Copy(image1Ip,imageCopy)
-            cv.ResetImageROI(image1Ip)
-            simg_bin = np.asarray(cv.GetMat(imageCopy))
+
+            simg_bin = trainImage[rc[1]:rc[1]+rc[3],rc[0]:rc[0]+rc[2],:]
             simg_b, simg_g, simg_r = cv2.split(simg_bin)
             simg_b_hist = cv2.calcHist([simg_b], [0], mask, [bins],[0,256])
             simg_b_hist = cv2.normalize(simg_b_hist).flatten()
@@ -283,10 +251,11 @@ def find_obj_hist_mask(trainImage,queryImage,max_sum=255, bins = 30,startx = 0 ,
 
             #CV_COMP_BHATTACHARYYA   CV_COMP_CHISQR  CV_COMP_INTERSECT
             inter = 0.33*cv2.compareHist(queryImage_b_hist,simg_b_hist,cv2.cv.CV_COMP_CHISQR) + 0.33*cv2.compareHist(queryImage_g_hist,simg_g_hist,cv2.cv.CV_COMP_CHISQR )+0.33*cv2.compareHist(queryImage_r_hist,simg_r_hist,cv2.cv.CV_COMP_CHISQR )
-           
+
             if( inter < bc_min):
                 find_list.append([(start_px,start_py),inter])
     find_list.sort(cmp = lambda x ,y : cmp(x[1],y[1]))
+
     return find_list
 
 
@@ -334,27 +303,27 @@ def find_obj_rect(image,minLineLength = 10,extend_length = 10,color_min = 200,co
 
     #cv2.imshow("img_bin",img_bin)
 
-    maxLineGap = 15  
-    lines = cv2.HoughLinesP(img_bin,1,np.pi/2,minLineLength,0,maxLineGap)  
-    
+    maxLineGap = 15
+    lines = cv2.HoughLinesP(img_bin,1,np.pi/2,minLineLength,0,maxLineGap)
+
     if len(lines[0]) < 4 :
         print "len_lines:",len(lines[0])
         return result_rect
 
     find_lines = []
-    for x1,y1,x2,y2 in lines[0]: 
+    for x1,y1,x2,y2 in lines[0]:
         #垂直的
         if x1==x2:
             find_lines.append((x1,y1+extend_length,x2,y2-extend_length))
         #水平的
         if y1==y2:
-            find_lines.append((x1-extend_length,y1,x2+extend_length,y2)) 
+            find_lines.append((x1-extend_length,y1,x2+extend_length,y2))
 
-    rect_img = np.zeros(image.shape, np.uint8) 
-    for x1,y1,x2,y2 in find_lines:      
-        cv2.line(rect_img,(x1,y1),(x2,y2),(0,255,0),3) 
+    rect_img = np.zeros(image.shape, np.uint8)
+    for x1,y1,x2,y2 in find_lines:
+        cv2.line(rect_img,(x1,y1),(x2,y2),(0,255,0),3)
 
-    rect_img_gray =  cv2.cvtColor(rect_img, cv2.COLOR_BGR2GRAY)  
+    rect_img_gray =  cv2.cvtColor(rect_img, cv2.COLOR_BGR2GRAY)
     _,rect_img_bin = cv2.threshold(rect_img_gray, 100,255, cv2.THRESH_BINARY)
 
     #cv2.imshow("rect_img_bin",rect_img_bin)
@@ -383,20 +352,30 @@ def find_obj_rect(image,minLineLength = 10,extend_length = 10,color_min = 200,co
 
 
 def get_image_sub(image,rect,channels = 3):
-    image1M = cv.fromarray(image)
-    image1Ip = cv.GetImage(image1M)
+
+    #判断是否出接
+    h, w = image.shape[:2]
+
+
+    if rect[0] < 0 :
+        rect[0] = 0
+    if rect[1] < 0 :
+        rect[1] = 0
+    if rect[0]+rect[2] > w:
+        rect[2] = w - rect[0]
+    if rect[1]+rect[3] > h:
+        rect[3] = h - rect[1]
+
+
     rc = (rect[0], rect[1], rect[2], rect[3])
-    cv.SetImageROI(image1Ip,rc)
-    imageCopy = cv.CreateImage((rc[2], rc[3]),cv2.IPL_DEPTH_8U,channels)
-    cv.Copy(image1Ip,imageCopy)
-    cv.ResetImageROI(image1Ip)
-    sub_image = np.asarray(cv.GetMat(imageCopy))
+    sub_image = image[rc[1]:rc[1]+rc[3],rc[0]:rc[0]+rc[2],:]
+    sub_image = sub_image.copy()
     return sub_image
 
 def get_window_hwnd(classname):
     hwnd = win32gui.FindWindow(classname, None)
     win32gui.ShowWindow(hwnd, win32con.SW_RESTORE)
-    #win32gui.SetForegroundWindow(hwnd)
+    win32gui.SetForegroundWindow(hwnd)
     return hwnd
 
 def get_window_rect_image(hwnd):
@@ -406,6 +385,92 @@ def get_window_rect_image(hwnd):
     game_rect = (game_rect[0],game_rect[1]+title_h,game_rect[2],game_rect[3])
     src_image = ImageGrab.grab(game_rect)
     open_cv_image = np.array(src_image)
+    open_cv_image = cv2.cvtColor(open_cv_image, cv2.cv.CV_BGR2RGB)
+    return open_cv_image
+
+
+
+
+
+
+def find_contours(img):
+    """
+    cv2.RETR_EXTERNAL 表示只检测外轮廓
+    cv2.RETR_LIST 检测的轮廓不建立等级关系
+    cv2.RETR_CCOMP 建立两个等级的轮廓，上面的一层为外边界，里面的一层为内孔的边界信息。如果内孔内还有一个连通物体，这个物体的边界也在顶层。
+    cv2.RETR_TREE 建立一个等级树结构的轮廓。
+
+    第三个参数method为轮廓的近似办法
+    cv2.CHAIN_APPROX_NONE 存储所有的轮廓点，相邻的两个点的像素位置差不超过1，即max（abs（x1-x2），abs（y2-y1））==1
+    cv2.CHAIN_APPROX_SIMPLE 压缩水平方向，垂直方向，对角线方向的元素，只保留该方向的终点坐标，例如一个矩形轮廓只需4个点来保存轮廓信息
+    cv2.CHAIN_APPROX_TC89_L1 ， CV_CHAIN_APPROX_TC89_KCOS 使用teh-Chinl chain 近似算法
+    """
+    img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+    #常量定义椭圆 MORPH_ELLIPSE 和十字形结构 MORPH_CROSS  定义矩形 MORPH_RECT
+    #kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (10, 10))
+    #opened = cv2.morphologyEx(img_gray, cv2.MORPH_OPEN, kernel)
+    #img_gray = cv2.dilate(img_gray, None, iterations = 5)
+    #img_gray = cv2.erode(img_gray, None, iterations = 2)
+
+
+    #_,img_bin = cv2.threshold(img_gray, 0,100, cv2.THRESH_BINARY_INV)
+
+
+    # kernel  = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
+    # dilate  = cv2.dilate(img_gray, kernel, iterations = 1)
+    # erode   = cv2.erode(img_gray, kernel, iterations = 1)
+    # result = cv2.absdiff(dilate,erode);
+    _,img_bin = cv2.threshold(img_gray, 200,255, cv2.THRESH_BINARY)
+    minLineLength = 200
+    maxLineGap = 15
+    lines = cv2.HoughLinesP(img_bin,1,np.pi/4,200,minLineLength,maxLineGap)
+    for x1,y1,x2,y2 in lines[0]:
+        cv2.line(img,(x1,y1),(x2,y2),(0,255,0),2)
+
+    cv2.imshow("img_bin",img_bin)
+    cv2.imshow("result",img)
+
+    # gradX = cv2.Sobel(img_bin, ddepth = cv2.cv.CV_32F, dx = 1, dy = 0, ksize = 3)
+    # gradY = cv2.Sobel(img_bin, ddepth = cv2.cv.CV_32F, dx = 0, dy = 1, ksize = 3)
+
+    # gradient = cv2.subtract(gradX, gradY)
+    # gradient = cv2.convertScaleAbs(gradient)
+
+    # blurred = cv2.blur(img_bin, (10, 10))
+    # (_, thresh) = cv2.threshold(blurred, 100, 255, cv2.THRESH_BINARY)
+
+
+
+    # kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
+    # closed = cv2.morphologyEx(img_bin, cv2.MORPH_CLOSE, kernel)
+
+
+    #
+    #closed = cv2.dilate(img_bin, None, iterations = 10)
+    #closed = cv2.erode(img_bin, None, iterations = 1)
+
+    # _,img_bin = cv2.threshold(closed, 0,80, cv2.THRESH_BINARY_INV)
+
+    # cv2.imshow("img_bin",img_bin)
+
+    # (cnts, _) = cv2.findContours(img_bin.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+
+    # c = sorted(cnts, key = cv2.contourArea, reverse = True)[0]
+
+    # rect = cv2.minAreaRect(c)
+
+    # box = np.int0(cv2.cv.BoxPoints(rect))
+
+    # cv2.drawContours(img, [box], -1, (0, 255, 0), 3)
+
+    # cv2.imshow("img",img)
+    return img
+
+
+
+def pil_to_cv2(image):
+    open_cv_image = np.array(image)
     open_cv_image = cv2.cvtColor(open_cv_image, cv2.cv.CV_BGR2RGB)
     return open_cv_image
 
