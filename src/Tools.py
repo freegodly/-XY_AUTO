@@ -232,11 +232,63 @@ def find_obj_hist(trainImage,queryImage,max_sum=255, bins = 30,startx = 0 ,endx 
             simg_g_hist = cv2.normalize(simg_g_hist).flatten()
             simg_r_hist = cv2.calcHist([simg_r], [0], None, [bins],[0,256])
             simg_r_hist = cv2.normalize(simg_r_hist).flatten()
+
+            #cv2.compareHist
+            #CV_CONTOURS_MATCH_I1, CV_CONTOURS_MATCH_I2, CV_CONTOURS_MATCH_I3
+            # inter = 0.33*cv2.compareHist(queryImage_b_hist,simg_b_hist,cv2.cv.CV_CONTOURS_MATCH_I1) + 0.33*cv2.compareHist(queryImage_g_hist,simg_g_hist,cv2.cv.CV_CONTOURS_MATCH_I1 )+0.33*cv2.compareHist(queryImage_r_hist,simg_r_hist,cv2.cv.CV_CONTOURS_MATCH_I1 )
             inter = 0.5 *calc_chimerge(queryImage_b_hist, simg_b_hist)+0.5 *calc_chimerge(queryImage_g_hist, simg_g_hist)+0.5 *calc_chimerge(queryImage_r_hist, simg_r_hist)
             if( inter < bc_min):
                 find_list.append([(start_px,start_py),inter])
     find_list.sort(cmp = lambda x ,y : cmp(x[1],y[1]))
     return find_list
+
+
+
+def find_obj_hist_mask(trainImage,queryImage,max_sum=255, bins = 30,startx = 0 ,endx = 0,starty = 0 ,endy = 0,move_px = 1,move_py = 1,mask = None):
+    find_list = []
+    h, w = trainImage.shape[:2]
+    h_f, w_f = queryImage.shape[:2]
+
+    queryImage_b, queryImage_g, queryImage_r = cv2.split(queryImage)
+    queryImage_b_hist = cv2.calcHist([queryImage_b], [0], mask, [bins],[0,256])
+    queryImage_b_hist = cv2.normalize(queryImage_b_hist).flatten()
+    queryImage_g_hist = cv2.calcHist([queryImage_g], [0], mask, [bins],[0,256])
+    queryImage_g_hist = cv2.normalize(queryImage_g_hist).flatten()
+    queryImage_r_hist = cv2.calcHist([queryImage_r], [0], mask, [bins],[0,256])
+    queryImage_r_hist = cv2.normalize(queryImage_r_hist).flatten()
+    image1M = cv.fromarray(trainImage)
+    image1Ip = cv.GetImage(image1M)
+    bc_min = max_sum
+    start_px = -1
+    start_py = -1
+    if endx==0 : endx = w
+    if endy==0 : endy = h
+    for j in xrange(int(endy-starty-h_f)/move_py):
+        start_py = j*move_py+starty
+        for i in xrange(int(endx-startx-w_f)/move_px):
+            start_px = i*move_px+startx
+            rc = (start_px, start_py, w_f, h_f)
+            cv.SetImageROI(image1Ip,rc)
+            imageCopy = cv.CreateImage((rc[2], rc[3]),cv2.IPL_DEPTH_8U,3)
+            cv.Copy(image1Ip,imageCopy)
+            cv.ResetImageROI(image1Ip)
+            simg_bin = np.asarray(cv.GetMat(imageCopy))
+            simg_b, simg_g, simg_r = cv2.split(simg_bin)
+            simg_b_hist = cv2.calcHist([simg_b], [0], mask, [bins],[0,256])
+            simg_b_hist = cv2.normalize(simg_b_hist).flatten()
+            simg_g_hist = cv2.calcHist([simg_g], [0], mask, [bins],[0,256])
+            simg_g_hist = cv2.normalize(simg_g_hist).flatten()
+            simg_r_hist = cv2.calcHist([simg_r], [0], mask, [bins],[0,256])
+            simg_r_hist = cv2.normalize(simg_r_hist).flatten()
+
+            #CV_COMP_BHATTACHARYYA   CV_COMP_CHISQR  CV_COMP_INTERSECT
+            inter = 0.33*cv2.compareHist(queryImage_b_hist,simg_b_hist,cv2.cv.CV_COMP_CHISQR) + 0.33*cv2.compareHist(queryImage_g_hist,simg_g_hist,cv2.cv.CV_COMP_CHISQR )+0.33*cv2.compareHist(queryImage_r_hist,simg_r_hist,cv2.cv.CV_COMP_CHISQR )
+           
+            if( inter < bc_min):
+                find_list.append([(start_px,start_py),inter])
+    find_list.sort(cmp = lambda x ,y : cmp(x[1],y[1]))
+    return find_list
+
 
 def find_obj_hist_multithreading(trainImage,queryImage,max_sum=255, bins = 30,startx = 0 ,endx = 0,starty = 0 ,endy = 0,move_px = 1,move_py = 1,theardnum=10):
     mt = MyThread()
@@ -268,6 +320,78 @@ def find_obj_hist_multithreading(trainImage,queryImage,max_sum=255, bins = 30,st
     return find_list
 
 
+def find_obj_rect(image,minLineLength = 10,extend_length = 10,color_min = 200,color_max = 255):
+    """
+    查找图像中最大的矩形
+    """
+    result_rect = None
+
+    img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+    #cv2.imwrite("img_gray.png",img_gray)
+
+    _,img_bin = cv2.threshold(img_gray, color_min,color_max, cv2.THRESH_BINARY)
+
+    #cv2.imshow("img_bin",img_bin)
+
+    maxLineGap = 15  
+    lines = cv2.HoughLinesP(img_bin,1,np.pi/2,minLineLength,0,maxLineGap)  
+    
+    if len(lines[0]) < 4 :
+        print "len_lines:",len(lines[0])
+        return result_rect
+
+    find_lines = []
+    for x1,y1,x2,y2 in lines[0]: 
+        #垂直的
+        if x1==x2:
+            find_lines.append((x1,y1+extend_length,x2,y2-extend_length))
+        #水平的
+        if y1==y2:
+            find_lines.append((x1-extend_length,y1,x2+extend_length,y2)) 
+
+    rect_img = np.zeros(image.shape, np.uint8) 
+    for x1,y1,x2,y2 in find_lines:      
+        cv2.line(rect_img,(x1,y1),(x2,y2),(0,255,0),3) 
+
+    rect_img_gray =  cv2.cvtColor(rect_img, cv2.COLOR_BGR2GRAY)  
+    _,rect_img_bin = cv2.threshold(rect_img_gray, 100,255, cv2.THRESH_BINARY)
+
+    #cv2.imshow("rect_img_bin",rect_img_bin)
+
+
+    (cnts, _) = cv2.findContours(rect_img_bin.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+
+    c = sorted(cnts, key = cv2.contourArea, reverse = True)[0]
+
+    rect = cv2.minAreaRect(c)
+
+    box = np.int0(cv2.cv.BoxPoints(rect))
+    # cv2.drawContours(image, [box], -1, (0, 255, 0), 2)
+    # cv2.imshow("img",image)
+
+    x_s = []
+    y_s = []
+    for b in box:
+        x_s.append(b[0])
+        y_s.append(b[1])
+
+    result_rect=[min(x_s),min(y_s),max(x_s)-min(x_s),max(y_s)-min(y_s)]
+
+    return result_rect
+
+
+
+def get_image_sub(image,rect,channels = 3):
+    image1M = cv.fromarray(image)
+    image1Ip = cv.GetImage(image1M)
+    rc = (rect[0], rect[1], rect[2], rect[3])
+    cv.SetImageROI(image1Ip,rc)
+    imageCopy = cv.CreateImage((rc[2], rc[3]),cv2.IPL_DEPTH_8U,channels)
+    cv.Copy(image1Ip,imageCopy)
+    cv.ResetImageROI(image1Ip)
+    sub_image = np.asarray(cv.GetMat(imageCopy))
+    return sub_image
 
 def get_window_hwnd(classname):
     hwnd = win32gui.FindWindow(classname, None)

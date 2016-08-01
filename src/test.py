@@ -12,7 +12,7 @@ import win32con,win32api
 import pythoncom, pyHook
 from FindImageProcess import *
 import time
-from DD import DD
+#from DD import DD
 
 screen_image = None
 fi_mouse = FindImage("feature/other/mouse_s.png","WSGAME",max_sum=2,move_px = 10,move_py = 10,prox_num=1,proy_num=1)
@@ -32,24 +32,65 @@ def find_contours(img):
     cv2.CHAIN_APPROX_TC89_L1 ， CV_CHAIN_APPROX_TC89_KCOS 使用teh-Chinl chain 近似算法
     """
     img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    r,g,b = cv2.split(img)
-    #cv2.imshow("b",b)
-    ret, img_binary = cv2.threshold(img_gray,50,110,cv2.THRESH_BINARY_INV)
+    
+    #常量定义椭圆 MORPH_ELLIPSE 和十字形结构 MORPH_CROSS  定义矩形 MORPH_RECT
+    #kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (10, 10))
+    #opened = cv2.morphologyEx(img_gray, cv2.MORPH_OPEN, kernel)
+    #img_gray = cv2.dilate(img_gray, None, iterations = 5)
+    #img_gray = cv2.erode(img_gray, None, iterations = 2)
+    
 
-    cv2.imshow("bin",img_binary)
+    #_,img_bin = cv2.threshold(img_gray, 0,100, cv2.THRESH_BINARY_INV)
+  
 
-    h, w = img.shape[:2]
+    # kernel  = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
+    # dilate  = cv2.dilate(img_gray, kernel, iterations = 1)
+    # erode   = cv2.erode(img_gray, kernel, iterations = 1)  
+    # result = cv2.absdiff(dilate,erode);  
+    _,img_bin = cv2.threshold(img_gray, 200,255, cv2.THRESH_BINARY)
+    minLineLength = 200  
+    maxLineGap = 15  
+    lines = cv2.HoughLinesP(img_bin,1,np.pi/4,200,minLineLength,maxLineGap)  
+    for x1,y1,x2,y2 in lines[0]:  
+        cv2.line(img,(x1,y1),(x2,y2),(0,255,0),2)    
 
-    contours, hierarchy = cv2.findContours(img_binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    perimeter_max = 0
-    for cnt in contours:
-        perimeter = cv2.arcLength(cnt, True)
-        print perimeter
-        if perimeter_max < perimeter : perimeter_max = perimeter
-    print perimeter_max
+    cv2.imshow("img_bin",img_bin)        
+    cv2.imshow("result",img)
 
-    cv2.drawContours(img,contours,-1,(0,0,255),2)
+    # gradX = cv2.Sobel(img_bin, ddepth = cv2.cv.CV_32F, dx = 1, dy = 0, ksize = 3)
+    # gradY = cv2.Sobel(img_bin, ddepth = cv2.cv.CV_32F, dx = 0, dy = 1, ksize = 3)
 
+    # gradient = cv2.subtract(gradX, gradY)
+    # gradient = cv2.convertScaleAbs(gradient)
+
+    # blurred = cv2.blur(img_bin, (10, 10))
+    # (_, thresh) = cv2.threshold(blurred, 100, 255, cv2.THRESH_BINARY)
+
+    
+
+    # kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
+    # closed = cv2.morphologyEx(img_bin, cv2.MORPH_CLOSE, kernel)
+
+
+    #
+    #closed = cv2.dilate(img_bin, None, iterations = 10)
+    #closed = cv2.erode(img_bin, None, iterations = 1)
+
+    # _,img_bin = cv2.threshold(closed, 0,80, cv2.THRESH_BINARY_INV)
+
+    # cv2.imshow("img_bin",img_bin)
+
+    # (cnts, _) = cv2.findContours(img_bin.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+
+    # c = sorted(cnts, key = cv2.contourArea, reverse = True)[0]
+
+    # rect = cv2.minAreaRect(c)
+
+    # box = np.int0(cv2.cv.BoxPoints(rect))
+
+    # cv2.drawContours(img, [box], -1, (0, 255, 0), 3)
+
+    # cv2.imshow("img",img)
     return img
 
 
@@ -98,14 +139,15 @@ def KeyStroke(event):
 
 def image_despose(image):
     start=clock()
+
+
     #标记坐标图像位置
     color = (0, 255, 0)
     cv2.rectangle(image, (20, 24), (110+20, 12+24), color, 1)
     #识别坐标
     #print_coordinates()
 
-    cv2.rectangle(image, (200, 200), (200+20, 200+20), color, 1)
-
+    ################### 查找光标位置
     # mouseinfo = fi_mouse.get_result()
     # if mouseinfo is not None:
     #     #print mouseinfo
@@ -113,7 +155,19 @@ def image_despose(image):
     #     cv2.rectangle(image, (start_point[0], start_point[1]), (start_point[0]+10, start_point[1]+10), (0, 0, 255), 4)
 
 
-    #print "find_obj_hist:",(clock()-start)
+    ################### 查找光标位置
+    image_mouse = cv2.imread("feature/other/mouse.png")
+    image_mouse_mask = cv2.imread("feature/other/mouse_mask.png",0)
+    find_list = find_obj_hist_mask(image,image_mouse,mask=image_mouse_mask,max_sum=1,move_px = 5,move_py = 5)
+    if len(find_list) > 0:
+        print find_list[0]
+        start_point = find_list[0]
+        cv2.rectangle(image, (start_point[0], start_point[1]), (start_point[0]+10, start_point[1]+10), (0, 0, 255), 4)
+
+
+
+
+    print "find_obj_hist:",(clock()-start)
 
 
     window_hwnd = get_window_hwnd("WSGAME")
@@ -238,12 +292,48 @@ def print_coordinates():
     print info.decode('utf-8')
 
 def test():
-    image = cv2.imread("img/xy0004.jpg")
-    #cv2.imshow('frame',image)
-    myimage = find_contours(image)
+    t = clock()
 
-    cv2.imshow('frame',myimage)
+    
 
+    
+
+    ################### 查找光标位置
+    # image = cv2.imread("img/xy0008.jpg")
+    # image_mouse = cv2.imread("feature/other/mouse.png")
+    # image_mouse_mask = cv2.imread("feature/other/mouse_mask.png",0)
+    # find_list = find_obj_hist_mask(image,image_mouse,max_sum=1,move_px = 5,move_py = 5,mask=image_mouse_mask)
+    # print len(find_list)
+    # if len(find_list) > 0:
+    #     print find_list[0]
+
+
+
+    ########################  查找小地图
+    # #image = cv2.imread("img/xy0004.jpg")
+    # image = cv2.imread("img/xy0009.jpg")
+    # #image = cv2.imread("img/xy0001.jpg")
+    # #image = cv2.imread("img/xy0010.jpg")
+    # rect = find_obj_rect(image,minLineLength=200,extend_length=10)
+    # if rect is not None:
+    #     print rect
+    #     cv2.rectangle(image, (rect[0], rect[1]), (rect[0]+rect[2], rect[1]+rect[3]), (0, 0, 255), 4)
+        
+    #     rect = [rect[0]+10,rect[1]+10,rect[2]-20,rect[3]-20]
+    #     sub_image = get_image_sub(image,rect)
+    #     #cv2.imshow('sub_image',sub_image)
+    #     cv2.imwrite('img/sub_image.png',sub_image)
+
+        
+    ####################  查找小地图光标位置  
+    image = cv2.imread("feature/other/mouse_for_location.png")
+    img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+    _,img_bin = cv2.threshold(img_gray, 240,255, cv2.THRESH_BINARY)
+
+
+    cv2.imshow('frame',image)
+    print "RunTime:",clock()-t
     cv2.waitKey()
     exit()
 
