@@ -1,0 +1,2554 @@
+argument_parser:
+  url:         https://github.com/Xe/argument_parser/ (git)
+  tags:        library, commandline, arguments, switches, parsing
+  description: Provides a complex commandline parser
+  license:     MIT
+  website:     https://github.com/Xe/argument_parser
+ 
+genieos:
+  url:         https://github.com/Araq/genieos/ (git)
+  tags:        library, commandline, sound, recycle, os
+  description: Too awesome procs to be included in nimrod.os module
+  license:     MIT
+  website:     http://github.com/Araq/genieos/
+ 
+jester:
+  url:         https://github.com/dom96/jester/ (git)
+  tags:        web, http, framework, dsl
+  description: A sinatra-like web framework for Nim.
+  license:     MIT
+  website:     https://github.com/dom96/jester
+ 
+templates:
+  url:         https://github.com/onionhammer/nim-templates.git (git)
+  tags:        web, html, template
+  description: A simple string templating library for Nim.
+  license:     BSD
+  website:     https://github.com/onionhammer/nim-templates
+ 
+murmur:
+  url:         https://github.com/olahol/nimrod-murmur/ (git)
+  tags:        hash, murmur
+  description: MurmurHash in pure Nim.
+  license:     MIT
+  website:     https://github.com/olahol/nimrod-murmur
+ 
+libtcod-nim:
+  url:         https://github.com/Vladar4/libtcod-nim/ (git)
+  tags:        roguelike, game, library, engine, sdl, opengl, glsl
+  description: Wrapper of the libtcod library for the Nim language.
+  license:     zlib
+  website:     https://github.com/Vladar4/libtcod-nim
+ 
+nimgame:
+  url:         https://github.com/Vladar4/nimgame/ (git)
+  tags:        game, engine, sdl
+  description: Simple 2D game engine for Nim language.
+  license:     MIT
+  website:     https://github.com/Vladar4/nimgame
+ 
+sfml:
+  url:         https://github.com/fowlmouth/nimrod-sfml/ (git)
+  tags:        game, library, opengl
+  description: High level OpenGL-based Game Library
+  license:     MIT
+  website:     https://github.com/fowlmouth/nimrod-sfml
+ 
+enet:
+  url:         https://github.com/fowlmouth/nimrod-enet/ (git)
+  tags:        game, networking, udp
+  description: Wrapper for ENet UDP networking library
+  license:     MIT
+  website:     https://github.com/fowlmouth/nimrod-enet
+ 
+nim-locale:
+  url:         https://github.com/Amrykid/nim-locale/ (git)
+  tags:        library, locale, i18n, localization, localisation, globalization
+  description: A simple library for localizing Nim applications.
+  license:     MIT
+  website:     https://github.com/Amrykid/nim-locale
+ 
+fowltek:
+  url:         https://github.com/fowlmouth/nimlibs/ (git)
+  tags:        game, opengl, wrappers, library, assorted
+  description: A collection of reusable modules and wrappers.
+  license:     MIT
+  website:     https://github.com/fowlmouth/nimlibs
+ 
+nake:
+  url:         https://github.com/fowlmouth/nake/ (git)
+  tags:        build, automation, sortof
+  description: make-like for Nim. Describe your builds as tasks!
+  license:     MIT
+  website:     https://github.com/fowlmouth/nake
+ 
+nimrod-glfw:
+  url:         https://github.com/rafaelvasco/nimrod-glfw/ (git)
+  tags:        library, glfw, opengl, windowing, game
+  description: Nim bindings for GLFW library.
+  license:     MIT
+  website:     https://github.com/rafaelvasco/nimrod-glfw
+ 
+chipmunk:
+  url:         https://github.com/fowlmouth/nimrod-chipmunk/ (git)
+  tags:        library, physics, game
+  description: Bindings for Chipmunk2D 6.x physics library (for backwards compatibility)
+  license:     MIT
+  website:     https://github.com/fowlmouth/nimrod-chipmunk
+ 
+chipmunk6:
+  url:         https://github.com/fowlmouth/nimrod-chipmunk/ (git)
+  tags:        library, physics, game
+  description: Bindings for Chipmunk2D 6.x physics library
+  license:     MIT
+  website:     https://github.com/fowlmouth/nimrod-chipmunk
+ 
+nim-glfw:
+  url:         https://github.com/EXetoC/nim-glfw/ (git)
+  tags:        library, glfw, opengl, windowing, game
+  description: A high-level GLFW 3 wrapper
+  license:     MIT
+  website:     https://github.com/EXetoC/nim-glfw
+ 
+nim-ao:
+  url:         https://github.com/EXetoC/nim-ao/ (git)
+  tags:        library, audio
+  description: A high-level libao wrapper
+  license:     MIT
+  website:     https://github.com/EXetoC/nim-ao
+ 
+termbox:
+  url:         https://github.com/fowlmouth/nim-termbox (git)
+  tags:        library, terminal, io
+  description: Termbox wrapper.
+  license:     MIT
+  website:     https://github.com/fowlmouth/nim-termbox
+ 
+linagl:
+  url:         https://bitbucket.org/BitPuffin/linagl (hg)
+  tags:        library, opengl, math, game
+  description: OpenGL math library
+  license:     CC0
+  website:     https://bitbucket.org/BitPuffin/linagl
+ 
+kwin:
+  url:         https://github.com/reactormonk/nim-kwin (git)
+  tags:        library, javascript, kde
+  description: KWin JavaScript API wrapper
+  license:     MIT
+  website:     https://github.com/reactormonk/nim-kwin
+ 
+opencv:
+  url:         https://github.com/dom96/nim-opencv (git)
+  tags:        library, wrapper, opencv, image, processing
+  description: OpenCV wrapper
+  license:     MIT
+  website:     https://github.com/dom96/nim-opencv
+ 
+nimble:
+  url:         https://github.com/nim-lang/nimble (git)
+  tags:        app, binary, package, manager
+  description: Nimble package manager
+  license:     BSD
+  website:     https://github.com/nim-lang/nimble
+ 
+aporia:
+  url:         https://github.com/nim-lang/Aporia (git)
+  tags:        app, binary, ide, gtk, nimrod
+  description: A Nim IDE.
+  license:     GPLv2
+  website:     https://github.com/nim-lang/Aporia
+ 
+c2nim:
+  url:         https://github.com/nim-lang/c2nim (git)
+  tags:        app, binary, tool, header, C, nimrod
+  description: c2nim is a tool to translate Ansi C code to Nim.
+  license:     MIT
+  website:     https://github.com/nim-lang/c2nim
+ 
+pas2nim:
+  url:         https://github.com/nim-lang/pas2nim (git)
+  tags:        app, binary, tool, Pascal, nimrod
+  description: pas2nim is a tool to translate Pascal code to Nim.
+  license:     MIT
+  website:     https://github.com/nim-lang/pas2nim
+ 
+ipsumgenera:
+  url:         https://github.com/dom96/ipsumgenera (git)
+  tags:        app, binary, blog, static, generator
+  description: Static blog generator ala Jekyll.
+  license:     MIT
+  website:     https://github.com/dom96/ipsumgenera
+ 
+clibpp:
+  url:         https://github.com/onionhammer/clibpp.git (git)
+  tags:        import, C++, library, wrap
+  description: Easy way to 'Mock' C++ interface
+  license:     MIT
+  website:     https://github.com/onionhammer/clibpp
+ 
+pastebin:
+  url:         https://github.com/achesak/nim-pastebin (git)
+  tags:        library, wrapper, pastebin
+  description: Pastebin API wrapper
+  license:     MIT
+  website:     https://github.com/achesak/nim-pastebin
+ 
+yahooweather:
+  url:         https://github.com/achesak/nim-yahooweather (git)
+  tags:        library, wrapper, weather
+  description: Yahoo! Weather API wrapper
+  license:     MIT
+  website:     https://github.com/achesak/nim-yahooweather
+ 
+noaa:
+  url:         https://github.com/achesak/nim-noaa (git)
+  tags:        library, wrapper, weather
+  description: NOAA weather API wrapper
+  license:     MIT
+  website:     https://github.com/achesak/nim-noaa
+ 
+rss:
+  url:         https://github.com/achesak/nim-rss (git)
+  tags:        library, rss, xml, syndication
+  description: RSS library
+  license:     MIT
+  website:     https://github.com/achesak/nim-rss
+ 
+extmath:
+  url:         https://github.com/achesak/extmath.nim (git)
+  tags:        library, math, trigonometry
+  description: Nim math library
+  license:     MIT
+  website:     https://github.com/achesak/extmath.nim
+ 
+gtk2:
+  url:         https://github.com/nim-lang/gtk2 (git)
+  tags:        wrapper, gui, gtk
+  description: Wrapper for gtk2, a feature rich toolkit for creating graphical user interfaces
+  license:     MIT
+  website:     https://github.com/nim-lang/gtk2
+ 
+cairo:
+  url:         https://github.com/nim-lang/cairo (git)
+  tags:        wrapper
+  description: Wrapper for cairo, a vector graphics library with display and print output
+  license:     MIT
+  website:     https://github.com/nim-lang/cairo
+ 
+x11:
+  url:         https://github.com/nim-lang/x11 (git)
+  tags:        wrapper
+  description: Wrapper for X11
+  license:     MIT
+  website:     https://github.com/nim-lang/x11
+ 
+opengl:
+  url:         https://github.com/nim-lang/opengl (git)
+  tags:        wrapper
+  description: High-level and low-level wrapper for OpenGL
+  license:     MIT
+  website:     https://github.com/nim-lang/opengl
+ 
+lua:
+  url:         https://github.com/nim-lang/lua (git)
+  tags:        wrapper
+  description: Wrapper to interface with the Lua interpreter
+  license:     MIT
+  website:     https://github.com/nim-lang/lua
+ 
+tcl:
+  url:         https://github.com/nim-lang/tcl (git)
+  tags:        wrapper
+  description: Wrapper for the TCL programming language
+  license:     MIT
+  website:     https://github.com/nim-lang/tcl
+ 
+glm:
+  url:         https://github.com/stavenko/nim-glm (git)
+  tags:        opengl, math, matrix, vector, glsl
+  description: Port of c++ glm library with shader-like syntax
+  license:     MIT
+  website:     https://github.com/stavenko/nim-glm
+ 
+python:
+  url:         https://github.com/nim-lang/python (git)
+  tags:        wrapper
+  description: Wrapper to interface with Python interpreter
+  license:     MIT
+  website:     https://github.com/nim-lang/python
+ 
+NimBorg:
+  url:         https://github.com/micklat/NimBorg (git)
+  tags:        wrapper
+  description: High-level and low-level interfaces to python and lua
+  license:     MIT
+  website:     https://github.com/micklat/NimBorg
+ 
+sha1:
+  url:         https://github.com/onionhammer/sha1 (git)
+  tags:        port, hash, sha1
+  description: SHA-1 produces a 160-bit (20-byte) hash value from arbitrary input
+  license:     BSD
+ 
+dropbox_filename_sanitizer:
+  url:         https://github.com/Araq/dropbox_filename_sanitizer/ (git)
+  tags:        dropbox
+  description: Tool to clean up filenames shared on Dropbox
+  license:     MIT
+  website:     https://github.com/Araq/dropbox_filename_sanitizer/
+ 
+csv:
+  url:         https://github.com/achesak/nim-csv (git)
+  tags:        csv, parsing, stringify, library
+  description: Library for parsing, stringifying, reading, and writing CSV (comma separated value) files
+  license:     MIT
+  website:     https://github.com/achesak/nim-csv
+ 
+geonames:
+  url:         https://github.com/achesak/nim-geonames (git)
+  tags:        library, wrapper, geography
+  description: GeoNames API wrapper
+  license:     MIT
+  website:     https://github.com/achesak/nim-geonames
+ 
+gravatar:
+  url:         https://github.com/achesak/nim-gravatar (git)
+  tags:        library, wrapper, gravatar
+  description: Gravatar API wrapper
+  license:     MIT
+  website:     https://github.com/achesak/nim-gravatar
+ 
+coverartarchive:
+  url:         https://github.com/achesak/nim-coverartarchive (git)
+  tags:        library, wrapper, cover art, music, metadata
+  description: Cover Art Archive API wrapper
+  license:     MIT
+  website:     http://github.com/achesak/nim-coverartarchive
+ 
+nim-ogg:
+  url:         https://bitbucket.org/BitPuffin/nim-ogg (hg)
+  tags:        library, wrapper, binding, audio, sound, video, metadata, media
+  description: Binding to libogg
+  license:     CC0
+ 
+ogg:
+  url:         https://bitbucket.org/BitPuffin/nim-ogg (hg)
+  tags:        library, wrapper, binding, audio, sound, video, metadata, media
+  description: Binding to libogg
+  license:     CC0
+ 
+nim-vorbis:
+  url:         https://bitbucket.org/BitPuffin/nim-vorbis (hg)
+  tags:        library, wrapper, binding, audio, sound, metadata, media
+  description: Binding to libvorbis
+  license:     CC0
+ 
+vorbis:
+  url:         https://bitbucket.org/BitPuffin/nim-vorbis (hg)
+  tags:        library, wrapper, binding, audio, sound, metadata, media
+  description: Binding to libvorbis
+  license:     CC0
+ 
+nim-portaudio:
+  url:         https://bitbucket.org/BitPuffin/nim-portaudio (hg)
+  tags:        library, wrapper, binding, audio, sound, media, io
+  description: Binding to portaudio
+  license:     CC0
+ 
+portaudio:
+  url:         https://bitbucket.org/BitPuffin/nim-portaudio (hg)
+  tags:        library, wrapper, binding, audio, sound, media, io
+  description: Binding to portaudio
+  license:     CC0
+ 
+commandeer:
+  url:         https://github.com/fenekku/commandeer (git)
+  tags:        library, commandline, arguments, switches, parsing, options
+  description: Provides a small command line parsing DSL (domain specific language)
+  license:     MIT
+  website:     https://github.com/fenekku/commandeer
+ 
+scrypt.nim:
+  url:         https://bitbucket.org/BitPuffin/scrypt.nim (hg)
+  tags:        library, wrapper, binding, crypto, cryptography, hash, password, security
+  description: Binding and utilities for scrypt
+  license:     CC0
+ 
+bloom:
+  url:         https://github.com/boydgreenfield/nimrod-bloom (git)
+  tags:        Bloom filter, Bloom, probabilistic, data structure, set membership, MurmurHash, MurmurHash3
+  description: Efficient Bloom filter implementation in Nim using MurmurHash3.
+  license:     MIT
+  website:     https://www.github.com/boydgreenfield/nimrod-bloom
+ 
+awesome_rmdir:
+  url:         https://github.com/Araq/awesome_rmdir/ (git)
+  tags:        rmdir, awesome, commandline
+  description: Command to remove acceptably empty directories.
+  license:     MIT
+  website:     https://github.com/Araq/awesome_rmdir/
+ 
+nimalpm:
+  url:         https://github.com/barcharcraz/nimalpm/ (git)
+  tags:        alpm, wrapper, binding, library
+  description: A nimrod wrapper for libalpm
+  license:     GPLv2
+  website:     https://www.github.com/barcharcraz/nimalpm/
+ 
+nimlibpng:
+  url:         https://github.com/barcharcraz/nimlibpng (git)
+  tags:        png, wrapper, library, libpng, image
+  description: Nim wrapper for the libpng library
+  license:     libpng
+  website:     https://github.com/barcharcraz/nimlibpng
+ 
+sdl2:
+  url:         https://github.com/nim-lang/sdl2 (git)
+  tags:        wrapper, media, audio, video
+  description: Wrapper for SDL 2.x
+  license:     MIT
+  website:     https://github.com/nim-lang/sdl2
+ 
+sdl2_nim:
+  url:         https://github.com/Vladar4/sdl2_nim (git)
+  tags:        library, wrapper, sdl2, game, video, image, audio, network, ttf
+  description: Wrapper of the SDL 2 library for the Nim language.
+  license:     zlib
+  website:     https://github.com/Vladar4/sdl2_nim
+ 
+assimp:
+  url:         https://github.com/barcharcraz/nim-assimp (git)
+  tags:        wrapper, media, mesh, import, game
+  description: Wrapper for the assimp library
+  license:     MIT
+  website:     https://github.com/barcharcraz/nim-assimp
+ 
+freeimage:
+  url:         https://github.com/barcharcraz/nim-freeimage (git)
+  tags:        wrapper, media, image, import, game
+  description: Wrapper for the FreeImage library
+  license:     MIT
+  website:     https://github.com/barcharcraz/nim-freeimage
+ 
+bcrypt:
+  url:         https://github.com/ithkuil/bcryptnim/ (git)
+  tags:        hash, crypto, password, bcrypt, library
+  description: Wraps the bcrypt (blowfish) library for creating encrypted hashes (useful for passwords)
+  license:     BSD
+  website:     https://www.github.com/ithkuil/bcryptnim/
+ 
+opencl:
+  url:         https://github.com/nim-lang/opencl (git)
+  tags:        library
+  description: Low-level wrapper for OpenCL
+  license:     MIT
+  website:     https://github.com/nim-lang/opencl
+ 
+DevIL:
+  url:         https://github.com/Varriount/DevIL (git)
+  tags:        image, library, graphics, wrapper
+  description: Wrapper for the DevIL image library
+  license:     MIT
+  website:     https://github.com/Varriount/DevIL
+ 
+signals:
+  url:         https://github.com/fowlmouth/signals.nim (git)
+  tags:        event-based, observer pattern, library
+  description: Signals/slots library.
+  license:     MIT
+  website:     https://github.com/fowlmouth/signals.nim
+ 
+sling:
+  url:         https://github.com/Druage/sling (git)
+  tags:        signal, slots, eventloop, callback
+  description: Signal and Slot library for Nim.
+  license:     unlicense
+  website:     https://github.com/Druage/sling
+ 
+number_files:
+  url:         https://github.com/Araq/number_files/ (git)
+  tags:        rename, filename, finder
+  description: Command to add counter suffix/prefix to a list of files.
+  license:     MIT
+  website:     https://github.com/Araq/number_files/
+ 
+redissessions:
+  url:         https://github.com/ithkuil/redissessions/ (git)
+  tags:        jester, sessions, redis
+  description: Redis-backed sessions for jester
+  license:     MIT
+  website:     https://github.com/ithkuil/redissessions/
+ 
+horde3d:
+  url:         https://github.com/fowlmouth/horde3d (git)
+  tags:        graphics, 3d, rendering, wrapper
+  description: Wrapper for Horde3D, a small open source 3D rendering engine.
+  license:     WTFPL
+  website:     https://github.com/fowlmouth/horde3d
+ 
+mongo:
+  url:         https://github.com/nim-lang/mongo (git)
+  tags:        library, wrapper, database
+  description: Bindings and a high-level interface for MongoDB
+  license:     MIT
+  website:     https://github.com/nim-lang/mongo
+ 
+allegro5:
+  url:         https://github.com/fowlmouth/allegro5 (git)
+  tags:        wrapper, graphics, games, opengl, audio
+  description: Wrapper for Allegro version 5.X
+  license:     MIT
+  website:     https://github.com/fowlmouth/allegro5
+ 
+physfs:
+  url:         https://github.com/fowlmouth/physfs (git)
+  tags:        wrapper, filesystem, archives
+  description: A library to provide abstract access to various archives.
+  license:     WTFPL
+  website:     https://github.com/fowlmouth/physfs
+ 
+shoco:
+  url:         https://github.com/onionhammer/shoconim.git (git)
+  tags:        compression, shoco
+  description: A fast compressor for short strings
+  license:     MIT
+  website:     https://github.com/onionhammer/shoconim
+ 
+murmur3:
+  url:         https://github.com/boydgreenfield/nimrod-murmur (git)
+  tags:        MurmurHash, MurmurHash3, murmur, hash, hashing
+  description: A simple MurmurHash3 wrapper for Nim
+  license:     MIT
+  website:     https://github.com/boydgreenfield/nimrod-murmur
+ 
+hex:
+  url:         https://github.com/esbullington/nimrod-hex (git)
+  tags:        hex, encoding
+  description: A simple hex package for Nim
+  license:     MIT
+  website:     https://github.com/esbullington/nimrod-hex
+ 
+strfmt:
+  url:         https://bitbucket.org/lyro/strfmt (hg)
+  tags:        library
+  description: A string formatting library inspired by Python's `format`.
+  license:     MIT
+  website:     https://lyro.bitbucket.org/strfmt
+ 
+jade-nim:
+  url:         https://github.com/idlewan/jade-nim (git)
+  tags:        template, jade, web, dsl, html
+  description: Compiles jade templates to Nim procedures.
+  license:     MIT
+  website:     https://github.com/idlewan/jade-nim
+ 
+gh_nimrod_doc_pages:
+  url:         https://github.com/Araq/gh_nimrod_doc_pages (git)
+  tags:        commandline, web, automation, documentation
+  description: Generates a GitHub documentation website for Nim projects.
+  license:     MIT
+  website:     https://github.com/Araq/gh_nimrod_doc_pages
+ 
+midnight_dynamite:
+  url:         https://github.com/Araq/midnight_dynamite (git)
+  tags:        wrapper, library, html, markdown, md
+  description: Wrapper for the markdown rendering hoedown library
+  license:     MIT
+  website:     https://github.com/Araq/midnight_dynamite
+ 
+rsvg:
+  url:         https://github.com/def-/rsvg (git)
+  tags:        wrapper, library, graphics
+  description: Wrapper for librsvg, a Scalable Vector Graphics (SVG) rendering library
+  license:     MIT
+  website:     https://github.com/def-/rsvg
+ 
+emerald:
+  url:         https://github.com/flyx/emerald (git)
+  tags:        dsl, html, template, web
+  description: macro-based HTML templating engine
+  license:     WTFPL
+  website:     https://flyx.github.io/emerald/
+ 
+niminst:
+  url:         https://github.com/nim-lang/niminst (git)
+  tags:        app, binary, tool, installation, generator, nim
+  description: tool to generate installers for Nim programs
+  license:     MIT
+  website:     https://github.com/nim-lang/niminst
+ 
+redis:
+  url:         https://github.com/nim-lang/redis (git)
+  tags:        redis, client, library
+  description: official redis client for Nim
+  license:     MIT
+  website:     https://github.com/nim-lang/redis
+ 
+dialogs:
+  url:         https://github.com/nim-lang/dialogs (git)
+  tags:        library, ui, gui, dialog, file
+  description: wraps GTK+ or Windows' open file dialogs
+  license:     MIT
+  website:     https://github.com/nim-lang/dialogs
+ 
+vectors:
+  url:         https://github.com/blamestross/nimrod-vectors (git)
+  tags:        math, vectors, library
+  description: Simple multidimensional vector math
+  license:     MIT
+  website:     https://github.com/blamestross/nimrod-vectors
+ 
+bitarray:
+  url:         https://github.com/onecodex/nim-bitarray (git)
+  tags:        Bit arrays, Bit sets, Bit vectors, Data structures
+  description: mmap-backed bitarray implementation in Nim.
+  license:     MIT
+  website:     https://www.github.com/onecodex/nim-bitarray
+ 
+appdirs:
+  url:         https://github.com/MrJohz/appdirs (git)
+  tags:        utility, filesystem
+  description: A utility library to find the directory you need to app in.
+  license:     MIT
+  website:     https://github.com/MrJohz/appdirs
+ 
+nim-sndfile:
+  url:         https://github.com/julienaubert/nim-sndfile (git)
+  tags:        audio, wav, wrapper, libsndfile
+  description: A wrapper of libsndfile
+  license:     MIT
+  website:     https://github.com/julienaubert/nim-sndfile
+ 
+bigints:
+  url:         https://github.com/def-/bigints (git)
+  tags:        math, library, numbers
+  description: Arbitrary-precision integers
+  license:     MIT
+  website:     https://github.com/def-/bigints
+ 
+iterutils:
+  url:         https://github.com/def-/iterutils (git)
+  tags:        library, iterators
+  description: Functional operations for iterators and slices, similar to sequtils
+  license:     MIT
+  website:     https://github.com/def-/iterutils
+ 
+hastyscribe:
+  url:         https://github.com/h3rald/hastyscribe (git)
+  tags:        markdown, html, publishing
+  description: Self-contained markdown compiler generating self-contained HTML documents
+  license:     MIT
+  website:     https://h3rald.com/hastyscribe
+ 
+nanomsg:
+  url:         https://github.com/def-/nim-nanomsg (git)
+  tags:        library, wrapper, networking
+  description: Wrapper for the nanomsg socket library that provides several common communication patterns
+  license:     MIT
+  website:     https://github.com/def-/nim-nanomsg
+ 
+directnimrod:
+  url:         https://bitbucket.org/barcharcraz/directnimrod (git)
+  tags:        library, wrapper, graphics, windows
+  description: Wrapper for microsoft's DirectX libraries
+  license:     MS-PL
+  website:     https://bitbucket.org/barcharcraz/directnimrod
+ 
+imghdr:
+  url:         https://github.com/achesak/nim-imghdr (git)
+  tags:        image, formats, files
+  description: Library for detecting the format of an image
+  license:     MIT
+  website:     https://github.com/achesak/nim-imghdr
+ 
+csv2json:
+  url:         https://github.com/achesak/nim-csv2json (git)
+  tags:        csv, json
+  description: Convert CSV files to JSON
+  license:     MIT
+  website:     https://github.com/achesak/nim-csv2json
+ 
+vecmath:
+  url:         https://github.com/barcharcraz/vecmath (git)
+  tags:        library, math, vector
+  description: various vector maths utils for nimrod
+  license:     MIT
+  website:     https://github.com/barcharcraz/vecmath
+ 
+lazy_rest:
+  url:         https://github.com/Araq/lazy_rest (git)
+  tags:        library, rst, rest, text, html
+  description: Simple reST HTML generation with some extras.
+  license:     MIT
+  website:     https://github.com/Araq/lazy_rest
+ 
+Phosphor:
+  url:         https://github.com/barcharcraz/Phosphor (git)
+  tags:        library, opengl, graphics
+  description: eaiser use of OpenGL and GLSL shaders
+  license:     MIT
+  website:     https://github.com/barcharcraz/Phosphor
+ 
+colorsys:
+  url:         https://github.com/achesak/nim-colorsys (git)
+  tags:        library, colors, rgb, yiq, hls, hsv
+  description: Convert between RGB, YIQ, HLS, and HSV color systems.
+  license:     MIT
+  website:     https://github.com/achesak/nim-colorsys
+ 
+pythonfile:
+  url:         https://github.com/achesak/nim-pythonfile (git)
+  tags:        library, python, files, file
+  description: Wrapper of the file procedures to provide an interface as similar as possible to that of Python
+  license:     MIT
+  website:     https://github.com/achesak/nim-pythonfile
+ 
+sndhdr:
+  url:         https://github.com/achesak/nim-sndhdr (git)
+  tags:        library, formats, files, sound, audio
+  description: Library for detecting the format of a sound file
+  license:     MIT
+  website:     https://github.com/achesak/nim-sndhdr
+ 
+irc:
+  url:         https://github.com/nim-lang/irc (git)
+  tags:        library, irc, network
+  description: Implements a simple IRC client.
+  license:     MIT
+  website:     https://github.com/nim-lang/irc
+ 
+random:
+  url:         https://github.com/BlaXpirit/nim-random (git)
+  tags:        library, algorithms, random
+  description: Pseudo-random number generation library inspired by Python
+  license:     MIT
+  website:     https://github.com/BlaXpirit/nim-random
+ 
+zmq:
+  url:         https://github.com/nim-lang/nim-zmq (git)
+  tags:        library, wrapper, zeromq, messaging, queue
+  description: ZeroMQ 4 wrapper
+  license:     MIT
+  website:     https://github.com/nim-lang/nim-zmq
+ 
+uuid:
+  url:         https://github.com/idlewan/nim-uuid (git)
+  tags:        library, wrapper, uuid
+  description: UUID wrapper
+  license:     MIT
+  website:     https://github.com/idlewan/nim-uuid
+ 
+robotparser:
+  url:         https://github.com/achesak/nim-robotparser (git)
+  tags:        library, useragent, robots, robot.txt
+  description: Determine if a useragent can access a URL using robots.txt
+  license:     MIT
+  website:     https://github.com/achesak/nim-robotparser
+ 
+epub:
+  url:         https://github.com/achesak/nim-epub (git)
+  tags:        library, epub, e-book
+  description: Module for working with EPUB e-book files
+  license:     MIT
+  website:     https://github.com/achesak/nim-epub
+ 
+hashids:
+  url:         https://github.com/achesak/nim-hashids (git)
+  tags:        library, hashids
+  description: Nim implementation of Hashids
+  license:     MIT
+  website:     https://github.com/achesak/nim-hashids
+ 
+openssl_evp:
+  url:         https://github.com/cowboy-coders/nim-openssl-evp (git)
+  tags:        library, crypto, openssl
+  description: Wrapper for OpenSSL's EVP interface
+  license:     OpenSSL License and SSLeay License
+  website:     https://github.com/cowboy-coders/nim-openssl-evp
+ 
+monad:
+  url:         https://github.com/superfunc/monad (git)
+  tags:        library, functional, monad, functor
+  description: basic monadic data types for Nim
+  license:     BSD3
+  website:     https://github.com/superfunc/monad
+ 
+eternity:
+  url:         https://github.com/hiteshjasani/nim-eternity (git)
+  tags:        library, time, format
+  description: Humanize elapsed time
+  license:     MIT
+  website:     https://github.com/hiteshjasani/nim-eternity
+ 
+gmp:
+  url:         https://github.com/FedeOmoto/nim-gmp (git)
+  tags:        library, bignum, numbers, math
+  description: wrapper for the GNU multiple precision arithmetic library (GMP)
+  license:     LGPLv3 or GPLv2
+  website:     https://github.com/FedeOmoto/nim-gmp
+ 
+ludens:
+  url:         https://github.com/rnentjes/nim-ludens (git)
+  tags:        library, game, opengl, sfml
+  description: Little game library using opengl and sfml
+  license:     MIT
+  website:     https://github.com/rnentjes/nim-ludens
+ 
+ffbookmarks:
+  url:         https://github.com/achesak/nim-ffbookmarks (git)
+  tags:        firefox, bookmarks, library
+  description: Nim module for working with Firefox bookmarks
+  license:     MIT
+  website:     https://github.com/achesak/nim-ffbookmarks
+ 
+moustachu:
+  url:         https://github.com/fenekku/moustachu.git (git)
+  tags:        web, html, template, mustache
+  description: Mustache templating for Nim.
+  license:     MIT
+  website:     https://github.com/fenekku/moustachu
+ 
+easy-bcrypt:
+  url:         https://github.com/flaviut/easy-bcrypt.git (git)
+  tags:        hash, crypto, password, bcrypt
+  description: simple wrapper providing a convenient interface for the bcrypt password hashing algorithm
+  license:     CC0
+  website:     https://github.com/flaviut/easy-bcrypt/blob/master/easy-bcrypt.nimble
+ 
+libclang:
+  url:         https://github.com/cowboy-coders/nim-libclang.git (git)
+  tags:        wrapper, bindings, clang
+  description: wrapper for libclang (the C-interface of the clang LLVM frontend)
+  license:     MIT
+  website:     https://github.com/cowboy-coders/nim-libclang
+ 
+nim-libclang:
+  url:         https://github.com/cowboy-coders/nim-libclang.git (git)
+  tags:        wrapper, bindings, clang
+  description: Please use libclang instead.
+  license:     MIT
+  website:     https://github.com/cowboy-coders/nim-libclang
+ 
+nimqml:
+  url:         https://github.com/filcuc/nimqml (git)
+  tags:        Qt, Qml, UI, GUI
+  description: Qt Qml bindings
+  license:     GPLv3
+  website:     https://github.com/filcuc/nimqml
+ 
+XPLM-Nim:
+  url:         https://github.com/jpoirier/XPLM-Nim (git)
+  tags:        X-Plane, XPLM, Plugin, SDK
+  description: X-Plane XPLM SDK wrapper
+  license:     BSD
+  website:     https://github.com/jpoirier/XPLM-Nim
+ 
+csfml:
+  url:         https://github.com/BlaXpirit/nim-csfml (git)
+  tags:        sfml, binding, game, media, library, opengl
+  description: Bindings for Simple and Fast Multimedia Library (through CSFML)
+  license:     zlib
+  website:     https://github.com/BlaXpirit/nim-csfml
+ 
+optional_t:
+  url:         https://github.com/flaviut/optional_t (git)
+  tags:        option, functional
+  description: Basic Option[T] library
+  license:     MIT
+  website:     https://github.com/flaviut/optional_t
+ 
+nimrtlsdr:
+  url:         https://github.com/jpoirier/nimrtlsdr (git)
+  tags:        rtl-sdr, wrapper, bindings, rtlsdr
+  description: A Nim wrapper for librtlsdr
+  license:     BSD
+  website:     https://github.com/jpoirier/nimrtlsdr
+ 
+lapp:
+  url:         https://gitlab.3dicc.com/gokr/lapp.git (git)
+  tags:        args, cmd, opt, parse, parsing
+  description: Opt parser using synopsis as specification, ported from Lua.
+  license:     MIT
+  website:     https://gitlab.3dicc.com/gokr/lapp
+ 
+blimp:
+  url:         https://gitlab.3dicc.com/gokr/blimp.git (git)
+  tags:        app, binary, utility, git, git-fat
+  description: Utility that helps with big files in git, very similar to git-fat, s3annnex etc.
+  license:     MIT
+  website:     https://gitlab.3dicc.com/gokr/blimp
+ 
+parsetoml:
+  url:         https://github.com/ziotom78/parsetoml.git (git)
+  tags:        library, nim
+  description: Library for parsing TOML files.
+  license:     MIT
+  website:     https://github.com/ziotom78/parsetoml
+ 
+compiler:
+  url:         https://github.com/Araq/Nim.git (git)
+  tags:        library, nim
+  description: Compiler package providing the compiler sources as a library.
+  license:     MIT
+  website:     https://github.com/nim-lang/Nim
+ 
+nre:
+  url:         https://github.com/flaviut/nre.git (git)
+  tags:        library, pcre, regex
+  description: A better regular expression library
+  license:     MIT
+  website:     https://github.com/flaviut/nre
+ 
+docopt:
+  url:         https://github.com/docopt/docopt.nim (git)
+  tags:        commandline, arguments, parsing, library
+  description: Command-line args parser based on Usage message
+  license:     MIT
+  website:     https://github.com/docopt/docopt.nim
+ 
+bpg:
+  url:         https://github.com/def-/nim-bpg.git (git)
+  tags:        image, library, wrapper
+  description: BPG (Better Portable Graphics) for Nim
+  license:     MIT
+  website:     https://github.com/def-/nim-bpg
+ 
+io-spacenav:
+  url:         https://github.com/nimious/io-spacenav.git (git)
+  tags:        binding, 3dx, 3dconnexion, libspnav, spacenav, spacemouse, spacepilot, spacenavigator
+  description: Obsolete - please use spacenav instead!
+  license:     MIT
+  website:     https://github.com/nimious/io-spacenav
+ 
+optionals:
+  url:         https://github.com/MasonMcGill/optionals.git (git)
+  tags:        library, option, optional, maybe
+  description: Option types
+  license:     MIT
+  website:     https://github.com/MasonMcGill/optionals
+ 
+tuples:
+  url:         https://github.com/MasonMcGill/tuples.git (git)
+  tags:        library, tuple, metaprogramming
+  description: Tuple manipulation utilities
+  license:     MIT
+  website:     https://github.com/MasonMcGill/tuples
+ 
+fuse:
+  url:         https://github.com/akiradeveloper/nim-fuse.git (git)
+  tags:        fuse, library, wrapper
+  description: A FUSE binding for Nim
+  license:     MIT
+  website:     https://github.com/akiradeveloper/nim-fuse
+ 
+brainfuck:
+  url:         https://github.com/def-/nim-brainfuck.git (git)
+  tags:        library, binary, app, interpreter, compiler, language
+  description: A brainfuck interpreter and compiler
+  license:     MIT
+  website:     https://github.com/def-/nim-brainfuck
+ 
+nimsuggest:
+  url:         https://github.com/nim-lang/nimsuggest.git (git)
+  tags:        binary, app, suggest, compiler, autocomplete, nim
+  description: Tool for providing auto completion data for Nim source code.
+  license:     MIT
+  website:     https://github.com/nim-lang/nimsuggest
+ 
+jwt:
+  url:         https://github.com/ekarlso/nim-jwt.git (git)
+  tags:        library, crypto, hash
+  description: JSON Web Tokens for Nim
+  license:     MIT
+  website:     https://github.com/ekarlso/nim-jwt
+ 
+pythonpathlib:
+  url:         https://github.com/achesak/nim-pythonpathlib.git (git)
+  tags:        path, directory, python, library
+  description: Module for working with paths that is as similar as possible to Python's pathlib
+  license:     MIT
+  website:     https://github.com/achesak/nim-pythonpathlib
+ 
+RingBuffer:
+  url:         git@github.com:megawac/RingBuffer.nim.git (git)
+  tags:        sequence, seq, circular, ring, buffer
+  description: Circular buffer implementation
+  license:     MIT
+  website:     https://github.com/megawac/RingBuffer.nim
+ 
+nimrat:
+  url:         https://github.com/apense/nimrat (git)
+  tags:        library, math, numbers
+  description: Module for working with rational numbers (fractions)
+  license:     MIT
+  website:     https://github.com/apense/nimrat
+ 
+io-isense:
+  url:         https://github.com/nimious/io-isense.git (git)
+  tags:        binding, isense, intersense, inertiacube, intertrax, microtrax, thales, tracking, sensor
+  description: Obsolete - please use isense instead!
+  license:     MIT
+  website:     https://github.com/nimious/io-isense
+ 
+io-usb:
+  url:         https://github.com/nimious/io-usb.git (git)
+  tags:        binding, usb, libusb
+  description: Obsolete - please use libusb instead!
+  license:     MIT
+  website:     https://github.com/nimious/io-usb
+ 
+nimcfitsio:
+  url:         https://github.com/ziotom78/nimcfitsio.git (git)
+  tags:        library, binding, cfitsio, fits, io
+  description: Bindings for CFITSIO, a library to read/write FITSIO images and tables.
+  license:     MIT
+  website:     https://github.com/ziotom78/nimcfitsio
+ 
+glossolalia:
+  url:         https://github.com/fowlmouth/glossolalia (git)
+  tags:        parser, peg
+  description: A DSL for quickly writing parsers
+  license:     CC0
+  website:     https://github.com/fowlmouth/glossolalia
+ 
+entoody:
+  url:         https://bitbucket.org/fowlmouth/entoody (git)
+  tags:        component, entity, composition
+  description: A component/entity system
+  license:     CC0
+  website:     https://bitbucket.org/fowlmouth/entoody
+ 
+msgpack:
+  url:         https://github.com/akiradeveloper/msgpack-nim.git (git)
+  tags:        msgpack, library, serialization
+  description: A MessagePack binding for Nim
+  license:     MIT
+  website:     https://github.com/akiradeveloper/msgpack-nim
+ 
+osinfo:
+  url:         https://github.com/nim-lang/osinfo.git (git)
+  tags:        os, library, info
+  description: Modules providing information about the OS.
+  license:     MIT
+  website:     https://github.com/nim-lang/osinfo
+ 
+io-myo:
+  url:         https://github.com/nimious/io-myo.git (git)
+  tags:        binding, myo, thalmic, armband, gesture
+  description: Obsolete - please use myo instead!
+  license:     MIT
+  website:     https://github.com/nimious/io-myo
+ 
+io-oculus:
+  url:         https://github.com/nimious/io-oculus.git (git)
+  tags:        binding, oculus, rift, vr, libovr, ovr, dk1, dk2, gearvr
+  description: Obsolete - please use oculus instead!
+  license:     MIT
+  website:     https://github.com/nimious/io-oculus
+ 
+closure_compiler:
+  url:         https://github.com/yglukhov/closure_compiler.git (git)
+  tags:        binding, closure, compiler, javascript
+  description: Bindings for Closure Compiler web API.
+  license:     MIT
+  website:     https://github.com/yglukhov/closure_compiler
+ 
+io-serialport:
+  url:         https://github.com/nimious/io-serialport.git (git)
+  tags:        binding, libserialport, serial, communication
+  description: Obsolete - please use serialport instead!
+  license:     MIT
+  website:     https://github.com/nimious/io-serialport
+ 
+beanstalkd:
+  url:         https://github.com/tormaroe/beanstalkd.nim.git (git)
+  tags:        library, queue, messaging
+  description: A beanstalkd work queue client library.
+  license:     MIT
+  website:     https://github.com/tormaroe/beanstalkd.nim
+ 
+wiki2text:
+  url:         https://github.com/rspeer/wiki2text.git (git)
+  tags:        nlp, wiki, xml, text
+  description: Quickly extracts natural-language text from a MediaWiki XML file.
+  license:     MIT
+  website:     https://github.com/rspeer/wiki2text
+ 
+qt5_qtsql:
+  url:         https://github.com/philip-wernersbach/nim-qt5_qtsql.git (git)
+  tags:        library, wrapper, database, qt, qt5, qtsql, sqlite, postgres, mysql
+  description: Binding for Qt 5's Qt SQL library that integrates with the features of the Nim language. Uses one API for multiple database engines.
+  license:     MIT
+  website:     https://github.com/philip-wernersbach/nim-qt5_qtsql
+ 
+orient:
+  url:         https://github.com/philip-wernersbach/nim-orient (git)
+  tags:        library, wrapper, database, orientdb, pure
+  description: OrientDB driver written in pure Nim, uses the OrientDB 2.0 Binary Protocol with Binary Serialization.
+  license:     MPL
+  website:     https://github.com/philip-wernersbach/nim-orient
+ 
+syslog:
+  url:         https://github.com/FedericoCeratto/nim-syslog (git)
+  tags:        library, pure
+  description: Syslog module.
+  license:     LGPLv3
+  website:     https://github.com/FedericoCeratto/nim-syslog
+ 
+nimes:
+  url:         https://github.com/def-/nimes (git)
+  tags:        emulator, nes, game, sdl, javascript
+  description: NES emulator using SDL2, also compiles to JavaScript with emscripten.
+  license:     MPL
+  website:     https://github.com/def-/nimes
+ 
+syscall:
+  url:         https://github.com/def-/nim-syscall (git)
+  tags:        library
+  description: Raw system calls for Nim
+  license:     MPL
+  website:     https://github.com/def-/nim-syscall
+ 
+jnim:
+  url:         https://github.com/vegansk/jnim (git)
+  tags:        library, java, jvm, bridge, bindings
+  description: Nim - Java bridge
+  license:     MIT
+  website:     https://github.com/vegansk/jnim
+ 
+nimPDF:
+  url:         https://github.com/jangko/nimpdf (git)
+  tags:        library, PDF, document
+  description: library for generating PDF files
+  license:     MIT
+  website:     https://github.com/jangko/nimpdf
+ 
+LLVM:
+  url:         https://github.com/FedeOmoto/llvm (git)
+  tags:        LLVM, bindings, wrapper
+  description: LLVM bindings for the Nim language.
+  license:     MIT
+  website:     https://github.com/FedeOmoto/llvm
+ 
+nshout:
+  url:         https://github.com/Senketsu/nshout (git)
+  tags:        library, shouter, libshout, wrapper, bindings, audio, web
+  description: Nim bindings for libshout
+  license:     MIT
+  website:     https://github.com/Senketsu/nshout
+ 
+nuuid:
+  url:         https://github.com/yglukhov/nim-only-uuid (git)
+  tags:        library, uuid, guid
+  description: A Nim source only UUID generator
+  license:     MIT
+  website:     https://github.com/yglukhov/nim-only-uuid
+ 
+fftw3:
+  url:         https://github.com/ziotom78/nimfftw3 (git)
+  tags:        library, nim, math, fft
+  description: Bindings to the FFTW library
+  license:     MIT
+  website:     https://github.com/ziotom78/nimfftw3
+ 
+nrpl:
+  url:         https://github.com/vegansk/nrpl (git)
+  tags:        REPL, application
+  description: A rudimentary Nim REPL
+  license:     MIT
+  website:     https://github.com/vegansk/nrpl
+ 
+nim-geocoding:
+  url:         https://github.com/saratchandra92/nim-geocoding (git)
+  tags:        library, geocoding, maps
+  description: A simple library for Google Maps Geocoding API
+  license:     MIT
+  website:     https://github.com/saratchandra92/nim-geocoding
+ 
+io-gles:
+  url:         https://github.com/nimious/io-gles.git (git)
+  tags:        binding, khronos, gles, opengl es
+  description: Obsolete - please use gles instead!
+  license:     MIT
+  website:     https://github.com/nimious/io-gles
+ 
+io-egl:
+  url:         https://github.com/nimious/io-egl.git (git)
+  tags:        binding, khronos, egl, opengl, opengl es, openvg
+  description: Obsolete - please use egl instead!
+  license:     MIT
+  website:     https://github.com/nimious/io-egl
+ 
+io-sixense:
+  url:         https://github.com/nimious/io-sixense.git (git)
+  tags:        binding, sixense, razer hydra, stem system, vr
+  description: Obsolete - please use sixense instead!
+  license:     MIT
+  website:     https://github.com/nimious/io-sixense
+ 
+tnetstring:
+  url:         https://mahlon@bitbucket.org/mahlon/nim-tnetstring (hg)
+  tags:        tnetstring, library, serialization
+  description: Parsing and serializing for the TNetstring format.
+  license:     MIT
+  website:     http://bitbucket.org/mahlon/nim-tnetstring
+ 
+msgpack4nim:
+  url:         https://github.com/jangko/msgpack4nim (git)
+  tags:        msgpack, library, serialization, deserialization
+  description: Another MessagePack implementation written in pure nim
+  license:     MIT
+  website:     https://github.com/jangko/msgpack4nim
+ 
+binaryheap:
+  url:         https://github.com/bluenote10/nim-heap (git)
+  tags:        heap, priority queue
+  description: Simple binary heap implementation
+  license:     MIT
+  website:     https://github.com/bluenote10/nim-heap
+ 
+stringinterpolation:
+  url:         https://github.com/bluenote10/nim-stringinterpolation (git)
+  tags:        string formatting, string interpolation
+  description: String interpolation with printf syntax
+  license:     MIT
+  website:     https://github.com/bluenote10/nim-stringinterpolation
+ 
+libovr:
+  url:         https://github.com/bluenote10/nim-ovr (git)
+  tags:        Oculus Rift, virtual reality
+  description: Nim bindings for libOVR (Oculus Rift)
+  license:     MIT
+  website:     https://github.com/bluenote10/nim-ovr
+ 
+delaunay:
+  url:         https://github.com/Nycto/DelaunayNim (git)
+  tags:        delaunay, library, algorithms, graph
+  description: 2D Delaunay triangulations
+  license:     MIT
+  website:     https://github.com/Nycto/DelaunayNim
+ 
+linenoise:
+  url:         https://github.com/fallingduck/linenoise-nim (git)
+  tags:        linenoise, library, wrapper, commandline
+  description: Wrapper for linenoise, a free, self-contained alternative to GNU readline.
+  license:     BSD
+  website:     https://github.com/fallingduck/linenoise-nim
+ 
+struct:
+  url:         https://github.com/rgv151/struct.nim (git)
+  tags:        struct, library, python, pack, unpack
+  description: Python-like 'struct' for Nim
+  license:     MIT
+  website:     https://github.com/rgv151/struct.nim
+ 
+uri2:
+  url:         https://github.com/achesak/nim-uri2 (git)
+  tags:        uri, url, library
+  description: Nim module for better URI handling
+  license:     MIT
+  website:     https://github.com/achesak/nim-uri2
+ 
+hmac:
+  url:         https://github.com/rgv151/hmac.nim (git)
+  tags:        hmac, authentication, hash, sha1, md5
+  description: HMAC-SHA1 and HMAC-MD5 hashing in Nim
+  license:     MIT
+  website:     https://github.com/rgv151/hmac.nim
+ 
+mongrel2:
+  url:         https://mahlon@bitbucket.org/mahlon/nim-mongrel2 (hg)
+  tags:        mongrel2, library, www
+  description: Handler framework for the Mongrel2 web server.
+  license:     MIT
+  website:     http://bitbucket.org/mahlon/nim-mongrel2
+ 
+shimsham:
+  url:         https://github.com/apense/shimsham (git)
+  tags:        crypto, hash, hashing, digest
+  description: Hashing/Digest collection in pure Nim
+  license:     MIT
+  website:     https://github.com/apense/shimsham
+ 
+base32:
+  url:         https://github.com/rgv151/base32.nim (git)
+  tags:        base32, encode, decode
+  description: Base32 library for Nim
+  license:     MIT
+  website:     https://github.com/rgv151/base32.nim
+ 
+otp:
+  url:         https://github.com/rgv151/otp.nim (git)
+  tags:        otp, hotp, totp, time, password, one, google, authenticator
+  description: One Time Password library for Nim
+  license:     MIT
+  website:     https://github.com/rgv151/otp.nim
+ 
+q:
+  url:         https://github.com/rgv151/q.nim (git)
+  tags:        css, selector, query, match, find, html, xml, jquery
+  description: Simple package for query HTML/XML elements using a CSS3 or jQuery-like selector syntax
+  license:     MIT
+  website:     https://github.com/rgv151/q.nim
+ 
+bignum:
+  url:         https://github.com/FedeOmoto/bignum (git)
+  tags:        bignum, gmp, wrapper
+  description: Wrapper around the GMP bindings for the Nim language.
+  license:     MIT
+  website:     https://github.com/FedeOmoto/bignum
+ 
+rbtree:
+  url:         https://github.com/Nycto/RBTreeNim (git)
+  tags:        tree, binary search tree, rbtree, red black tree
+  description: Red/Black Trees
+  license:     MIT
+  website:     https://github.com/Nycto/RBTreeNim
+ 
+anybar:
+  url:         https://github.com/rgv151/anybar.nim (git)
+  tags:        anybar, menubar, status, indicator
+  description: Control AnyBar instances with Nim
+  license:     MIT
+  website:     https://github.com/rgv151/anybar.nim
+ 
+astar:
+  url:         https://github.com/Nycto/AStarNim (git)
+  tags:        astar, A*, pathfinding, algorithm
+  description: A* Pathfinding
+  license:     MIT
+  website:     https://github.com/Nycto/AStarNim
+ 
+lazy:
+  url:         https://github.com/petermora/nimLazy/ (git)
+  tags:        library, iterator, lazy list
+  description: Iterator library for Nim
+  license:     MIT
+  website:     https://github.com/petermora/nimLazy
+ 
+asyncpythonfile:
+  url:         https://github.com/fallingduck/asyncpythonfile-nim (git)
+  tags:        async, asynchronous, library, python, file, files
+  description: High level, asynchronous file API mimicking Python's file interface.
+  license:     ISC
+  website:     https://github.com/fallingduck/asyncpythonfile-nim
+ 
+nimfuzz:
+  url:         https://github.com/apense/nimfuzz (git)
+  tags:        fuzzing, testing, hacking, security
+  description: Simple and compact fuzzing
+  license:     Apache License 2.0
+  website:     https://apense.github.io/nimfuzz
+ 
+linalg:
+  url:         https://github.com/unicredit/linear-algebra (git)
+  tags:        vector, matrix, linear algebra, BLAS, LAPACK
+  description: Linear algebra for Nim
+  license:     Apache License 2.0
+  website:     https://github.com/unicredit/linear-algebra
+ 
+sequester:
+  url:         https://github.com/fallingduck/sequester (git)
+  tags:        library, seq, sequence, strings, iterators, php
+  description: Library for converting sequences to strings. Also has PHP-inspired explode and implode procs.
+  license:     ISC
+  website:     https://github.com/fallingduck/sequester
+ 
+options:
+  url:         https://github.com/fallingduck/options-nim (git)
+  tags:        library, option, optionals, maybe
+  description: Temporary package to fix broken code in 0.11.2 stable.
+  license:     MIT
+  website:     https://github.com/fallingduck/options-nim
+ 
+oldwinapi:
+  url:         https://github.com/nim-lang/oldwinapi (git)
+  tags:        library, windows, api
+  description: Old Win API library for Nim
+  license:     LGPL with static linking exception
+  website:     https://github.com/nim-lang/oldwinapi
+ 
+nimx:
+  url:         https://github.com/yglukhov/nimx (git)
+  tags:        gui, ui, library
+  description: Cross-platform GUI framework
+  license:     BSD
+  website:     https://github.com/yglukhov/nimx
+ 
+memo:
+  url:         https://github.com/andreaferretti/memo (git)
+  tags:        memo, memoization, memoize, cache
+  description: Memoize Nim functions
+  license:     Apache License 2.0
+  website:     https://github.com/andreaferretti/memo
+ 
+base62:
+  url:         https://github.com/singularperturbation/base62-encode (git)
+  tags:        base62, encode, decode
+  description: Arbitrary base encoding-decoding functions, defaulting to Base-62.
+  license:     MIT
+  website:     https://github.com/singularperturbation/base62-encode
+ 
+telebot:
+  url:         https://github.com/rgv151/telebot.nim (git)
+  tags:        telebot, telegram, bot, api, client, async
+  description: Async Telegram Bot API Client
+  license:     MIT
+  website:     https://github.com/rgv151/telebot.nim
+ 
+tempfile:
+  url:         https://github.com/rgv151/tempfile.nim (git)
+  tags:        temp, mktemp, make, mk, mkstemp, mkdtemp
+  description: Temporary files and directories
+  license:     MIT
+  website:     https://github.com/rgv151/tempfile.nim
+ 
+AstroNimy:
+  url:         https://github.com/super-massive-black-holes/AstroNimy (git)
+  tags:        science, astronomy, library
+  description: Astronomical library for Nim
+  license:     MIT
+  website:     https://github.com/super-massive-black-holes/AstroNimy
+ 
+patty:
+  url:         https://github.com/andreaferretti/patty (git)
+  tags:        pattern, adt, variant, pattern matching, algebraic data type
+  description: Algebraic data types and pattern matching
+  license:     Apache License 2.0
+  website:     https://github.com/andreaferretti/patty
+ 
+einheit:
+  url:         https://github.com/jyapayne/einheit (git)
+  tags:        unit, tests, unittest, unit tests, unit test macro
+  description: Pretty looking, full featured, Python-inspired unit test library.
+  license:     MIT
+  website:     https://github.com/jyapayne/einheit
+ 
+plists:
+  url:         https://github.com/yglukhov/plists (git)
+  tags:        plist, property, list
+  description: Generate and parse Mac OS X .plist files in Nim.
+  license:     MIT
+  website:     https://github.com/yglukhov/plists
+ 
+ncurses:
+  url:         https://github.com/rnowley/nim-ncurses/ (git)
+  tags:        library, terminal, graphics, wrapper
+  description: A wrapper for NCurses
+  license:     MIT
+  website:     https://github.com/rnowley/nim-ncurses
+ 
+nanovg.nim:
+  url:         https://github.com/fowlmouth/nanovg.nim (git)
+  tags:        wrapper, GUI, vector graphics, opengl
+  description: A wrapper for NanoVG vector graphics rendering
+  license:     MIT
+  website:     https://github.com/fowlmouth/nanovg.nim
+ 
+pwd:
+  url:         https://github.com/achesak/nim-pwd (git)
+  tags:        library, unix, pwd, password
+  description: Nim port of Python's pwd module for working with the UNIX password file
+  license:     MIT
+  website:     https://github.com/achesak/nim-pwd
+ 
+spwd:
+  url:         https://github.com/achesak/nim-spwd (git)
+  tags:        library, unix, spwd, password, shadow
+  description: Nim port of Python's spwd module for working with the UNIX shadow password file
+  license:     MIT
+  website:     https://github.com/achesak/nim-spwd
+ 
+grp:
+  url:         https://github.com/achesak/nim-grp (git)
+  tags:        library, unix, grp, group
+  description: Nim port of Python's grp module for working with the UNIX group database file
+  license:     MIT
+  website:     https://github.com/achesak/nim-grp
+ 
+stopwatch:
+  url:         https://github.com/rbmz/stopwatch (git)
+  tags:        timer, benchmarking
+  description: A simple benchmarking/timer library based on nim's lib/system/timers.nim
+  license:     MIT
+  website:     https://github.com/rbmz/stopwatch
+ 
+nimFinLib:
+  url:         https://github.com/qqtop/NimFinLib (git)
+  tags:        financial
+  description: Financial Library for Nim
+  license:     MIT
+  website:     https://github.com/qqtop/NimFinLib
+ 
+libssh2:
+  url:         https://github.com/rgv151/libssh2.nim (git)
+  tags:        lib, ssh, ssh2, openssh, client, sftp, scp
+  description: Nim wrapper for libssh2
+  license:     MIT
+  website:     https://github.com/rgv151/libssh2.nim
+ 
+rethinkdb:
+  url:         https://github.com/rgv151/rethinkdb.nim (git)
+  tags:        rethinkdb, driver, client, json
+  description: RethinkDB driver for Nim
+  license:     MIT
+  website:     https://github.com/rgv151/rethinkdb.nim
+ 
+dbus:
+  url:         https://github.com/zielmicha/nim-dbus (git)
+  tags:        dbus
+  description: dbus bindings for Nim
+  license:     MIT
+  website:     https://github.com/zielmicha/nim-dbus
+ 
+lmdb:
+  url:         https://github.com/fowlmouth/lmdb.nim (git)
+  tags:        wrapper, lmdb
+  description: A wrapper for LMDB the Lightning Memory-Mapped Database
+  license:     MIT
+  website:     https://github.com/fowlmouth/lmdb.nim
+ 
+zip:
+  url:         https://github.com/nim-lang/zip (git)
+  tags:        wrapper, zip
+  description: A wrapper for the zip library
+  license:     MIT
+  website:     https://github.com/nim-lang/zip
+ 
+csvtools:
+  url:         https://github.com/unicredit/csvtools (git)
+  tags:        CSV, comma separated values, TSV
+  description: Manage CSV files
+  license:     Apache License 2.0
+  website:     https://github.com/unicredit/csvtools
+ 
+httpform:
+  url:         https://github.com/tulayang/httpform (git)
+  tags:        request parser, upload, html5 file
+  description: Http request form parser
+  license:     MIT
+  website:     https://github.com/tulayang/httpform
+ 
+vardene:
+  url:         https://github.com/Xe/vardene (git)
+  tags:        command line, tool, compiler
+  description: A simple tool to manage multiple installs of Nim.
+  license:     MIT
+  website:     https://christine.website/projects/Vardene
+ 
+quadtree:
+  url:         https://github.com/Nycto/QuadtreeNim (git)
+  tags:        quadtree, algorithm
+  description: A Quadtree implementation
+  license:     MIT
+  website:     https://github.com/Nycto/QuadtreeNim
+ 
+expat:
+  url:         https://github.com/nim-lang/expat (git)
+  tags:        expat, xml, parsing
+  description: Expat wrapper for Nim
+  license:     MIT
+  website:     https://github.com/nim-lang/expat
+ 
+sphinx:
+  url:         https://github.com/Araq/sphinx (git)
+  tags:        sphinx, wrapper, search, engine
+  description: Sphinx wrapper for Nim
+  license:     LGPL
+  website:     https://github.com/Araq/sphinx
+ 
+sdl1:
+  url:         https://github.com/nim-lang/sdl1 (git)
+  tags:        graphics, library, multi-media, input, sound, joystick
+  description: SDL 1.2 wrapper for Nim.
+  license:     LGPL
+  website:     https://github.com/nim-lang/sdl1
+ 
+graphics:
+  url:         https://github.com/nim-lang/graphics (git)
+  tags:        library, SDL
+  description: Graphics module for Nim.
+  license:     MIT
+  website:     https://github.com/nim-lang/graphics
+ 
+libffi:
+  url:         https://github.com/Araq/libffi (git)
+  tags:        ffi, library, C, calling, convention
+  description: libffi wrapper for Nim.
+  license:     MIT
+  website:     https://github.com/Araq/libffi
+ 
+libcurl:
+  url:         https://github.com/Araq/libcurl (git)
+  tags:        curl, web, http, download
+  description: Nim wrapper for libcurl.
+  license:     MIT
+  website:     https://github.com/Araq/libcurl
+ 
+perlin:
+  url:         https://github.com/Nycto/PerlinNim (git)
+  tags:        perlin, simplex, noise
+  description: Perlin noise and Simplex noise generation
+  license:     MIT
+  website:     https://github.com/Nycto/PerlinNim
+ 
+pfring:
+  url:         https://github.com/rgv151/pfring.nim (git)
+  tags:        pf_ring, packet, sniff, pcap, pfring, network, capture, socket
+  description: PF_RING wrapper for Nim
+  license:     MIT
+  website:     https://github.com/rgv151/pfring.nim
+ 
+xxtea:
+  url:         https://github.com/xxtea/xxtea-nim (git)
+  tags:        xxtea, encrypt, decrypt, crypto
+  description: XXTEA encryption algorithm library written in pure Nim.
+  license:     MIT
+  website:     https://github.com/xxtea/xxtea-nim
+ 
+xxhash:
+  url:         https://github.com/rgv151/xxhash.nim (git)
+  tags:        fast, hash, algorithm
+  description: xxhash wrapper for Nim
+  license:     MIT
+  website:     https://github.com/rgv151/xxhash.nim
+ 
+libipset:
+  url:         https://github.com/rgv151/libipset.nim (git)
+  tags:        ipset, firewall, netfilter, mac, ip, network, collection, rule, set
+  description: libipset wrapper for Nim
+  license:     MIT
+  website:     https://github.com/rgv151/libipset.nim
+ 
+pop3:
+  url:         https://github.com/FedericoCeratto/nim-pop3 (git)
+  tags:        network, pop3, email
+  description: POP3 client library
+  license:     LGPLv3
+  website:     https://github.com/FedericoCeratto/nim-pop3
+ 
+nimrpc:
+  url:         https://github.com/rogercloud/nim-rpc (git)
+  tags:        msgpack, library, rpc, nimrpc
+  description: RPC implementation for Nim based on msgpack4nim
+  license:     MIT
+  website:     https://github.com/rogercloud/nim-rpc
+ 
+asyncevents:
+  url:         https://github.com/tulayang/asyncevents (git)
+  tags:        event, future, asyncdispath
+  description: Asynchronous event loop for progaming with MVC
+  license:     MIT
+  website:     https://github.com/tulayang/asyncevents
+ 
+nimSHA2:
+  url:         https://github.com/jangko/nimSHA2 (git)
+  tags:        hash, crypto, library, sha2
+  description: Secure Hash Algorithm - 2, [224, 256, 384, and 512 bits]
+  license:     MIT
+  website:     https://github.com/jangko/nimSHA2
+ 
+nimAES:
+  url:         https://github.com/jangko/nimAES (git)
+  tags:        crypto, library, aes, encryption, rijndael
+  description: Advanced Encryption Standard, Rijndael Algorithm
+  license:     MIT
+  website:     https://github.com/jangko/nimAES
+ 
+nimeverything:
+  url:         https://github.com/xland/nimeverything/ (git)
+  tags:        everything, voidtools, Everything Search Engine
+  description: everything  search engine wrapper
+  license:     MIT
+  website:     https://github.com/xland/nimeverything
+ 
+vidhdr:
+  url:         https://github.com/achesak/nim-vidhdr (git)
+  tags:        video, formats, file
+  description: Library for detecting the format of an video file
+  license:     MIT
+  website:     https://github.com/achesak/nim-vidhdr
+ 
+gitapi:
+  url:         https://github.com/achesak/nim-gitapi (git)
+  tags:        git, version control, library
+  description: Nim wrapper around the git version control software
+  license:     MIT
+  website:     https://github.com/achesak/nim-gitapi
+ 
+ptrace:
+  url:         https://github.com/rgv151/ptrace.nim (git)
+  tags:        ptrace, trace, process, syscal, system, call
+  description: ptrace wrapper for Nim
+  license:     MIT
+  website:     https://github.com/rgv151/ptrace.nim
+ 
+ndbex:
+  url:         https://github.com/Senketsu/nim-db-ex (git)
+  tags:        extension, database, Nim, convenience, db, mysql, postgres, sqlite
+  description: extension modules for Nim's 'db_*' modules
+  license:     MIT
+  website:     https://github.com/Senketsu/nim-db-ex
+ 
+spry:
+  url:         https://github.com/gokr/spry (git)
+  tags:        language, library, scripting
+  description: A Smalltalk and Rebol inspired language implemented as an AST interpreter
+  license:     MIT
+  website:     https://github.com/gokr/spry
+ 
+nimBMP:
+  url:         https://github.com/jangko/nimBMP (git)
+  tags:        graphics, library, BMP
+  description: BMP encoder and decoder
+  license:     MIT
+  website:     https://github.com/jangko/nimBMP
+ 
+nimPNG:
+  url:         https://github.com/jangko/nimPNG (git)
+  tags:        graphics, library, PNG
+  description: PNG(Portable Network Graphics) encoder and decoder
+  license:     MIT
+  website:     https://github.com/jangko/nimPNG
+ 
+litestore:
+  url:         https://github.com/h3rald/litestore (git)
+  tags:        database, rest, sqlite
+  description: A lightweight, self-contained, RESTful, searchable, multi-format NoSQL document store
+  license:     MIT
+  website:     https://h3rald.com/litestore
+ 
+parseFixed:
+  url:         https://github.com/jlp765/parsefixed (git)
+  tags:        parse, fixed, width, parser, text
+  description: Parse fixed-width fields within lines of text (complementary to parsecsv)
+  license:     MIT
+  website:     https://github.com/jlp765/parsefixed
+ 
+playlists:
+  url:         https://github.com/achesak/nim-playlists (git)
+  tags:        library, playlists, M3U, PLS, XSPF
+  description: Nim library for parsing PLS, M3U, and XSPF playlist files
+  license:     MIT
+  website:     https://github.com/achesak/nim-playlists
+ 
+seqmath:
+  url:         https://github.com/jlp765/seqmath (git)
+  tags:        math, seq, sequence, array, nested, algebra, statistics, lifted, financial
+  description: Nim math library for sequences and nested sequences (extends math library)
+  license:     MIT
+  website:     https://github.com/jlp765/seqmath
+ 
+daemonize:
+  url:         https://github.com/rgv151/daemonize.nim (git)
+  tags:        daemonize, background, fork, unix, linux, process
+  description: This library makes your code run as a daemon process on Unix-like systems
+  license:     MIT
+  website:     https://github.com/rgv151/daemonize.nim
+ 
+tnim:
+  url:         https://github.com/jlp765/tnim (git)
+  tags:        REPL, sandbox, interactive, compiler, code, language, Nim
+  description: tnim is a Nim REPL - an interactive sandbox for testing Nim code
+  license:     MIT
+  website:     https://github.com/jlp765/tnim
+ 
+ris:
+  url:         https://github.com/achesak/nim-ris (git)
+  tags:        RIS, citation, library
+  description: Module for working with RIS citation files
+  license:     MIT
+  website:     https://github.com/achesak/nim-ris
+ 
+geoip:
+  url:         https://github.com/achesak/nim-geoip (git)
+  tags:        IP, address, location
+  description: Retrieve info about a location from an IP address
+  license:     MIT
+  website:     https://github.com/achesak/nim-geoip
+ 
+nimroutine:
+  url:         https://github.com/rogercloud/nim-routine (git)
+  tags:        goroutine, routine, lightweight, thread
+  description: A go routine like nim implementation
+  license:     MIT
+  website:     https://github.com/rogercloud/nim-routine
+ 
+coverage:
+  url:         https://github.com/yglukhov/coverage (git)
+  tags:        code, coverage
+  description: Code coverage library
+  license:     MIT
+  website:     https://github.com/yglukhov/coverage
+ 
+golib:
+  url:         https://github.com/stefantalpalaru/golib-nim (git)
+  tags:        library, wrapper
+  description: Bindings for golib - a library that (ab)uses gccgo to bring Go's channels and goroutines to the rest of the world
+  license:     BSD
+  website:     https://github.com/stefantalpalaru/golib-nim
+ 
+libnotify:
+  url:         https://github.com/FedericoCeratto/nim-libnotify.git (git)
+  tags:        library, wrapper, desktop
+  description: Minimalistic libnotify wrapper for desktop notifications
+  license:     LGPLv3
+  website:     https://github.com/FedericoCeratto/nim-libnotify
+ 
+nimcat:
+  url:         https://github.com/shakna-israel/nimcat (git)
+  tags:        cat, cli
+  description: An implementation of cat in Nim
+  license:     MIT
+  website:     https://github.com/shakna-israel/nimcat
+ 
+sections:
+  url:         https://github.com/c0ffeeartc/nim-sections (git)
+  tags:        BDD, test
+  description: `Section` macro with BDD aliases for testing
+  license:     MIT
+  website:     https://github.com/c0ffeeartc/nim-sections
+ 
+nimfp:
+  url:         https://github.com/vegansk/nimfp (git)
+  tags:        functional, library
+  description: Nim functional programming library
+  license:     MIT
+  website:     https://github.com/vegansk/nimfp
+ 
+nhsl:
+  url:         https://github.com/twist-vector/nhsl.git (git)
+  tags:        library, serialization, pure
+  description: Nim Hessian Serialization Library encodes/decodes data into the Hessian binary protocol
+  license:     LGPL
+  website:     https://github.com/twist-vector/nhsl
+ 
+nimstopwatch:
+  url:         https://github.com/twist-vector/nim-stopwatch.git (git)
+  tags:        app, timer
+  description: A Nim-based, non-graphical application designed to measure the amount of time elapsed from its activation to deactivation, includes total elapsed time, lap, and split times.
+  license:     LGPL
+  website:     https://github.com/twist-vector/nim-stopwatch
+ 
+playground:
+  url:         https://github.com/theduke/nim-playground (git)
+  tags:        webapp, execution, nim, code, sandbox
+  description: Web-based playground for testing Nim code.
+  license:     MIT
+  website:     https://github.com/theduke/nim-playground
+ 
+nimsl:
+  url:         https://github.com/yglukhov/nimsl (git)
+  tags:        shader, opengl, glsl
+  description: Shaders in Nim.
+  license:     MIT
+  website:     https://github.com/yglukhov/nimsl
+ 
+omnilog:
+  url:         https://github.com/nim-appkit/omnilog (git)
+  tags:        library, logging, logs
+  description: Advanced logging library for Nim with structured logging, formatters, filters and writers.
+  license:     MIT
+  website:     https://github.com/nim-appkit/omnilog
+ 
+values:
+  url:         https://github.com/nim-appkit/values (git)
+  tags:        library, values, datastructures
+  description: Library for working with arbitrary values + a map data structure.
+  license:     MIT
+  website:     https://github.com/nim-appkit/values
+ 
+geohash:
+  url:         https://github.com/twist-vector/nim-geohash.git (git)
+  tags:        library, geocoding, pure
+  description: Nim implementation of the geohash latitude/longitude geocode system
+  license:     Apache License 2.0
+  website:     https://github.com/twist-vector/nim-geohash
+ 
+bped:
+  url:         https://github.com/twist-vector/nim-bped.git (git)
+  tags:        library, serialization, pure
+  description: Nim implementation of the Bittorrent ascii serialization protocol
+  license:     Apache License 2.0
+  website:     https://github.com/twist-vector/nim-bped
+ 
+ctrulib:
+  url:         https://github.com/skyforce77/ctrulib-nim.git (git)
+  tags:        library, nintendo, 3ds
+  description: ctrulib wrapper
+  license:     GPLv2
+  website:     https://github.com/skyforce77/ctrulib-nim
+ 
+nimrdkafka:
+  url:         https://github.com/dfdeshom/nimrdkafka.git (git)
+  tags:        library, wrapper, kafka
+  description: Nim wrapper for librdkafka
+  license:     Apache License 2.0
+  website:     https://github.com/dfdeshom/nimrdkafka
+ 
+utils:
+  url:         https://github.com/nim-appkit/utils (git)
+  tags:        library, utilities
+  description: Collection of string, parsing, pointer, ... utilities.
+  license:     MIT
+  website:     https://github.com/nim-appkit/utils
+ 
+pymod:
+  url:         https://github.com/jboy/nim-pymod (git)
+  tags:        wrapper, python, module, numpy, array, matrix, ndarray, pyobject, pyarrayobject, iterator, iterators, docstring
+  description: Auto-generate a Python module that wraps a Nim module.
+  license:     MIT
+  website:     https://github.com/jboy/nim-pymod
+ 
+db:
+  url:         https://github.com/jlp765/db (git)
+  tags:        wrapper, database, module, sqlite, mysql, postgres, db_sqlite, db_mysql, db_postgres
+  description: Unified db access module, providing a single library module to access the db_sqlite, db_mysql and db_postgres modules.
+  license:     MIT
+  website:     https://github.com/jlp765/db
+ 
+nimsnappy:
+  url:         https://github.com/dfdeshom/nimsnappy.git (git)
+  tags:        wrapper, compression
+  description: Nim wrapper for the snappy compression library. there is also a high-level API for easy use
+  license:     BSD
+  website:     https://github.com/dfdeshom/nimsnappy
+ 
+nimLUA:
+  url:         https://github.com/jangko/nimLUA (git)
+  tags:        lua, library, bind, glue, macros
+  description: glue code generator to bind Nim and Lua together using Nim's powerful macro
+  license:     MIT
+  website:     https://github.com/jangko/nimLUA
+ 
+sound:
+  url:         https://github.com/yglukhov/sound.git (git)
+  tags:        sound, ogg
+  description: Cross-platform sound mixer library
+  license:     MIT
+  website:     https://github.com/yglukhov/sound
+ 
+nimi3status:
+  url:         https://github.com/FedericoCeratto/nimi3status (git)
+  tags:        i3, i3status
+  description: Lightweight i3 status bar.
+  license:     GPLv3
+  website:     https://github.com/FedericoCeratto/nimi3status
+ 
+native_dialogs:
+  url:         https://github.com/SSPkrolik/nim-native-dialogs.git (git)
+  tags:        ui, gui, cross-platform, library
+  description: Implements framework-agnostic native operating system dialogs calls
+  license:     MIT
+  website:     https://github.com/SSPkrolik/nim-native-dialogs
+ 
+variant:
+  url:         https://github.com/yglukhov/variant.git (git)
+  tags:        variant
+  description: Variant type and type matching
+  license:     MIT
+  website:     https://github.com/yglukhov/variant
+ 
+pythonmath:
+  url:         https://github.com/achesak/nim-pythonmath (git)
+  tags:        library, python, math
+  description: Module to provide an interface as similar as possible to Python's math libary
+  license:     MIT
+  website:     https://github.com/achesak/nim-pythonmath
+ 
+nimlz4:
+  url:         https://github.com/dfdeshom/nimlz4.git (git)
+  tags:        wrapper, compression, lzo, lz4
+  description: Nim wrapper for the LZ4 library. There is also a high-level API for easy use
+  license:     BSD
+  website:     https://github.com/dfdeshom/nimlz4
+ 
+pythonize:
+  url:         https://github.com/marcoapintoo/nim-pythonize.git (git)
+  tags:        python, wrapper
+  description: A higher-level wrapper for the Python Programing Language
+  license:     MIT
+  website:     https://github.com/marcoapintoo/nim-pythonize
+ 
+cligen:
+  url:         https://github.com/c-blake/cligen.git (git)
+  tags:        library, commandline, arguments, switches, parsing, options
+  description: Infer & generate command-line interace/option/argument parsers
+  license:     MIT
+  website:     https://github.com/c-blake/cligen
+ 
+fnmatch:
+  url:         https://github.com/achesak/nim-fnmatch (git)
+  tags:        library, unix, files, matching
+  description: Nim module for filename matching with UNIX shell patterns
+  license:     MIT
+  website:     https://github.com/achesak/nim-fnmatch
+ 
+shorturl:
+  url:         https://github.com/achesak/nim-shorturl (git)
+  tags:        library, url, uid
+  description: Nim module for generating URL identifiers for Tiny URL and bit.ly-like URLs
+  license:     MIT
+  website:     https://github.com/achesak/nim-shorturl
+ 
+teafiles:
+  url:         git@github.com:unicredit/nim-teafiles.git (git)
+  tags:        teafiles, mmap, timeseries
+  description: TeaFiles provide fast read/write access to time series data
+  license:     Apache2
+  website:     https://github.com/unicredit/nim-teafiles
+ 
+emmy:
+  url:         git@github.com:unicredit/emmy.git (git)
+  tags:        algebra, polynomials, primes, ring, quotients
+  description: Algebraic structures and related operations for Nim
+  license:     Apache2
+  website:     https://github.com/unicredit/emmy
+ 
+impulse_engine:
+  url:         https://github.com/matkuki/Nim-Impulse-Engine (git)
+  tags:        physics, engine, 2D
+  description: Nim port of a simple 2D physics engine
+  license:     zlib
+  website:     https://github.com/matkuki/Nim-Impulse-Engine
+ 
+notifications:
+  url:         https://github.com/dom96/notifications (git)
+  tags:        notifications, alerts, gui, toasts, macosx, cocoa
+  description: Library for displaying notifications on the desktop
+  license:     MIT
+  website:     https://github.com/dom96/notifications
+ 
+reactor:
+  url:         https://github.com/zielmicha/reactor.nim (git)
+  tags:        async, libuv, http, tcp
+  description: Asynchronous networking engine for Nim
+  license:     MIT
+  website:     https://networkos.net/nim/reactor.nim
+ 
+collections:
+  url:         https://github.com/zielmicha/collections.nim (git)
+  tags:        iterator, functional
+  description: Various collections and utilities
+  license:     MIT
+  website:     https://github.com/zielmicha/collections.nim
+ 
+capnp:
+  url:         https://github.com/zielmicha/capnp.nim (git)
+  tags:        capnp, serialization, protocol, rpc
+  description: Cap'n Proto implementation for Nim
+  license:     MIT
+  website:     https://github.com/zielmicha/capnp.nim
+ 
+biscuits:
+  url:         https://github.com/achesak/nim-biscuits (git)
+  tags:        cookie, persistence
+  description: better cookie handling
+  license:     MIT
+  website:     https://github.com/achesak/nim-biscuits
+ 
+pari:
+  url:         https://github.com/lompik/pari.nim (git)
+  tags:        number theory, computer algebra system
+  description: Pari/GP C library wrapper
+  license:     MIT
+  website:     https://github.com/lompik/pari.nim
+ 
+spacenav:
+  url:         https://github.com/nimious/spacenav.git (git)
+  tags:        binding, 3dx, 3dconnexion, libspnav, spacenav, spacemouse, spacepilot, spacenavigator
+  description: Bindings for libspnav, the free 3Dconnexion device driver
+  license:     MIT
+  website:     https://github.com/nimious/spacenav
+ 
+isense:
+  url:         https://github.com/nimious/isense.git (git)
+  tags:        binding, isense, intersense, inertiacube, intertrax, microtrax, thales, tracking, sensor
+  description: Bindings for the InterSense SDK
+  license:     MIT
+  website:     https://github.com/nimious/isense
+ 
+libusb:
+  url:         https://github.com/nimious/libusb.git (git)
+  tags:        binding, usb, libusb
+  description: Bindings for libusb, the cross-platform user library to access USB devices.
+  license:     MIT
+  website:     https://github.com/nimious/libusb
+ 
+myo:
+  url:         https://github.com/nimious/myo.git (git)
+  tags:        binding, myo, thalmic, armband, gesture
+  description: Bindings for the Thalmic Labs Myo gesture control armband SDK.
+  license:     MIT
+  website:     https://github.com/nimious/myo
+ 
+oculus:
+  url:         https://github.com/nimious/oculus.git (git)
+  tags:        binding, oculus, rift, vr, libovr, ovr, dk1, dk2, gearvr
+  description: Bindings for the Oculus VR SDK.
+  license:     MIT
+  website:     https://github.com/nimious/oculus
+ 
+serialport:
+  url:         https://github.com/nimious/serialport.git (git)
+  tags:        binding, libserialport, serial, communication
+  description: Bindings for libserialport, the cross-platform serial communication library.
+  license:     MIT
+  website:     https://github.com/nimious/serialport
+ 
+gles:
+  url:         https://github.com/nimious/gles.git (git)
+  tags:        binding, khronos, gles, opengl es
+  description: Bindings for OpenGL ES, the embedded 3D graphics library.
+  license:     MIT
+  website:     https://github.com/nimious/gles
+ 
+egl:
+  url:         https://github.com/nimious/egl.git (git)
+  tags:        binding, khronos, egl, opengl, opengl es, openvg
+  description: Bindings for EGL, the native platform interface for rendering APIs.
+  license:     MIT
+  website:     https://github.com/nimious/egl
+ 
+sixense:
+  url:         https://github.com/nimious/sixense.git (git)
+  tags:        binding, sixense, razer hydra, stem system, vr
+  description: Bindings for the Sixense Core API.
+  license:     MIT
+  website:     https://github.com/nimious/sixense
+ 
+listsv:
+  url:         https://github.com/srwiley/listsv.git (git)
+  tags:        singly linked list, doubly linked list
+  description: Basic operations on singly and doubly linked lists.
+  license:     MIT
+  website:     https://github.com/srwiley/listsv
+ 
+kissfft:
+  url:         https://github.com/m13253/nim-kissfft (git)
+  tags:        fft, dsp, signal
+  description: Nim binding for KissFFT Fast Fourier Transform library
+  license:     BSD
+  website:     https://github.com/m13253/nim-kissfft
+ 
+nimbench:
+  url:         https://github.com/ivankoster/nimbench.git (git)
+  tags:        benchmark, micro benchmark, timer
+  description: Micro benchmarking tool to measure speed of code, with the goal of optimizing it.
+  license:     Apache License, Version 2.0
+  website:     https://github.com/ivankoster/nimbench
+ 
+nest:
+  url:         https://github.com/kedean/nest.git (git)
+  tags:        library, api, router, web
+  description: RESTful URI router
+  license:     MIT
+  website:     https://github.com/kedean/nest
+ 
+nimbluez:
+  url:         https://github.com/Electric-Blue/NimBluez.git (git)
+  tags:        bluetooth, library, wrapper, sockets
+  description: Nim modules for access to system Bluetooth resources.
+  license:     BSD
+  website:     https://github.com/Electric-Blue/NimBluez
+ 
+yaml:
+  url:         https://github.com/flyx/NimYAML (git)
+  tags:        serialization, parsing, library, yaml
+  description: YAML 1.2 implementation for Nim
+  license:     MIT
+  website:     http://flyx.github.io/NimYAML/
+ 
+nimyaml:
+  url:         https://github.com/flyx/NimYAML (git)
+  tags:        serialization, parsing, library, yaml
+  description: YAML 1.2 implementation for Nim
+  license:     MIT
+  website:     http://flyx.github.io/NimYAML/
+ 
+jsmn:
+  url:         https://github.com/OpenSystemsLab/jsmn.nim (git)
+  tags:        json, token, tokenizer, parser, jsmn
+  description: Jsmn - a world fastest JSON parser - in pure Nim
+  license:     MIT
+  website:     https://github.com/OpenSystemsLab/jsmn.nim
+ 
+mangle:
+  url:         https://github.com/baabelfish/mangle (git)
+  tags:        functional, iterators, lazy, library
+  description: Yet another iterator library
+  license:     MIT
+  website:     https://github.com/baabelfish/mangle
+ 
+nimshell:
+  url:         https://github.com/vegansk/nimshell (git)
+  tags:        shell, utility
+  description: Library for shell scripting in nim
+  license:     MIT
+  website:     https://github.com/vegansk/nimshell
+ 
+rosencrantz:
+  url:         https://github.com/andreaferretti/rosencrantz (git)
+  tags:        web, server, DSL, combinators
+  description: A web DSL for Nim
+  license:     MIT
+  website:     https://github.com/andreaferretti/rosencrantz
+ 
+sam:
+  url:         https://github.com/OpenSystemsLab/sam.nim (git)
+  tags:        json, binding, map, dump, load
+  description: Fast and just works JSON-Binding for Nim
+  license:     MIT
+  website:     https://github.com/OpenSystemsLab/sam.nim
+ 
+twitter:
+  url:         https://github.com/kubo39/twitter (git)
+  tags:        library, wrapper, twitter
+  description: Low-level twitter API wrapper library for Nim.
+  license:     MIT
+  website:     https://github.com/kubo39/twitter
+ 
+stomp:
+  url:         https://bitbucket.org/mahlon/nim-stomp (hg)
+  tags:        stomp, library, messaging, events
+  description: A pure-nim implementation of the STOMP protocol for machine messaging.
+  license:     MIT
+  website:     http://bitbucket.org/mahlon/nim-stomp
+ 
+srt:
+  url:         https://github.com/achesak/nim-srt (git)
+  tags:        srt, subrip, subtitle
+  description: Nim module for parsing SRT (SubRip) subtitle files
+  license:     MIT
+  website:     https://github.com/achesak/nim-srt
+ 
+subviewer:
+  url:         https://github.com/achesak/nim-subviewer (git)
+  tags:        subviewer, subtitle
+  description: Nim module for parsing SubViewer subtitle files
+  license:     MIT
+  website:     https://github.com/achesak/nim-subviewer
+ 
+Kinto:
+  url:         https://github.com/OpenSystemsLab/kinto.nim (git)
+  tags:        mozilla, kinto, json, storage, server, client
+  description: Kinto Client for Nim
+  license:     MIT
+  website:     https://github.com/OpenSystemsLab/kinto.nim
+ 
+xmltools:
+  url:         https://github.com/vegansk/xmltools (git)
+  tags:        xml, functional, library, parsing
+  description: High level xml library for Nim
+  license:     MIT
+  website:     https://github.com/vegansk/xmltools
+ 
+nimongo:
+  url:         https://github.com/SSPkrolik/nimongo (git)
+  tags:        mongo, mongodb, database, server, driver, storage
+  description: MongoDB driver in pure Nim language with synchronous and asynchronous I/O support
+  license:     MIT
+  website:     https://github.com/SSPkrolik/nimongo
+ 
+nimboost:
+  url:         https://github.com/vegansk/nimboost (git)
+  tags:        stdlib, library, utility
+  description: Additions to the Nim's standard library, like boost for C++
+  license:     MIT
+  website:     https://github.com/vegansk/nimboost
+ 
+asyncdocker:
+  url:         https://github.com/tulayang/asyncdocker (git)
+  tags:        async, docker
+  description: Asynchronous docker client written by Nim-lang
+  license:     MIT
+  website:     http://tulayang.github.io/asyncdocker.html
+ 
+python3:
+  url:         https://github.com/matkuki/python3 (git)
+  tags:        python, wrapper
+  description: Wrapper to interface with the Python 3 interpreter
+  license:     MIT
+  website:     https://github.com/matkuki/python3
+ 
+jser:
+  url:         https://github.com/niv/jser.nim (git)
+  tags:        json, serialize, tuple
+  description: json de/serializer for tuples and more
+  license:     MIT
+  website:     https://github.com/niv/jser.nim
+ 
+pledge:
+  url:         https://github.com/euantorano/pledge.nim (git)
+  tags:        pledge, openbsd
+  description: OpenBSDs pledge(2) for Nim.
+  license:     BSD3
+  website:     https://github.com/euantorano/pledge.nim
+ 
+sophia:
+  url:         https://github.com/gokr/nim-sophia (git)
+  tags:        library, wrapper, database
+  description: Nim wrapper of the Sophia key/value store
+  license:     MIT
+  website:     https://github.com/gokr/nim-sophia
+ 
+progress:
+  url:         https://github.com/euantorano/progress.nim (git)
+  tags:        progress, bar, terminal, ui
+  description: A simple progress bar for Nim.
+  license:     BSD3
+  website:     https://github.com/euantorano/progress.nim
+ 
+websocket:
+  url:         https://github.com/niv/websocket.nim (git)
+  tags:        http, websockets, async, client, server
+  description: websockets for nim
+  license:     MIT
+  website:     https://github.com/niv/websocket.nim
+ 
+cucumber:
+  url:         https://github.com/shaunc/cucumber_nim (git)
+  tags:        testing, cucumber, bdd
+  description: implements the cucumber BDD framework in the nim language
+  license:     MIT
+  website:     https://github.com/shaunc/cucumber_nim
+ 
+libmpdclient:
+  url:         https://github.com/lompik/libmpdclient.nim (git)
+  tags:        MPD, Music Player Daemon
+  description: Bindings for the Music Player Daemon C client library
+  license:     BSD
+  website:     https://github.com/lompik/libmpdclient.nim
+ 
+awk:
+  url:         https://github.com/greencardamom/awk (git)
+  tags:        awk
+  description: Nim for awk programmers
+  license:     MIT
+  website:     https://github.com/greencardamom/awk
+ 
+dotenv:
+  url:         https://github.com/euantorano/dotenv.nim (git)
+  tags:        env, dotenv, configuration, environment
+  description: Loads environment variables from `.env`.
+  license:     BSD3
+  website:     https://github.com/euantorano/dotenv.nim
+ 
+sph:
+  url:         https://github.com/aidansteele/sph (git)
+  tags:        crypto, hashes, md5, sha
+  description: Large number of cryptographic hashes for Nim
+  license:     MIT
+  website:     https://github.com/aidansteele/sph
+ 
+libsodium:
+  url:         https://github.com/FedericoCeratto/nim-libsodium (git)
+  tags:        wrapper, library, security, crypto
+  description: libsodium wrapper
+  license:     LGPLv3
+  website:     https://github.com/FedericoCeratto/nim-libsodium
+ 
+aws_sdk:
+  url:         https://github.com/aidansteele/aws_sdk.nim (git)
+  tags:        aws, amazon
+  description: Library for interacting with Amazon Web Services (AWS)
+  license:     MIT
+  website:     https://github.com/aidansteele/aws_sdk.nim
+ 
+i18n:
+  url:         https://github.com/Parashurama/nim-i18n (git)
+  tags:        gettext, i18n, internationalisation
+  description: Bring a gettext-like internationalisation module to Nim
+  license:     MIT
+  website:     https://github.com/Parashurama/nim-i18n
+ 
+persistent_enums:
+  url:         https://github.com/yglukhov/persistent_enums (git)
+  tags:        enum, binary, protocol
+  description: Define enums which values preserve their binary representation upon inserting or reordering
+  license:     MIT
+  website:     https://github.com/yglukhov/persistent_enums
+ 
+nimcl:
+  url:         https://github.com/unicredit/nimcl (git)
+  tags:        OpenCL, GPU
+  description: High level wrapper over OpenCL
+  license:     Apache License 2.0
+  website:     https://github.com/unicredit/nimcl
+ 
+nimblas:
+  url:         https://github.com/unicredit/nimblas (git)
+  tags:        BLAS, linear algebra, vector, matrix
+  description: BLAS for Nim
+  license:     Apache License 2.0
+  website:     https://github.com/unicredit/nimblas
+ 
+fixmath:
+  url:         https://github.com/Jeff-Ciesielski/fixmath (git)
+  tags:        math
+  description: LibFixMath 16:16 fixed point support for nim
+  license:     MIT
+  website:     https://github.com/Jeff-Ciesielski/fixmath
+ 
+nimzend:
+  url:         https://github.com/metatexx/nimzend (git)
+  tags:        zend, php, binding, extension
+  description: Native Nim Zend API glue for easy PHP extension development.
+  license:     MIT
+  website:     https://github.com/metatexx/nimzend
+ 
+spills:
+  url:         https://github.com/andreaferretti/spills (git)
+  tags:        disk-based, sequence, memory-mapping
+  description: Disk-based sequences
+  license:     Apache License 2.0
+  website:     https://github.com/andreaferretti/spills
+ 
+platformer:
+  url:         https://github.com/def-/nim-platformer (git)
+  tags:        game, sdl, 2d
+  description: Writing a 2D Platform Game in Nim with SDL2
+  license:     MIT
+  website:     https://github.com/def-/nim-platformer
+ 
+nimCEF:
+  url:         https://github.com/jangko/nimCEF (git)
+  tags:        chromium, embedded, framework, cef, wrapper
+  description: Nim wrapper for the Chromium Embedded Framework
+  license:     MIT
+  website:     https://github.com/jangko/nimCEF
+ 
+migrate:
+  url:         https://github.com/euantorano/migrate.nim (git)
+  tags:        migrate, database, db
+  description: A simple database migration utility for Nim.
+  license:     BSD3
+  website:     https://github.com/euantorano/migrate.nim
+ 
+subfield:
+  url:         https://github.com/jyapayne/subfield (git)
+  tags:        subfield, macros
+  description: Override the dot operator to access nested subfields of a Nim object.
+  license:     MIT
+  website:     https://github.com/jyapayne/subfield
+ 
+semver:
+  url:         https://github.com/euantorano/semver.nim (git)
+  tags:        semver, version, parser
+  description: Semantic versioning parser for Nim. Allows the parsing of version strings into objects and the comparing of version objects.
+  license:     BSD3
+  website:     https://github.com/euantorano/semver.nim
+ 
+ad:
+  url:         https://github.com/subsetpark/ad (git)
+  tags:        calculator, rpn
+  description: A simple RPN calculator
+  license:     MIT
+  website:     https://github.com/subsetpark/ad
+ 
+asyncpg:
+  url:         https://github.com/cheatfate/asyncpg (git)
+  tags:        async, database, postgres, postgresql, asyncdispatch, asynchronous, library
+  description: Asynchronous PostgreSQL driver for Nim Language.
+  license:     MIT
+  website:     https://github.com/cheatfate/asyncpg
+ 
+registry:
+  url:         https://github.com/miere43/nim-registry (git)
+  tags:        registry, windows, library
+  description: Deal with Windows Registry from Nim.
+  license:     MIT
+  website:     https://github.com/miere43/nim-registry
+ 
+luna:
+  url:         https://github.com/smallfx/luna.nim (git)
+  tags:        lua, scripting
+  description: Lua convenience library for nim
+  license:     MIT
+  website:     https://github.com/smallfx/luna.nim
+ 
+qrcode:
+  url:         https://github.com/achesak/nim-qrcode (git)
+  tags:        qr, qrcode, api
+  description: module for creating and reading QR codes using http://goqr.me/
+  license:     MIT
+  website:     https://github.com/achesak/nim-qrcode
+ 
+circleci_client:
+  url:         https://github.com/FedericoCeratto/nim-circleci (git)
+  tags:        circleci, client
+  description: CircleCI API client
+  license:     LGPLv3
+  website:     https://github.com/FedericoCeratto/nim-circleci
+ 
+iup:
+  url:         https://github.com/nim-lang/iup (git)
+  tags:        GUI, IUP
+  description: Bindings for the IUP widget toolkit
+  license:     MIT
+  website:     https://github.com/nim-lang/iup
+ 
+barbarus:
+  url:         https://github.com/cjxgm/barbarus (git)
+  tags:        i18n, internationalization
+  description: A simple extensible i18n engine.
+  license:     MIT
+  website:     https://github.com/cjxgm/barbarus
+ 
+jsonob:
+  url:         https://github.com/cjxgm/jsonob (git)
+  tags:        json, object, marshal
+  description: JSON / Object mapper
+  license:     MIT
+  website:     https://github.com/cjxgm/jsonob
+ 
+autome:
+  url:         https://github.com/miere43/autome (git)
+  tags:        gui, automation, windows
+  description: Write GUI automation scripts with Nim
+  license:     MIT
+  website:     https://github.com/miere43/autome
+ 
+wox:
+  url:         https://github.com/roose/nim-wox (git)
+  tags:        wox, plugins
+  description: Helper library for writing Wox plugins in Nim
+  license:     MIT
+  website:     https://github.com/roose/nim-wox
+ 
+seccomp:
+  url:         https://github.com/FedericoCeratto/nim-seccomp (git)
+  tags:        linux, security, sandbox, seccomp
+  description: Linux Seccomp sandbox library
+  license:     LGPLv2.1
+  website:     https://github.com/FedericoCeratto/nim-seccomp
+ 
+AntTweakBar:
+  url:         https://github.com/krux02/nimAntTweakBar (git)
+  tags:        gui, opengl, rendering
+  description: nim wrapper around the AntTweakBar c library
+  license:     MIT
+  website:     https://github.com/krux02/nimAntTweakBar
+ 
+slimdown:
+  url:         https://github.com/ruivieira/nim-slimdown (git)
+  tags:        markdown, parser, library
+  description: Nim module that converts Markdown text to HTML using only regular expressions. Based on jbroadway's Slimdown.
+  license:     MIT
+  website:     https://github.com/ruivieira/nim-slimdown
+ 
+taglib:
+  url:         https://github.com/alex-laskin/nim-taglib (git)
+  tags:        audio, metadata, tags, library, wrapper
+  description: TagLib Audio Meta-Data Library wrapper
+  license:     MIT
+  website:     https://github.com/alex-laskin/nim-taglib
+ 
+des:
+  url:         https://github.com/LucaWolf/des.nim (git)
+  tags:        library, encryption, crypto
+  description: 3DES native library for Nim
+  license:     MIT
+  website:     https://github.com/LucaWolf/des.nim
+ 
