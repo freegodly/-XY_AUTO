@@ -12,7 +12,7 @@ from time import clock
 import threading
 from MyThread import *
 
-def comparehits_bin_min(image_bin,featureimage_bin,max_sum=255,startx = 0 ,endx = 0,move_px = 1):
+def comparehits_bin_min(image_bin,featureimage_bin,max_sum=10,startx = 0 ,endx = 0,move_px = 1):
     """
     查找特征图像出现的位置
     要求传入二值化图像
@@ -369,7 +369,7 @@ def get_image_sub(image,rect,channels = 3):
 
     rc = (rect[0], rect[1], rect[2], rect[3])
     sub_image = image[rc[1]:rc[1]+rc[3],rc[0]:rc[0]+rc[2],:]
-    sub_image = sub_image.copy()
+    sub_image = sub_image
     return sub_image
 
 def get_window_hwnd(classname):

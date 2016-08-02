@@ -12,42 +12,97 @@ import win32con,win32api
 import pythoncom, pyHook
 import time
 from DD import DD
+import threading
+import multiprocessing
+from time import ctime,sleep
 
 
+class GameBasicInfo(object):
+    def __init__(self):
+        self.map_name = ""
+        self.hero_location_info = [-1,-1]
+        self.minimap_location = [-1,-1]
+        self.isrun = True
+        self.game_hwnd = None
+        self.game_rect = []
+        self.client_rect = []
 
-def KeyStroke(event):
-    if str(event.Key)=='F12':
-        exit()
-    return True
+    def start(self):
+        t = threading.Thread(target=self.do_update, args=())
+        t.start()
 
+    def stop(self):
+        self.isrun = False
 
+    def do_update(self):
+        self.isrun = True
+        self.game_hwnd = get_window_hwnd("WSGAME")
+        while self.isrun:
+            self.update()
+            time.sleep(0.01)
 
-def image_despose(image):
-    start=clock()
-    #识别坐标
-    mapname,hero_location_info = get_coordinates(image)
-    print mapname
-    print "hero_location_info:",hero_location_info
+    def update(self):
+        self.game_rect = win32gui.GetWindowRect(self.game_hwnd)
+        self.client_rect = win32gui.GetClientRect(self.game_hwnd)
 
-    ################### 查找光标位置
-    image_mouse = cv2.imread("feature/other/mouse.png")
-    image_mouse_mask = cv2.imread("feature/other/mouse_mask.png",0)
-    find_list = find_obj_hist_mask(image,image_mouse,mask=image_mouse_mask,max_sum=2.5,move_px = 5,move_py = 5)
-    if len(find_list) > 0:
-        #print find_list[0]
-        start_point = find_list[0][0]
-        cv2.rectangle(image, (start_point[0], start_point[1]), (start_point[0]+10, start_point[1]+10), (0, 0, 255), 4)
+        image = get_window_rect_image(self.game_hwnd)
+        self.map_name, self.hero_location_info = get_coordinates(image)
 
-        ##查找小地图区域范围
-        rect_location = [ find_list[0][0][0] - 34 , find_list[0][0][1] - 26-5 ,68,26]
-        #cv2.rectangle(image, (rect_location[0], rect_location[1]), (rect_location[0]+rect_location[2], rect_location[1]+rect_location[3]), (0, 255, 0), 2)
-        image_sub = get_image_sub(image,rect_location)
-        minimap_location = get_minimap_location(image_sub)
-        print "minimap_location:",minimap_location
-    print "find_obj_hist:",(clock()-start)
-    return image
+        # print mapname
+        # print "hero_location_info:",hero_location_info
 
+        ################### 查找光标位置
+        image_mouse = cv2.imread("feature/other/mouse.png")
+        image_mouse_mask = cv2.imread("feature/other/mouse_mask.png",0)
+        find_list = find_obj_hist_mask(image,image_mouse,mask=image_mouse_mask,max_sum=2.5,move_px = 5,move_py = 5)
+        if len(find_list) > 0:
+            #print find_list[0]
+            start_point = find_list[0][0]
+            #cv2.rectangle(image, (start_point[0], start_point[1]), (start_point[0]+10, start_point[1]+10), (0, 0, 255), 4)
 
+            ##查找小地图区域范围
+            rect_location = [ find_list[0][0][0] - 34 , find_list[0][0][1] - 26-5 ,68,26]
+            #cv2.rectangle(image, (rect_location[0], rect_location[1]), (rect_location[0]+rect_location[2], rect_location[1]+rect_location[3]), (0, 255, 0), 2)
+            image_sub = get_image_sub(image,rect_location)
+            self.minimap_location = get_minimap_location(image_sub)
+            #print "minimap_location:",minimap_location
+
+    def task_go_point(self,x,y):
+        t = threading.Thread(target=self.go_point, args=(x,y))
+        t.start()
+
+    def go_point(self,x,y):
+
+        win32gui.SetForegroundWindow(self.game_hwnd)
+
+        cent_x = self.game_rect[0]+self.client_rect[2]/2
+        cent_y = self.game_rect[1]+self.client_rect[3]/2
+
+        DD.DD_mov(cent_x,cent_y)
+        time.sleep(1)
+        DD.DD_key_click(300)
+        time.sleep(0.1)
+
+        while self.minimap_location[0] ==-1:
+            print self.minimap_location
+            time.sleep(0.2)
+        print self.minimap_location
+        #200,100,555,294
+        #10,10  66 236
+        #       183 91
+        x_diff = x-self.minimap_location[0]
+        y_diff = self.minimap_location[1]-y
+
+        map_size     = (200.0,100.0)
+        min_map_size = (555.0,294.0 )
+
+        mov_x = int(x_diff*(min_map_size[0]/map_size[0]))
+        mov_y = int(y_diff*(min_map_size[1]/map_size[1]))
+        DD.DD_mov(cent_x+mov_x,cent_y+mov_y)
+        #DD.DD_movR(mov_x,mov_y)
+        time.sleep(0.1)
+
+        DD.DD_btn_click(1)
 
 def find_point(image):
     mach_list = []
@@ -144,9 +199,9 @@ def split_point(title_image):
         endx = endx -5 -1
 
 def get_coordinates(image):
-    mapname = u"未知"
+    mapname = u""
     hero_location = [-1,-1]
-    img = get_image_sub(image,(20, 27,110,12))
+    img = get_image_sub(image,(20, 24,110,12))
     #cv2.imwrite("img.png",img)
     mach_list = find_point(img)
     info = ""
@@ -197,32 +252,3 @@ def get_minimap_location(image):
         except Exception,e:
             pass
     return minimap_location
-
-
-def test():
-    t = clock()
-    # image = Image.open('img/map/xy0009.jpg')
-    # title_image = image.crop((20, 27,110+20,12+27))
-    # split_point(title_image)
-    # print "RunTime:",clock()-t
-
-    image = cv2.imread("img/map/xy0000.jpg")
-    print get_coordinates(image)
-    cv2.waitKey()
-    exit()
-
-if __name__ == '__main__':
-    hm = pyHook.HookManager()
-    hm.KeyDown = KeyStroke
-    hm.HookKeyboard()
-
-    hwnd = get_window_hwnd("WSGAME")
-
-    test()
-    while(True):
-        open_cv_image = get_window_rect_image(hwnd)
-        open_cv_image = image_despose(open_cv_image)
-        cv2.imshow('frame',open_cv_image)
-        pythoncom.PumpWaitingMessages()
-
-    cv2.destroyAllWindows()
