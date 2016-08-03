@@ -15,14 +15,20 @@ from DD import DD
 
 from FindGameBasicInfo import *
 
+gbi =GameBasicInfo()
 
 
 
-
+def KeyStroke(event):
+    if str(event.Key)=='F12':
+        gbi.stop()
+        exit()
+    return True
 
 if __name__ == '__main__':
-
-    gbi =GameBasicInfo()
+    hm = pyHook.HookManager()
+    hm.KeyDown = KeyStroke
+    hm.HookKeyboard()
 
     gbi.start()
 
@@ -41,4 +47,5 @@ if __name__ == '__main__':
         elif cmd == "go":
             point=raw_input('input point:')
             p = point.split(',')
-            gbi.go_point(int(p[0]),int(p[1]))
+            gbi.go_point_mini(int(p[0]),int(p[1]))
+            #gbi.go_point(int(p[0]),int(p[1]))

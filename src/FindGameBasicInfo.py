@@ -39,6 +39,7 @@ class GameBasicInfo(object):
         self.game_hwnd = get_window_hwnd("WSGAME")
         while self.isrun:
             self.update()
+            pythoncom.PumpWaitingMessages()
             time.sleep(0.01)
 
     def update(self):
@@ -79,7 +80,9 @@ class GameBasicInfo(object):
         cent_y = self.game_rect[1]+self.client_rect[3]/2
 
         DD.DD_mov(cent_x,cent_y)
+        map_size_info = self.mapsizeinfo[self.map_name]
         time.sleep(1)
+
         DD.DD_key_click(300)
         time.sleep(0.1)
 
@@ -91,16 +94,93 @@ class GameBasicInfo(object):
         x_diff = x-self.minimap_location[0]
         y_diff = self.minimap_location[1]-y
 
-        map_size_info = self.mapsizeinfo[self.map_name]
+
         map_size     = (float(map_size_info[0]),float(map_size_info[1]))
         min_map_size = (float(map_size_info[2]),float(map_size_info[3]))
 
         mov_x = int(x_diff*(min_map_size[0]/map_size[0]))
         mov_y = int(y_diff*(min_map_size[1]/map_size[1]))
-        DD.DD_mov(cent_x+mov_x,cent_y+mov_y)
-        time.sleep(0.1)
+
+        move_to_x = cent_x+mov_x
+        move_to_y = cent_y+mov_y
+
+        DD.DD_mov(move_to_x,move_to_y)
+        DD.DD_btn_click(1)
+        time.sleep(0.5)
+        mouse_offset = 1
+        max_count = 100
+        while (abs(x-self.minimap_location[0])>1 or abs(y-self.minimap_location[1])>0) and max_count>1:
+            max_count = max_count-1
+            print self.minimap_location
+            x_diff = x-self.minimap_location[0]
+            y_diff = self.minimap_location[1]-y
+
+            if(x_diff>0): move_to_x=move_to_x+mouse_offset
+            elif(x_diff<0): move_to_x=move_to_x-mouse_offset
+            if(y_diff>0): move_to_y=move_to_y+mouse_offset
+            elif(y_diff<0): move_to_y=move_to_y-mouse_offset
+            DD.DD_mov(move_to_x,move_to_y)
+            time.sleep(0.5)
+
 
         DD.DD_btn_click(1)
+        DD.DD_btn_click(1)
+        DD.DD_key_click(300)
+
+    def go_point_mini(self,x,y):
+
+        win32gui.SetForegroundWindow(self.game_hwnd)
+
+        cent_x = self.game_rect[0]+self.client_rect[2]/2
+        cent_y = self.game_rect[1]+self.client_rect[3]/2+8
+
+        DD.DD_mov(cent_x,cent_y)
+        return
+        map_size_info = self.mapsizeinfo[self.map_name]
+        time.sleep(1)
+
+        mouse_offset = 50
+        max_count = 50
+        while (abs(x-self.hero_location_info[0])>2 or abs(y-self.hero_location_info[1])>2) and max_count>0:
+            max_count = max_count-1
+            #判断角色出现在屏幕的那个位置
+            offset_x,offset_y = self.hero_offset(map_size_info)
+            x_diff = x-self.hero_location_info[0]
+            y_diff = self.hero_location_info[1]-y
+            if(x_diff>0): offset_x=offset_x+mouse_offset
+            elif(x_diff<0): offset_x=offset_x-mouse_offset
+            if(y_diff>0): offset_y=offset_y+mouse_offset
+            elif(y_diff<0): offset_y=offset_y-mouse_offset
+            DD.DD_mov(cent_x+offset_x,cent_y+offset_y)
+
+            DD.DD_btn_click(1)
+            DD.DD_btn_click(1)
+            time.sleep(0.3)
+
+
+    def hero_offset(self,map_size_info):
+        """
+        获取角色相对画面中心的偏移
+        """
+        offset_x = 0
+        offset_y = 0
+        if  self.hero_location_info[0] >=  self.client_rect[0]/2  and self.hero_location_info[0] <= (map_size_info[0]- self.client_rect[0]/2):
+            offset_x = 0
+        elif self.hero_location_info[0] <  self.client_rect[0]/2:
+            offset_x = self.hero_location_info[0] - self.client_rect[0]/2
+        elif self.hero_location_info[0] > (map_size_info[0]- self.client_rect[0]/2):
+            offset_x = self.hero_location_info[0] - (map_size_info[0]- self.client_rect[0]/2)
+
+        if  self.hero_location_info[1] >=  self.client_rect[1]/2  and self.hero_location_info[1] <= (map_size_info[1]- self.client_rect[1]/2):
+            offset_y = 0
+        elif self.hero_location_info[1] <  self.client_rect[1]/2:
+            offset_y =  self.client_rect[1]/2 - self.hero_location_info[1]
+        elif self.hero_location_info[1] > (map_size_info[1]- self.client_rect[1]/2):
+            offset_y =  (map_size_info[1]- self.client_rect[1]/2)   - self.hero_location_info[1]
+
+        return (offset_x,offset_y)
+
+
 
 def find_point(image):
     mach_list = []
