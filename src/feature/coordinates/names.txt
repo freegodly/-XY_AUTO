@@ -26,3 +26,7 @@ guo1.png 果
 shan.png 山
 shou.png 寿
 jiao.png 郊
+bei.png 北
+ju.png 俱
+lu.png 芦
+zhou.png 洲

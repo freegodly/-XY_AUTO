@@ -11,7 +11,7 @@ from PIL import Image
 import win32con,win32api
 import pythoncom, pyHook
 import time
-from DD import DD
+#from DD import DD
 
 
 
@@ -117,6 +117,7 @@ def split_point(title_image):
     img_left = cv2.imread("feature/coordinates/left.png")
     img_left_bin = img_gray_and_bin(img_left,200,255)
     find_list = comparehits_bin_min(cv_title_image_bin,img_left_bin)
+    print find_list
     left_x = find_list[0][0]
     img_right = cv2.imread("feature/coordinates/right.png")
     img_right_bin = img_gray_and_bin(img_right,200,255)
@@ -153,6 +154,7 @@ def get_coordinates(image):
     for m in mach_list:
         info+=m
     hero_location_info = info.decode('utf-8')
+    print hero_location_info
     try:
         h = hero_location_info.split('[')
         mapname = h[0]
@@ -201,22 +203,126 @@ def get_minimap_location(image):
 
 def test():
     t = clock()
-    # image = Image.open('img/map/xy0009.jpg')
+    # image = Image.open('img/map/xy0007.jpg')
     # title_image = image.crop((20, 27,110+20,12+27))
+    # title_image.save("point/title_image.png")
     # split_point(title_image)
-    # print "RunTime:",clock()-t
+    print "RunTime:",clock()-t
 
+    # image = cv2.imread("img/map/xy0000.jpg")
+    # get_coordinates(image)
+    # image = cv2.imread("img/map/xy0001.jpg")
+    # get_coordinates(image)
+    # image = cv2.imread("img/map/xy0002.jpg")
+    # get_coordinates(image)
+    # image = cv2.imread("img/map/xy0003.jpg")
+    # get_coordinates(image)
+    # image = cv2.imread("img/map/xy0004.jpg")
+    # get_coordinates(image)
+    # image = cv2.imread("img/map/xy0005.jpg")
+    # get_coordinates(image)
+    # image = cv2.imread("img/map/xy0006.jpg")
+    # get_coordinates(image)
+    # image = cv2.imread("img/map/xy0007.jpg")
+    # get_coordinates(image)
+    # image = cv2.imread("img/map/xy0008.jpg")
+    # get_coordinates(image)
+    # image = cv2.imread("img/map/xy0009.jpg")
+    # get_coordinates(image)
+
+
+    #读取地图大小信息
+    mapsizeinfo = read_mapsizeinfo("feature/map/mapsizeinfo.txt")
+    #print mapsizeinfo
+    for item in mapsizeinfo.items():
+        print item[0]
+        print item[1]
+
+
+    #获取矩形
     image = cv2.imread("img/map/xy0000.jpg")
-    print get_coordinates(image)
+    rect = find_obj_rect(image)
+    if rect is not None:
+        cv2.rectangle(image, (rect[0], rect[1]), (rect[0]+rect[2], rect[1]+rect[3]), (0, 0, 255), 4)
+    cv2.imwrite("point/xy0000.jpg",image)
+
+    image = cv2.imread("img/map/xy0001.jpg")
+    rect = find_obj_rect(image)
+    if rect is not None:
+        cv2.rectangle(image, (rect[0], rect[1]), (rect[0]+rect[2], rect[1]+rect[3]), (0, 0, 255), 4)
+    cv2.imwrite("point/xy0001.jpg",image)
+
+    image = cv2.imread("img/map/xy0002.jpg")
+    rect = find_obj_rect(image)
+    if rect is not None:
+        cv2.rectangle(image, (rect[0], rect[1]), (rect[0]+rect[2], rect[1]+rect[3]), (0, 0, 255), 4)
+    cv2.imwrite("point/xy0002.jpg",image)
+
+    image = cv2.imread("img/map/xy0003.jpg")
+    rect = find_obj_rect(image)
+    if rect is not None:
+        cv2.rectangle(image, (rect[0], rect[1]), (rect[0]+rect[2], rect[1]+rect[3]), (0, 0, 255), 4)
+    cv2.imwrite("point/xy0003.jpg",image)
+
+    image = cv2.imread("img/map/xy0004.jpg")
+    rect = find_obj_rect(image)
+    if rect is not None:
+        cv2.rectangle(image, (rect[0], rect[1]), (rect[0]+rect[2], rect[1]+rect[3]), (0, 0, 255), 4)
+    cv2.imwrite("point/xy0004.jpg",image)
+
+    image = cv2.imread("img/map/xy0005.jpg")
+    rect = find_obj_rect(image)
+    if rect is not None:
+        cv2.rectangle(image, (rect[0], rect[1]), (rect[0]+rect[2], rect[1]+rect[3]), (0, 0, 255), 4)
+    cv2.imwrite("point/xy0005.jpg",image)
+
+    image = cv2.imread("img/map/xy0006.jpg")
+    rect = find_obj_rect(image)
+    if rect is not None:
+        cv2.rectangle(image, (rect[0], rect[1]), (rect[0]+rect[2], rect[1]+rect[3]), (0, 0, 255), 4)
+    cv2.imwrite("point/xy0006.jpg",image)
+
+    image = cv2.imread("img/map/xy0007.jpg")
+    rect = find_obj_rect(image)
+    if rect is not None:
+        cv2.rectangle(image, (rect[0], rect[1]), (rect[0]+rect[2], rect[1]+rect[3]), (0, 0, 255), 4)
+    cv2.imwrite("point/xy0007.jpg",image)
+
+    image = cv2.imread("img/map/xy0008.jpg")
+    rect = find_obj_rect(image)
+    if rect is not None:
+        cv2.rectangle(image, (rect[0], rect[1]), (rect[0]+rect[2], rect[1]+rect[3]), (0, 0, 255), 4)
+    cv2.imwrite("point/xy0008.jpg",image)
+
+    image = cv2.imread("img/map/xy0009.jpg")
+    rect = find_obj_rect(image)
+    if rect is not None:
+        cv2.rectangle(image, (rect[0], rect[1]), (rect[0]+rect[2], rect[1]+rect[3]), (0, 0, 255), 4)
+    cv2.imwrite("point/xy0009.jpg",image)
+
+    image = cv2.imread("img/xy0002.jpg")
+    rect = find_obj_rect(image)
+    if rect is not None:
+        cv2.rectangle(image, (rect[0], rect[1]), (rect[0]+rect[2], rect[1]+rect[3]), (0, 0, 255), 4)
+    cv2.imwrite("point/xy0002img.jpg",image)
+
+    image = cv2.imread("img/xy0000.jpg")
+    rect = find_obj_rect(image)
+    if rect is not None:
+        cv2.rectangle(image, (rect[0], rect[1]), (rect[0]+rect[2], rect[1]+rect[3]), (0, 0, 255), 4)
+    cv2.imwrite("point/xy0000img.jpg",image)
+
+    #cv2.imshow("image",image)
+
     cv2.waitKey()
     exit()
 
 if __name__ == '__main__':
-    hm = pyHook.HookManager()
-    hm.KeyDown = KeyStroke
-    hm.HookKeyboard()
+    # hm = pyHook.HookManager()
+    # hm.KeyDown = KeyStroke
+    # hm.HookKeyboard()
 
-    hwnd = get_window_hwnd("WSGAME")
+    #hwnd = get_window_hwnd("WSGAME")
 
     test()
     while(True):

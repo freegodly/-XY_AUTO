@@ -26,7 +26,7 @@ class GameBasicInfo(object):
         self.game_hwnd = None
         self.game_rect = []
         self.client_rect = []
-
+        self.mapsizeinfo = read_mapsizeinfo("feature/map/mapsizeinfo.txt")
     def start(self):
         t = threading.Thread(target=self.do_update, args=())
         t.start()
@@ -86,20 +86,18 @@ class GameBasicInfo(object):
         while self.minimap_location[0] ==-1:
             print self.minimap_location
             time.sleep(0.2)
-        print self.minimap_location
-        #200,100,555,294
-        #10,10  66 236
-        #       183 91
+
+
         x_diff = x-self.minimap_location[0]
         y_diff = self.minimap_location[1]-y
 
-        map_size     = (200.0,100.0)
-        min_map_size = (555.0,294.0 )
+        map_size_info = self.mapsizeinfo[self.map_name]
+        map_size     = (float(map_size_info[0]),float(map_size_info[1]))
+        min_map_size = (float(map_size_info[2]),float(map_size_info[3]))
 
         mov_x = int(x_diff*(min_map_size[0]/map_size[0]))
         mov_y = int(y_diff*(min_map_size[1]/map_size[1]))
         DD.DD_mov(cent_x+mov_x,cent_y+mov_y)
-        #DD.DD_movR(mov_x,mov_y)
         time.sleep(0.1)
 
         DD.DD_btn_click(1)

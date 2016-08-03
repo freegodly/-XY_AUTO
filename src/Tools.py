@@ -101,6 +101,19 @@ def read_feature_file(filename):
 
     return feature_info
 
+def read_mapsizeinfo(filename):
+    mapsizeinfo = {}
+
+    file_object = open(filename,'r')
+    try:
+        for line in file_object:
+            line = line.strip('\n')
+            sl = line.split(",")
+            mapsizeinfo[sl[0].decode('utf-8')]= [int(sl[1]),int(sl[2]),int(sl[3]),int(sl[4])]
+    finally:
+        file_object.close()
+
+    return mapsizeinfo
 
 def togray(src,des):
     image = cv2.imread(src)          # queryImage
@@ -289,7 +302,7 @@ def find_obj_hist_multithreading(trainImage,queryImage,max_sum=255, bins = 30,st
     return find_list
 
 
-def find_obj_rect(image,minLineLength = 10,extend_length = 10,color_min = 200,color_max = 255):
+def find_obj_rect(image,thresholdValue =200 ,minLineLength = 100,extend_length = 0,color_min = 1,color_max = 256):
     """
     查找图像中最大的矩形
     """
@@ -297,14 +310,24 @@ def find_obj_rect(image,minLineLength = 10,extend_length = 10,color_min = 200,co
 
     img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-    #cv2.imwrite("img_gray.png",img_gray)
+    cv2.imwrite("img_gray.png",img_gray)
+    _,img_bin = cv2.threshold(img_gray, color_min,color_max, cv2.THRESH_BINARY_INV)
+    img_bin = cv2.GaussianBlur(img_bin,(5,5),0)
+    img_bin = cv2.Canny(img_bin, 2, 10, apertureSize = 5)
+    kernel = cv2.getStructuringElement(cv2.MORPH_RECT,(3, 3))
+    img_bin = cv2.dilate(img_bin,kernel)
 
-    _,img_bin = cv2.threshold(img_gray, color_min,color_max, cv2.THRESH_BINARY)
 
-    #cv2.imshow("img_bin",img_bin)
+
+    #_,img_bin = cv2.threshold(img_bin, 0,100, cv2.THRESH_BINARY)
+
+    # cv2.imshow("img_bin",img_bin)
+    # cv2.waitKey()
+    # exit()
+
 
     maxLineGap = 15
-    lines = cv2.HoughLinesP(img_bin,1,np.pi/2,minLineLength,0,maxLineGap)
+    lines = cv2.HoughLinesP(img_bin,1,np.pi/2,thresholdValue,minLineLength,maxLineGap)
 
     if len(lines[0]) < 4 :
         print "len_lines:",len(lines[0])
