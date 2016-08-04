@@ -4,16 +4,17 @@
 #include <opencv/cv.hpp>
 #include <stdlib.h>
 #include <windows.h>
+#include <QGuiApplication>
+#include <QScreen>
+#include <QDebug>
+
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    a.addLibraryPath("dlls/");
     MainWindow w;
     w.show();
-
-    IplImage* image = cvLoadImage( "filename.png", 1 );
-
-
 
 
     return a.exec();

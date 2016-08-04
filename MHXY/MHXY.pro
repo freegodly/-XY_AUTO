@@ -13,13 +13,15 @@ TEMPLATE = app
 
 INCLUDEPATH += 3rd/opencv/include
 
-LIBS += ../MHXY/3rd/opencv/lib/*.a
+LIBS += ../MHXY/3rd/opencv/lib/*.a -lgdi32
 
 
 SOURCES += src/main.cpp\
-       src/mainwindow.cpp
+       src/mainwindow.cpp \
+    src/Tools/tools.cpp
 
-HEADERS  += src/mainwindow.h
+HEADERS  += src/mainwindow.h \
+    src/Tools/tools.h
 
 FORMS    += src/mainwindow.ui
 

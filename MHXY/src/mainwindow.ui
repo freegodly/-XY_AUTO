@@ -59,6 +59,21 @@
          <enum>QFrame::Raised</enum>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
          <item>
           <widget class="QLabel" name="GameRect">
            <property name="minimumSize">
@@ -113,45 +128,71 @@
          <property name="title">
           <string>基本信息</string>
          </property>
-         <widget class="QLabel" name="label111">
+         <widget class="QLabel" name="l_HeroPoint">
           <property name="geometry">
            <rect>
             <x>10</x>
             <y>40</y>
-            <width>91</width>
+            <width>111</width>
             <height>16</height>
            </rect>
           </property>
           <property name="text">
-           <string>人物坐标: -1,-1</string>
+           <string>人物坐标: -100,-100</string>
           </property>
          </widget>
-         <widget class="QLabel" name="label_2">
+         <widget class="QLabel" name="l_MapName">
           <property name="geometry">
            <rect>
             <x>10</x>
             <y>20</y>
-            <width>101</width>
+            <width>111</width>
             <height>16</height>
            </rect>
           </property>
           <property name="text">
-           <string>地图名称: 未知</string>
+           <string>地图名称:  未 知</string>
           </property>
          </widget>
-         <widget class="QLabel" name="label_3">
+         <widget class="QLabel" name="l_MiniMap_Point">
           <property name="geometry">
            <rect>
-            <x>10</x>
-            <y>60</y>
+            <x>140</x>
+            <y>40</y>
             <width>81</width>
             <height>16</height>
            </rect>
           </property>
           <property name="text">
-           <string>MS 坐标: -1,-1</string>
+           <string>坐标: -100,-100</string>
           </property>
          </widget>
+         <widget class="QLabel" name="l_MousePoint">
+          <property name="geometry">
+           <rect>
+            <x>140</x>
+            <y>20</y>
+            <width>81</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>鼠标: -100,-100</string>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QPushButton" name="pushButton_Test">
+         <property name="geometry">
+          <rect>
+           <x>80</x>
+           <y>410</y>
+           <width>75</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>PushButton</string>
+         </property>
         </widget>
        </widget>
       </item>
@@ -172,9 +213,21 @@
     <property name="title">
      <string>开始</string>
     </property>
+    <addaction name="actionStart"/>
+    <addaction name="actionStop"/>
    </widget>
    <addaction name="menu"/>
   </widget>
+  <action name="actionStart">
+   <property name="text">
+    <string>Start</string>
+   </property>
+  </action>
+  <action name="actionStop">
+   <property name="text">
+    <string>Stop</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
