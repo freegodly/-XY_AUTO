@@ -1,1 +1,6 @@
-*.pyc
+*.user
+bin/debug
+bin/release/*.o
+bin/release/*.cpp
+bin/Makefile*
+bin/*.h
