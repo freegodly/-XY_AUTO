@@ -11,10 +11,15 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = MHXY
 TEMPLATE = app
 
+INCLUDEPATH += 3rd/opencv/include
 
-SOURCES += main.cpp\
-        mainwindow.cpp
+LIBS += ../MHXY/3rd/opencv/lib/*.a
 
-HEADERS  += mainwindow.h
 
-FORMS    += mainwindow.ui
+SOURCES += src/main.cpp\
+       src/mainwindow.cpp
+
+HEADERS  += src/mainwindow.h
+
+FORMS    += src/mainwindow.ui
+
