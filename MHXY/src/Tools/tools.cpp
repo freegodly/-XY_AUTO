@@ -109,6 +109,7 @@ IplImage* Tools::GetDesktopHwndImage(HWND hWnd)
     if(NULL == hWnd)
     {
         hWnd = hDesktop;
+
     }
     RECT rect;
     ::GetWindowRect(hWnd, &rect);
@@ -200,7 +201,6 @@ IplImage *Tools::QImageToIplImage(QImage * qImage)
     }
     return IplImageBuffer;
 }
-
 
 
 
@@ -306,8 +306,30 @@ Find_Obj_Result Tools::find_obj_hist_mask(IplImage * trainImage,
 
 
     return result;
-  }
+}
 
+CvRect Tools::find_obj_matchtemplate(IplImage *trainImage, IplImage *queryImage, float min_value, int method)
+{
+
+    CvRect rect{-1,-1,0,0};
+
+    IplImage *  image_gray = cvCreateImage(CvSize(trainImage->width-queryImage->width+1,trainImage->height-queryImage->height+1),IPL_DEPTH_32F,1);
+
+    cvMatchTemplate( trainImage, queryImage, image_gray, CV_TM_CCORR_NORMED );
+    CvPoint     minloc, maxloc;
+    double      minval, maxval;
+    cvMinMaxLoc( image_gray, &minval, &maxval, &minloc, &maxloc, 0 );
+    cvReleaseImage(&image_gray);
+
+    if(maxval>min_value){
+        rect = {maxloc.x,maxloc.y,queryImage->width,queryImage->height};
+    }
+
+
+    //qDebug()<<maxval;
+
+   return rect;
+}
 
 QList<Find_Obj_Result> Tools::comparehits_bin_min(IplImage * image_bin,
                     IplImage *featureimage_bin,
@@ -350,11 +372,81 @@ QList<Find_Obj_Result> Tools::comparehits_bin_min(IplImage * image_bin,
               find_list.append(result);
           }
       }
-      qSort(find_list.begin(), find_list.end(),
-                                [](Find_Obj_Result x,Find_Obj_Result y)->bool
-                                                 {return x.error < y.error; });
+      if(find_list.count()>1){
+         qSort(find_list.begin(), find_list.end(),
+                                    [](Find_Obj_Result x,Find_Obj_Result y)->bool
+                                                     {return x.error < y.error; });
+      }
+
       return find_list;
 
 }
+
+
+QList<Find_Obj_Result> Tools::comparehits_bin_min_x(IplImage * image_bin,
+                    IplImage *featureimage_bin,
+                    IplImage * featureimage_bin_mask,
+                    int max_sum,int startx  ,
+                    int endx,
+                    int starty  , int endy,int move_px,int move_py  )
+{
+      QList<Find_Obj_Result>   find_list;
+
+      int h = image_bin->height;
+      int w = image_bin->width;
+      int h_f = featureimage_bin->height;
+      int w_f = featureimage_bin->width;
+
+      int bc_min = max_sum;
+      int start_px = -1;
+      int start_py = -1;
+
+      if (endx==0) endx = w;
+      if (endy==0) endy = h;
+      for(int m=0;m< (int)(endy-starty-h_f)/move_py;m++)
+      {
+          start_py = m*move_py+starty;
+          for(int i=0;i< (int)(endx-startx-w_f)/move_px;i++)
+          {
+              start_px = i*move_px+startx;
+              int error = 0;
+              //rc = (start_px, start_py, w_f, h_f)
+
+              for(int j = 0 ; j<h_f;j++){
+                  for(int k = 0 ; k<w_f;k++){
+                    if(featureimage_bin_mask ==NULL )
+                    {
+                        uchar f_value = ((uchar *)(featureimage_bin->imageData  +  j * featureimage_bin->widthStep ))[k];
+                        uchar im_value = ((uchar *)(image_bin->imageData  +  (j+start_py) * image_bin->widthStep ))[k+start_px];
+                        error += abs((int)f_value-(int)im_value);
+                    }
+                    else
+                    {
+                       uchar mask_value = ((uchar *)(featureimage_bin_mask->imageData  +  j * featureimage_bin_mask->widthStep ))[k];
+                       if(mask_value>100){
+                           uchar f_value = ((uchar *)(featureimage_bin->imageData  +  j * featureimage_bin->widthStep ))[k];
+                           uchar im_value = ((uchar *)(image_bin->imageData  +  (j+start_py) * image_bin->widthStep ))[k+start_px];
+                           error += abs((int)f_value-(int)im_value);
+                       }
+                    }
+                  }
+              }
+
+              //qDebug()<<"error_______"<<error;
+              if( error < bc_min){
+                  Find_Obj_Result result{start_px,start_py,error};
+                  find_list.append(result);
+              }
+          }
+      }
+      if(find_list.count()>1){
+      qSort(find_list.begin(), find_list.end(),
+                                [](Find_Obj_Result x,Find_Obj_Result y)->bool
+                                                 {return x.error < y.error; });
+      }
+      return find_list;
+
+}
+
 
 

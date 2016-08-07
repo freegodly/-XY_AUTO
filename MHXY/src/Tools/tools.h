@@ -6,6 +6,8 @@
 #include <QWindow>
 #include <windows.h>
 #include <opencv/cv.hpp>
+#include <opencv2/opencv.hpp>
+#include <QRect>
 
 struct Find_Obj_Result{
      int x;
@@ -45,10 +47,23 @@ public:
                               int starty = 0 ,int endy = 0,
                               int move_px = 5,int move_py = 5);
 
+  static CvRect  find_obj_matchtemplate(IplImage * trainImage,
+                                        IplImage * queryImage,
+                                        float min_value=0.9,
+                                        int method = 0);
+
   static QList<Find_Obj_Result> comparehits_bin_min(IplImage * image_bin,
                                                            IplImage *featureimage_bin,
                                                            int max_sum =1,int startx =0,
                                                            int endx = 0,int move_px =1);
+  static QList<Find_Obj_Result> comparehits_bin_min_x(IplImage * image_bin,
+                                                             IplImage *featureimage_bin, IplImage *featureimage_bin_mask=NULL,
+                                                             int max_sum = 255, int startx =0 ,
+                                                             int endx=0,
+                                                             int starty  = 0 , int endy=0,
+                                                             int move_px = 1, int move_py = 1 );
+
+
 signals:
 
 public slots:
