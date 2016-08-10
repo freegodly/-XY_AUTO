@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QLibrary>
-
+#include<Windows.h>
 class HardKeyMouse : public QObject
 {
     Q_OBJECT
@@ -17,7 +17,8 @@ signals:
 public slots:
 
 private:
-   static QLibrary *dd;
+  //QLibrary *dd;
+  HINSTANCE dd;
 };
 
 #endif // HARDKEYMOUSE_H

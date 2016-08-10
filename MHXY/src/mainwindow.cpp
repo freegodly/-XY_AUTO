@@ -27,12 +27,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
    IsRunScript  = false;
    timer_status = false;
+
+   hardKeyMouse = new HardKeyMouse();
+
    this->imgData = new uchar[640*480*3];
 
-   GameHwnd = FindWindowA("WSGAME",NULL);
+   GameHwnd = FindWindow(L"WSGAME",NULL);
    QScriptValue qcmu = engine.newQObject(this);
    engine.globalObject().setProperty("XY", qcmu);
-
 }
 
 MainWindow::~MainWindow()
@@ -71,22 +73,12 @@ void MainWindow::timerEvent(QTimerEvent *event)
         //给dorun使用
         this->p_Game_Image = Ipl_sub_image;
         PaintRectList.clear();
-
-        if(IsRunScript)
-        {
-            engine.evaluate("dorun();");
-            if(engine.hasUncaughtException()){
-
-                    QString errinfo =  engine.uncaughtException().toString();
-                    errinfo += engine.uncaughtExceptionBacktrace().join("/n");
-
-                    Add_Log_Msg(errinfo);
-            }
-        }
-
+        ///
+        /// \brief run_script
+        ///
+        run_script();
 
         cvReleaseImage(&Ipl_sub_image);
-
 
         QPainter painter(&Game_originalPixmap);
 
@@ -115,19 +107,36 @@ void MainWindow::timerEvent(QTimerEvent *event)
         }
 
         painter.end();
-
         this->ui->GameRect->setPixmap(Game_originalPixmap);
-
-
-
-
-
-
-
-
 
     }
 }
+
+
+
+void MainWindow::run_script()
+{
+    try{
+        if(IsRunScript)
+        {
+            engine.evaluate("dorun();");
+            if(engine.hasUncaughtException()){
+
+                    QString errinfo =  engine.uncaughtException().toString();
+                    errinfo += engine.uncaughtExceptionBacktrace().join("/n");
+
+                    Add_Log_Msg(errinfo);
+            }
+        }
+    }
+    catch(...)
+    {
+
+    }
+
+}
+
+
 
 void MainWindow::Add_Log_Msg(QString msg)
 {
@@ -141,17 +150,17 @@ void MainWindow::Clear_Log_Msg()
 
 void MainWindow::Mouse_Move_To(int x, int y)
 {
-    hardKeyMouse.MouseMove(this->GameRect.left()+x,this->GameRect.top()+y);
+    hardKeyMouse->MouseMove(this->GameRect.left()+x,this->GameRect.top()+y);
 }
 
 void MainWindow::Mouse_Click(int type)
 {
-    hardKeyMouse.MouseClick(type);
+    hardKeyMouse->MouseClick(type);
 }
 
 void MainWindow::Key_Click(int key1, int key2)
 {
-    hardKeyMouse.KeyClick(key1,key2);
+    hardKeyMouse->KeyClick(key1,key2);
 }
 
 QList<int> MainWindow::Match_Image_Rect(QString image_name, float mini_value, int method)
@@ -189,10 +198,9 @@ void MainWindow::on_pushButton_Test_clicked()
 void MainWindow::on_actionStart_triggered()
 {
     if(!timer_status){
-        this->timer_id = this->startTimer(150);
+        this->timer_id = this->startTimer(200);
         timer_status = true;
     }
-
     //载入脚本
     //读取js文件
     QString fileName("script/main.js");
@@ -511,6 +519,7 @@ void MainWindow::ui_heroinfo_update()
     str = QString("Size:[%1,%2]").arg(this->MapSize.width()).arg(this->MapSize.height());
     this->ui->l_Map_Size->setText(str);
 }
+
 
 
 

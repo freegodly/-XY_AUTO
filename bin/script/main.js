@@ -162,14 +162,6 @@ var MapSwitchInfo =[
 
 
 
-var TaskState = new Array();
-
-var TaskList = new Array();
-
-TaskState.Run_Times = 0;
-TaskState.NowRunTaskIndex = 0;
-TaskState.CellTaskState =  new Array();
-
 
 function MouseMoveTo(Targ,NowState,CellTaskState,Direction){
 	if(CellTaskState.NowRun == null){
@@ -334,6 +326,7 @@ function GoPointMiniMap(Args,CellTaskState){
 
 //[srcmap,targmap]
 function GoSwitchMap(Args,CellTaskState){
+	XY.Add_Log_Msg("1111");
 	if(CellTaskState.NowRun == null){
 		XY.Add_Log_Msg("GoSwitchMap.....Start");
 		CellTaskState.NowRun = GoSwitchMap;
@@ -367,6 +360,7 @@ function GoSwitchMap(Args,CellTaskState){
 		}
 	}
 	else if(CellTaskState.RunStep == 0){
+		XY.Add_Log_Msg("GoPointMiniMap");
 		if(GoPointMiniMap(CellTaskState.MapSwitchInfoStep.gopoint,CellTaskState.GoPointMiniMap_TaskState)){
 			CellTaskState.RunStep=CellTaskState.RunStep+1;
 			XY.Key_Click(109,-1)
@@ -470,12 +464,26 @@ function GoSwitchMap(Args,CellTaskState){
 
 
 
+
+
+
+
+
+var TaskState = new Array();
+
+var TaskList = new Array();
+
+TaskState.Run_Times = 0;
+TaskState.NowRunTaskIndex = 0;
+TaskState.CellTaskState =  new Array();
+
 function FirstRun(){
 	XY.Clear_Log_Msg();
 	XY.Set_Gamge_ForegroundWindow();
 
+	XY.Add_Log_Msg("FirstRun")
 	//创建任务
-	//TaskList.push(["GoPointMiniMap",GoPointMiniMap,[590,360]])
+	TaskList.push(["GoPointMiniMap",GoPointMiniMap,[106,90]])
 	// TaskList.push(["GoSwitchMap",GoSwitchMap,["长安城","江南野外"]])
 	// TaskList.push(["GoSwitchMap",GoSwitchMap,["江南野外","建邺城"]])
 	// TaskList.push(["GoSwitchMap",GoSwitchMap,["建邺城","江南野外"]])
@@ -495,27 +503,27 @@ function FirstRun(){
 	//TaskList.push(["GoSwitchMap",GoSwitchMap,["东海湾","建邺城"]])
 	//TaskList.push(["GoSwitchMap",GoSwitchMap,["东海湾","傲来国"]])
 	//return 
- 	TaskList.push(["GoSwitchMap",GoSwitchMap,["长安城","江南野外"]])
- 	TaskList.push(["GoSwitchMap",GoSwitchMap,["江南野外","建邺城"]])
- 	TaskList.push(["GoSwitchMap",GoSwitchMap,["建邺城","东海湾"]])
- 	TaskList.push(["GoSwitchMap",GoSwitchMap,["东海湾","傲来国"]])
- 	TaskList.push(["GoSwitchMap",GoSwitchMap,["傲来国","花果山"]])
- 	TaskList.push(["GoSwitchMap",GoSwitchMap,["花果山","北俱芦洲"]])
- 	TaskList.push(["GoSwitchMap",GoSwitchMap,["北俱芦洲","长寿郊外"]])
- 	TaskList.push(["GoSwitchMap",GoSwitchMap,["长寿郊外","长寿村"]])
+ // 	TaskList.push(["GoSwitchMap",GoSwitchMap,["长安城","江南野外"]])
+ // 	TaskList.push(["GoSwitchMap",GoSwitchMap,["江南野外","建邺城"]])
+ // 	TaskList.push(["GoSwitchMap",GoSwitchMap,["建邺城","东海湾"]])
+ // 	TaskList.push(["GoSwitchMap",GoSwitchMap,["东海湾","傲来国"]])
+ // 	TaskList.push(["GoSwitchMap",GoSwitchMap,["傲来国","花果山"]])
+ // 	TaskList.push(["GoSwitchMap",GoSwitchMap,["花果山","北俱芦洲"]])
+ // 	TaskList.push(["GoSwitchMap",GoSwitchMap,["北俱芦洲","长寿郊外"]])
+ // 	TaskList.push(["GoSwitchMap",GoSwitchMap,["长寿郊外","长寿村"]])
 
-	TaskList.push(["GoSwitchMap",GoSwitchMap,["长寿村","长寿郊外"]])
-	TaskList.push(["GoSwitchMap",GoSwitchMap,["长寿郊外","北俱芦洲"]])
-	TaskList.push(["GoSwitchMap",GoSwitchMap,["北俱芦洲","花果山"]])
-	TaskList.push(["GoSwitchMap",GoSwitchMap,["花果山","傲来国"]])
-	TaskList.push(["GoSwitchMap",GoSwitchMap,["傲来国","东海湾"]])
-	TaskList.push(["GoSwitchMap",GoSwitchMap,["东海湾","建邺城"]])
-	TaskList.push(["GoSwitchMap",GoSwitchMap,["建邺城","江南野外"]])
-	TaskList.push(["GoSwitchMap",GoSwitchMap,["江南野外","长安城"]])
+	// TaskList.push(["GoSwitchMap",GoSwitchMap,["长寿村","长寿郊外"]])
+	// TaskList.push(["GoSwitchMap",GoSwitchMap,["长寿郊外","北俱芦洲"]])
+	// TaskList.push(["GoSwitchMap",GoSwitchMap,["北俱芦洲","花果山"]])
+	// TaskList.push(["GoSwitchMap",GoSwitchMap,["花果山","傲来国"]])
+	// TaskList.push(["GoSwitchMap",GoSwitchMap,["傲来国","东海湾"]])
+	// TaskList.push(["GoSwitchMap",GoSwitchMap,["东海湾","建邺城"]])
+	// TaskList.push(["GoSwitchMap",GoSwitchMap,["建邺城","江南野外"]])
+	// TaskList.push(["GoSwitchMap",GoSwitchMap,["江南野外","长安城"]])
 
 	XY.Add_Log_Msg(XY.MapName);
 	
-
+	XY.Add_Log_Msg("FirstRun End")
 }
 
 
@@ -529,7 +537,6 @@ function dorun(){
 	TaskState.Run_Times = TaskState.Run_Times + 1 ;
 	if(TaskState.Run_Times==1){
 		FirstRun();
-		TaskState.NNCellTaskState = [];
 		return 
 	}
 
@@ -537,18 +544,23 @@ function dorun(){
 
 	if(TaskState.Run_Times>10)
 	{
-		// var ConfirmRect = XY.Match_Image_Rect("feature/map/to_dohaiwan.png",0.85,1)
-		// XY.Draw_Gamge_Rect(ConfirmRect[0],ConfirmRect[1],ConfirmRect[2],ConfirmRect[3])
-		// XY.Add_Log_Msg("X:"+ConfirmRect[0]+"  Y:"+ConfirmRect[1])
-		//MouseMoveTo([590,360],XY.MousePoint,TaskState.NNCellTaskState)
-		if(TaskState.NowRunTaskIndex <= TaskList.length -1){
-			var result = TaskList[TaskState.NowRunTaskIndex][1](TaskList[TaskState.NowRunTaskIndex][2],TaskState.CellTaskState);
-			if(result){
+		if(TaskState.NowRunTaskIndex <= TaskList.length -1)
+		{
+			var taskname 	= 	TaskList[TaskState.NowRunTaskIndex][0]
+			var taskfunc 	= 	TaskList[TaskState.NowRunTaskIndex][1]
+			var taskarg 	= 	TaskList[TaskState.NowRunTaskIndex][2]
+		
+			var result = taskfunc(taskarg,TaskState.CellTaskState)
+		
+			if(result)
+			{
 				TaskState.CellTaskState = [];
 				XY.Add_Log_Msg("Task:"+TaskList[TaskState.NowRunTaskIndex][0]+".....OK");
 				TaskState.NowRunTaskIndex= TaskState.NowRunTaskIndex+1;
 			}
-		}else if(TaskState.NowRunTaskIndex == TaskList.length){
+		}
+		else if(TaskState.NowRunTaskIndex == TaskList.length)
+		{
 			XY.Add_Log_Msg("完成任务");
 			TaskState.NowRunTaskIndex= TaskState.NowRunTaskIndex+1;
 		}

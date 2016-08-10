@@ -15,7 +15,7 @@ INCLUDEPATH += 3rd/opencv/include
 
 LIBS += ../MHXY/3rd/opencv/lib/*.a -lgdi32
 
-QMAKE_LFLAGS += -O0
+#QMAKE_LFLAGS += -O0
 
 SOURCES += src/main.cpp\
        src/mainwindow.cpp \

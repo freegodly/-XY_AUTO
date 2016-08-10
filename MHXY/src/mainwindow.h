@@ -11,6 +11,7 @@
 #include <QtScript>
 #include <QRect>
 #include <QPainter>
+#include <QTimer>
 
 namespace Ui {
 class MainWindow;
@@ -37,6 +38,7 @@ public:
 
 protected:
     void timerEvent( QTimerEvent *event );
+
 
 public slots:
     void Add_Log_Msg(QString msg);
@@ -74,12 +76,14 @@ private:
     Ui::MainWindow *ui;
     uchar *imgData;
     int timer_id;
+
+
     bool timer_status;
     HWND GameHwnd;
     QRect GameRect;
     QScriptEngine engine;
 
-    HardKeyMouse hardKeyMouse;
+    HardKeyMouse *hardKeyMouse;
 
     IplImage* p_Game_Image;
 
@@ -114,6 +118,8 @@ private:
     QPoint minimapmouse_location_sub(IplImage *Ipl_image,int type);
     void map_info_update();
     void ui_heroinfo_update();
+
+    void run_script();
 };
 
 #endif // MAINWINDOW_H
