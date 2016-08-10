@@ -62,6 +62,14 @@ private slots:
 
     void on_actionStop_triggered();
 
+    void on_action_ScriptRun_triggered();
+
+    void on_action_ScriptStop_triggered();
+
+    void on_action_LoadScript_triggered();
+
+    void on_actionSelectWindow_triggered();
+
 private:
     Ui::MainWindow *ui;
     uchar *imgData;
@@ -76,6 +84,9 @@ private:
     IplImage* p_Game_Image;
 
     QList<QRect> PaintRectList;
+
+
+    bool IsRunScript;
 
 
 public:

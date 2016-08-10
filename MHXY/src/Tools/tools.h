@@ -8,6 +8,7 @@
 #include <opencv/cv.hpp>
 #include <opencv2/opencv.hpp>
 #include <QRect>
+#include <QList>
 
 struct Find_Obj_Result{
      int x;
@@ -21,7 +22,10 @@ struct Result_Feature_Info{
     QString mean;
 };
 
-
+struct Window_Info{
+    QString  Title;
+    HWND hwnd;
+};
 
 class Tools : public QObject
 {
@@ -30,6 +34,9 @@ public:
     explicit Tools(QObject *parent = 0);
 
 public:
+
+  static QList<Window_Info> GetTopWindow();
+
   static IplImage*  HBitmapToIpl     (HBITMAP            hBmp);
   static IplImage*  GetHwndImage     (HWND               hWnd);
   static QImage*    IplImageToQImage (IplImage *img,uchar *buff);
@@ -67,6 +74,9 @@ public:
 signals:
 
 public slots:
+
+public:
+   static QList<Window_Info> Window_Info_List;
 };
 
 #endif // TOOLS_H

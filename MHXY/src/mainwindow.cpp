@@ -11,6 +11,10 @@
 #include <ctime>
 #include <QPainter>
 #include <QScriptValue>
+#include "ui/selectwindowdialog.h"
+#include <QDesktopWidget>
+#include <QScreen>
+
 
 
 
@@ -21,12 +25,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
+   IsRunScript  = false;
    timer_status = false;
    this->imgData = new uchar[640*480*3];
-   GameHwnd = FindWindow(L"WSGAME",NULL);
 
-
+   GameHwnd = FindWindowA("WSGAME",NULL);
    QScriptValue qcmu = engine.newQObject(this);
    engine.globalObject().setProperty("XY", qcmu);
 
@@ -39,22 +42,23 @@ MainWindow::~MainWindow()
 
 void MainWindow::timerEvent(QTimerEvent *event)
 {
+
     // 调用方法
     if(GameHwnd)
     {
-
         RECT rect;
         GetWindowRect(GameHwnd, &rect);
+        if(rect.left < 0) return;
+
         GameRect = {rect.left+3,rect.top+26,640,480};
 
+        QScreen *screen = QGuiApplication::primaryScreen();
 
-        IplImage* Ipl_imagee  = Tools::GetDesktopHwndImage(GameHwnd);
+        QPixmap Game_originalPixmap=screen->grabWindow(QApplication::desktop()->winId(),rect.left+3,rect.top+26,640,480);
 
-        if(Ipl_imagee==NULL) return;
-        if(Ipl_imagee->width < 640) return;
+        QImage image = Game_originalPixmap.toImage();
 
-        IplImage* Ipl_sub_image = Tools::GetSubImage(Ipl_imagee,cvRect(3,26,640,480));
-        cvReleaseImage(&Ipl_imagee);
+        IplImage* Ipl_sub_image = Tools::QImageToIplImage(&image);
 
 
         find_obj(Ipl_sub_image);
@@ -67,19 +71,23 @@ void MainWindow::timerEvent(QTimerEvent *event)
         //给dorun使用
         this->p_Game_Image = Ipl_sub_image;
         PaintRectList.clear();
-        engine.evaluate("dorun();");
-        if(engine.hasUncaughtException()){
 
-                QString errinfo =  engine.uncaughtException().toString();
-                errinfo += engine.uncaughtExceptionBacktrace().join("/n");
+        if(IsRunScript)
+        {
+            engine.evaluate("dorun();");
+            if(engine.hasUncaughtException()){
 
-                Add_Log_Msg(errinfo);
+                    QString errinfo =  engine.uncaughtException().toString();
+                    errinfo += engine.uncaughtExceptionBacktrace().join("/n");
+
+                    Add_Log_Msg(errinfo);
+            }
         }
 
 
-        QImage* GameImage  = Tools::IplImageToQImage(Ipl_sub_image,this->imgData);
         cvReleaseImage(&Ipl_sub_image);
-        QPixmap Game_originalPixmap = QPixmap::fromImage(*GameImage);
+
+
         QPainter painter(&Game_originalPixmap);
 
 
@@ -549,4 +557,46 @@ QList<int> MainWindow::getMinimapmouseLocation()
 {
     QList<int> value ={this->MinimapmouseLocation.x(),this->MinimapmouseLocation.y()};
     return value;
+}
+
+
+void MainWindow::on_action_ScriptRun_triggered()
+{
+    IsRunScript = true;
+}
+
+void MainWindow::on_action_ScriptStop_triggered()
+{
+     IsRunScript = false;
+}
+
+void MainWindow::on_action_LoadScript_triggered()
+{
+    //载入脚本
+    //读取js文件
+    QString fileName("script/main.js");
+    QFile scriptFile(fileName);
+    scriptFile.open(QIODevice::ReadOnly);
+    QTextStream stream(&scriptFile);
+    stream.setCodec("UTF-8");
+    QString contents = stream.readAll();
+    scriptFile.close();
+    engine.evaluate(contents, "script/main.js");
+    if(engine.hasUncaughtException()){
+
+            QString errinfo =  engine.uncaughtException().toString();
+            errinfo += engine.uncaughtExceptionBacktrace().join("/n");
+
+            Add_Log_Msg(errinfo);
+    }
+}
+
+void MainWindow::on_actionSelectWindow_triggered()
+{
+
+
+    SelectWindowDialog swd;
+    swd.exec();
+    GameHwnd = swd.Select_Hwnd;
+    qDebug()<<GameHwnd;
 }

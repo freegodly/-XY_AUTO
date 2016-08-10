@@ -2,9 +2,43 @@
 #include <QDebug>
 
 
+
+ QList<Window_Info> Tools::Window_Info_List;
+
+BOOL   CALLBACK   EnumWindowsProc(
+      HWND   hWnd,             //   handle   to   parent   window
+      LPARAM   lParam       //   application-defined   value
+  )
+{
+    if (GetParent(hWnd)==NULL && IsWindowVisible(hWnd) )  //判断是否顶层窗口并且可见
+        {
+            char WindowTitle[100]={0};
+            ::GetWindowTextA(hWnd,WindowTitle,100);
+
+            Window_Info wi={QString::fromLocal8Bit(WindowTitle),hWnd};
+            Tools::Window_Info_List.append(wi);
+
+            //printf("%s\n",WindowTitle);
+
+            //EnumChildWindows(hWnd,EnumChildWindowsProc,NULL); //获取父窗口的所有子窗口
+        }
+
+        return true;
+
+}
+
+
 Tools::Tools(QObject *parent) : QObject(parent)
 {
 
+}
+
+QList<Window_Info> Tools::GetTopWindow()
+{
+    Tools::Window_Info_List.clear();
+    EnumWindows(EnumWindowsProc ,NULL );
+
+    return   Tools::Window_Info_List;
 }
 
 
@@ -41,7 +75,11 @@ IplImage* Tools::HBitmapToIpl(HBITMAP hBmp)
     // create the image
     IplImage *dst = cvCreateImage(cvGetSize(img),img->depth,3);
     // convert color
-    cvCvtColor(img,dst,CV_BGRA2BGR);
+    if(nChannels>1)
+    {
+        cvCvtColor(img,dst,CV_BGRA2BGR);
+    }
+
     cvReleaseImage(&img);
     return dst;
 }
@@ -162,24 +200,31 @@ IplImage* Tools::GetDesktopHwndImage(HWND hWnd)
 
 IplImage *Tools::GetSubImage( IplImage *img, CvRect rect)
 {
-     cvSetImageROI(img,rect);//设置源图像ROI
-     IplImage* pDest = cvCreateImage(cvSize(rect.width,rect.height),img->depth,img->nChannels);//创建目标图像
-     cvCopy(img,pDest); //复制图像
-     cvResetImageROI(img);//源图像用完后，清空ROI
-     return pDest;
+     try{
+         cvSetImageROI(img,rect);//设置源图像ROI
+         IplImage* pDest = cvCreateImage(cvSize(rect.width,rect.height),img->depth,img->nChannels);//创建目标图像
+         cvCopy(img,pDest); //复制图像
+         cvResetImageROI(img);//源图像用完后，清空ROI
+         return pDest;
+    }
+   catch(...){
+        return NULL;
+    }
 }
 
 
 
 QImage* Tools::IplImageToQImage(IplImage *img, uchar *buff)
 {
-    cvCvtColor((CvArr*)img,(CvArr*)img,CV_BGR2RGB);
-    //uchar *imgData = new uchar[img->imageSize];
-    memcpy(buff,img->imageData,img->imageSize);
-    //uchar *imgData=(uchar *)img->imageData;
-    QImage * image=new QImage(buff,img->width,img->height,QImage::Format_RGB888);
 
-    return image;
+        cvCvtColor((CvArr*)img,(CvArr*)img,CV_BGR2RGB);
+        //uchar *imgData = new uchar[img->imageSize];
+        memcpy(buff,img->imageData,img->imageSize);
+        //uchar *imgData=(uchar *)img->imageData;
+        QImage * image=new QImage(buff,img->width,img->height,QImage::Format_RGB888);
+
+        return image;
+
 }
 
 

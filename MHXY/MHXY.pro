@@ -20,11 +20,14 @@ QMAKE_LFLAGS += -O0
 SOURCES += src/main.cpp\
        src/mainwindow.cpp \
     src/Tools/tools.cpp \
-    src/Tools/hardkeymouse.cpp
+    src/Tools/hardkeymouse.cpp \
+    src/ui/selectwindowdialog.cpp
 
 HEADERS  += src/mainwindow.h \
     src/Tools/tools.h \
-    src/Tools/hardkeymouse.h
+    src/Tools/hardkeymouse.h \
+    src/ui/selectwindowdialog.h
 
-FORMS    += src/mainwindow.ui
+FORMS    += src/mainwindow.ui \
+    src/ui/selectwindowdialog.ui
 
