@@ -13,6 +13,10 @@
 #include <QPainter>
 #include <QTimer>
 
+
+class ScriptThread;
+
+
 namespace Ui {
 class MainWindow;
 }
@@ -29,6 +33,7 @@ class MainWindow : public QMainWindow
     Q_PROPERTY( QList<int>      MiniMapSize             READ getMiniMapSize)
     Q_PROPERTY( QList<int>      HeroLocation            READ getHeroLocation)
     Q_PROPERTY( QList<int>      MinimapmouseLocation    READ getMinimapmouseLocation)
+    Q_PROPERTY( QList<int>      TempValueList           READ getTempValueList)
 
 public:
     explicit MainWindow(QWidget *parent = 0);
@@ -39,25 +44,30 @@ public:
 protected:
     void timerEvent( QTimerEvent *event );
 
+signals:
+    void SIGNAL_Add_Log_Msg(QString msg);
+    void SIGNAL_Clear_Log_Msg();
+    void SIGNAL_Match_Image_Rect(QString image_name,float mini_value = 0.8,int method=0);
+    void SIGNAL_Draw_Gamge_Rect(int x,int y,int w,int h);
 
 public slots:
     void Add_Log_Msg(QString msg);
 
     void Clear_Log_Msg();
 
-    void Mouse_Move_To(int x , int y);
-
-    void Mouse_Click(int type);
-
-    void Key_Click(int key1,int key2=-1);
-
-    QList<int> Match_Image_Rect(QString image_name,float mini_value = 0.8,int method=0);
+    void Match_Image_Rect(QString image_name,float mini_value = 0.8,int method=0);
 
     void Set_Gamge_ForegroundWindow();
 
     void Draw_Gamge_Rect(int x,int y,int w,int h);
 
 private slots:
+
+    void SLOT_Add_Log_Msg(QString msg);
+    void SLOT_Clear_Log_Msg();
+    void SLOT_Match_Image_Rect( QString image_name, float mini_value = 0.8, int method=0);
+    void SLOT_Draw_Gamge_Rect(int x,int y,int w,int h);
+
     void on_pushButton_Test_clicked();
 
     void on_actionStart_triggered();
@@ -68,29 +78,24 @@ private slots:
 
     void on_action_ScriptStop_triggered();
 
-    void on_action_LoadScript_triggered();
-
     void on_actionSelectWindow_triggered();
 
 private:
     Ui::MainWindow *ui;
     uchar *imgData;
     int timer_id;
-
+    ScriptThread *script;
 
     bool timer_status;
     HWND GameHwnd;
     QRect GameRect;
-    QScriptEngine engine;
 
-    HardKeyMouse *hardKeyMouse;
 
     IplImage* p_Game_Image;
-
+    QPixmap Game_originalPixmap;
     QList<QRect> PaintRectList;
 
 
-    bool IsRunScript;
 
 
 public:
@@ -100,6 +105,7 @@ public:
     QSize  MiniMapSize;
     QPoint HeroLocation;
     QPoint MinimapmouseLocation;
+    QList<int> TempValueList;
 
 private:
     QList<int> getMousePoint();
@@ -108,6 +114,7 @@ private:
     QList<int>  getMiniMapSize();
     QList<int> getHeroLocation();
     QList<int> getMinimapmouseLocation();
+    QList<int> getTempValueList();
 
 
 private:

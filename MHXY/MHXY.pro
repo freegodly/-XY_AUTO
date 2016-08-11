@@ -15,18 +15,20 @@ INCLUDEPATH += 3rd/opencv/include
 
 LIBS += ../MHXY/3rd/opencv/lib/*.a -lgdi32
 
-#QMAKE_LFLAGS += -O0
+#QMAKE_CXXFLAGS += -O0
 
 SOURCES += src/main.cpp\
        src/mainwindow.cpp \
     src/Tools/tools.cpp \
     src/Tools/hardkeymouse.cpp \
-    src/ui/selectwindowdialog.cpp
+    src/ui/selectwindowdialog.cpp \
+    src/scriptthread.cpp
 
 HEADERS  += src/mainwindow.h \
     src/Tools/tools.h \
     src/Tools/hardkeymouse.h \
-    src/ui/selectwindowdialog.h
+    src/ui/selectwindowdialog.h \
+    src/scriptthread.h
 
 FORMS    += src/mainwindow.ui \
     src/ui/selectwindowdialog.ui

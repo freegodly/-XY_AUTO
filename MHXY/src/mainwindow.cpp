@@ -14,7 +14,7 @@
 #include "ui/selectwindowdialog.h"
 #include <QDesktopWidget>
 #include <QScreen>
-
+#include "scriptthread.h"
 
 
 
@@ -25,16 +25,23 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-   IsRunScript  = false;
+
+    connect(this,SIGNAL(SIGNAL_Add_Log_Msg(QString)),this,SLOT(SLOT_Add_Log_Msg(QString)));
+    connect(this,SIGNAL(SIGNAL_Clear_Log_Msg()),this,SLOT(SLOT_Clear_Log_Msg()));
+
+    connect(this,SIGNAL(SIGNAL_Draw_Gamge_Rect(int,int,int,int)),this,SLOT(SLOT_Draw_Gamge_Rect(int,int,int,int)));
+    connect(this,SIGNAL(SIGNAL_Match_Image_Rect(QString,float,int)),this,SLOT(SLOT_Match_Image_Rect(QString,float,int)));
+
    timer_status = false;
 
-   hardKeyMouse = new HardKeyMouse();
 
    this->imgData = new uchar[640*480*3];
 
    GameHwnd = FindWindow(L"WSGAME",NULL);
-   QScriptValue qcmu = engine.newQObject(this);
-   engine.globalObject().setProperty("XY", qcmu);
+
+   this->p_Game_Image = NULL;
+
+   script  = NULL;
 }
 
 MainWindow::~MainWindow()
@@ -56,29 +63,23 @@ void MainWindow::timerEvent(QTimerEvent *event)
 
         QScreen *screen = QGuiApplication::primaryScreen();
 
-        QPixmap Game_originalPixmap=screen->grabWindow(QApplication::desktop()->winId(),rect.left+3,rect.top+26,640,480);
+        Game_originalPixmap=screen->grabWindow(QApplication::desktop()->winId(),rect.left+3,rect.top+26,640,480);
 
         QImage image = Game_originalPixmap.toImage();
 
-        IplImage* Ipl_sub_image = Tools::QImageToIplImage(&image);
+        if(this->p_Game_Image!=NULL)
+        {
+            cvReleaseImage(&this->p_Game_Image);
+        }
+        this->p_Game_Image = Tools::QImageToIplImage(&image);
 
 
-        find_obj(Ipl_sub_image);
+        find_obj(this->p_Game_Image);
 
 
         map_info_update();
         ui_heroinfo_update();
 
-
-        //给dorun使用
-        this->p_Game_Image = Ipl_sub_image;
-        PaintRectList.clear();
-        ///
-        /// \brief run_script
-        ///
-        run_script();
-
-        cvReleaseImage(&Ipl_sub_image);
 
         QPainter painter(&Game_originalPixmap);
 
@@ -105,6 +106,7 @@ void MainWindow::timerEvent(QTimerEvent *event)
         foreach(QRect rc,PaintRectList){
             painter.drawRect(rc.x(),rc.y(),rc.width(),rc.height());
         }
+        PaintRectList.clear();
 
         painter.end();
         this->ui->GameRect->setPixmap(Game_originalPixmap);
@@ -114,68 +116,21 @@ void MainWindow::timerEvent(QTimerEvent *event)
 
 
 
-void MainWindow::run_script()
-{
-    try{
-        if(IsRunScript)
-        {
-            engine.evaluate("dorun();");
-            if(engine.hasUncaughtException()){
-
-                    QString errinfo =  engine.uncaughtException().toString();
-                    errinfo += engine.uncaughtExceptionBacktrace().join("/n");
-
-                    Add_Log_Msg(errinfo);
-            }
-        }
-    }
-    catch(...)
-    {
-
-    }
-
-}
-
-
+//########################################导出方法
 
 void MainWindow::Add_Log_Msg(QString msg)
 {
-    ui->t_RunLog->append(msg);
+    emit SIGNAL_Add_Log_Msg(msg);
 }
 
 void MainWindow::Clear_Log_Msg()
 {
-    ui->t_RunLog->clear();
+    emit SIGNAL_Clear_Log_Msg();
 }
 
-void MainWindow::Mouse_Move_To(int x, int y)
+void MainWindow::Match_Image_Rect(QString image_name, float mini_value, int method)
 {
-    hardKeyMouse->MouseMove(this->GameRect.left()+x,this->GameRect.top()+y);
-}
-
-void MainWindow::Mouse_Click(int type)
-{
-    hardKeyMouse->MouseClick(type);
-}
-
-void MainWindow::Key_Click(int key1, int key2)
-{
-    hardKeyMouse->KeyClick(key1,key2);
-}
-
-QList<int> MainWindow::Match_Image_Rect(QString image_name, float mini_value, int method)
-{
-    QList<int> qrect={-1,-1,0,0};
-
-    IplImage* p_image_mouse = cvLoadImage(image_name.toStdString().c_str(),CV_LOAD_IMAGE_COLOR);
-
-    if(p_image_mouse != NULL) {
-        CvRect rect=  Tools::find_obj_matchtemplate(this->p_Game_Image,p_image_mouse,mini_value,method);
-        cvReleaseImage(&p_image_mouse);
-        qrect = {rect.x,rect.y,rect.width,rect.height};
-    }
-
-    return qrect;
+    emit SIGNAL_Match_Image_Rect(image_name,mini_value,method);
 }
 
 void MainWindow::Set_Gamge_ForegroundWindow()
@@ -187,8 +142,46 @@ void MainWindow::Set_Gamge_ForegroundWindow()
 
 void MainWindow::Draw_Gamge_Rect(int x, int y, int w, int h)
 {
-    PaintRectList.append({x,y,w,h});
+    emit SIGNAL_Draw_Gamge_Rect(x,y,w,h);
 }
+
+
+//#######################################信号曹
+
+void MainWindow::SLOT_Add_Log_Msg(QString msg)
+{
+     ui->t_RunLog->append(msg);
+}
+
+void MainWindow::SLOT_Clear_Log_Msg()
+{
+     ui->t_RunLog->clear();
+}
+
+void MainWindow::SLOT_Match_Image_Rect(QString image_name, float mini_value, int method)
+{
+   QList<int> qrect={-1,-1,0,0};
+
+    IplImage* p_image_mouse = cvLoadImage(image_name.toStdString().c_str(),CV_LOAD_IMAGE_COLOR);
+
+    if(p_image_mouse != NULL) {
+        CvRect rect=  Tools::find_obj_matchtemplate(this->p_Game_Image,p_image_mouse,mini_value,method);
+        cvReleaseImage(&p_image_mouse);
+        qrect = {rect.x,rect.y,rect.width,rect.height};
+    }
+
+    TempValueList = qrect;
+}
+
+void MainWindow::SLOT_Draw_Gamge_Rect(int x, int y, int w, int h)
+{
+     PaintRectList.append({x,y,w,h});
+}
+
+
+
+//########################################  事件
+
 
 void MainWindow::on_pushButton_Test_clicked()
 {
@@ -201,23 +194,6 @@ void MainWindow::on_actionStart_triggered()
         this->timer_id = this->startTimer(200);
         timer_status = true;
     }
-    //载入脚本
-    //读取js文件
-    QString fileName("script/main.js");
-    QFile scriptFile(fileName);
-    scriptFile.open(QIODevice::ReadOnly);
-    QTextStream stream(&scriptFile);
-    stream.setCodec("UTF-8");
-    QString contents = stream.readAll();
-    scriptFile.close();
-    engine.evaluate(contents, "script/main.js");
-    if(engine.hasUncaughtException()){
-
-            QString errinfo =  engine.uncaughtException().toString();
-            errinfo += engine.uncaughtExceptionBacktrace().join("/n");
-
-            Add_Log_Msg(errinfo);
-    }
 }
 
 void MainWindow::on_actionStop_triggered()
@@ -226,6 +202,41 @@ void MainWindow::on_actionStop_triggered()
     timer_status = false;
 }
 
+void MainWindow::on_action_ScriptRun_triggered()
+{
+    if(script==NULL)
+    {
+       script = new ScriptThread(this);
+       script->LoadScriptFile();
+       script->start();
+    }
+
+}
+
+
+void MainWindow::on_action_ScriptStop_triggered()
+{
+    if(script != NULL){
+
+         script->terminate();
+         //script->exit();
+         script = NULL;
+    }
+
+}
+
+void MainWindow::on_actionSelectWindow_triggered()
+{
+
+
+    SelectWindowDialog swd;
+    swd.exec();
+    GameHwnd = swd.Select_Hwnd;
+    qDebug()<<GameHwnd;
+}
+
+
+//########################################  主要方法
 
 void MainWindow::find_obj(IplImage* Ipl_image)
 {
@@ -528,7 +539,7 @@ void MainWindow::ui_heroinfo_update()
 
 
 
-///////////////////////////////property
+//##############################property
 
 
 QList<int> MainWindow::getMousePoint()
@@ -568,44 +579,8 @@ QList<int> MainWindow::getMinimapmouseLocation()
     return value;
 }
 
-
-void MainWindow::on_action_ScriptRun_triggered()
+QList<int> MainWindow::getTempValueList()
 {
-    IsRunScript = true;
+    return TempValueList;
 }
 
-void MainWindow::on_action_ScriptStop_triggered()
-{
-     IsRunScript = false;
-}
-
-void MainWindow::on_action_LoadScript_triggered()
-{
-    //载入脚本
-    //读取js文件
-    QString fileName("script/main.js");
-    QFile scriptFile(fileName);
-    scriptFile.open(QIODevice::ReadOnly);
-    QTextStream stream(&scriptFile);
-    stream.setCodec("UTF-8");
-    QString contents = stream.readAll();
-    scriptFile.close();
-    engine.evaluate(contents, "script/main.js");
-    if(engine.hasUncaughtException()){
-
-            QString errinfo =  engine.uncaughtException().toString();
-            errinfo += engine.uncaughtExceptionBacktrace().join("/n");
-
-            Add_Log_Msg(errinfo);
-    }
-}
-
-void MainWindow::on_actionSelectWindow_triggered()
-{
-
-
-    SelectWindowDialog swd;
-    swd.exec();
-    GameHwnd = swd.Select_Hwnd;
-    qDebug()<<GameHwnd;
-}

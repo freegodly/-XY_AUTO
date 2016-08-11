@@ -128,7 +128,7 @@
          <property name="title">
           <string>基本信息</string>
          </property>
-         <widget class="QWidget" name="">
+         <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
            <rect>
             <x>10</x>
@@ -241,7 +241,6 @@
     </property>
     <addaction name="action_ScriptRun"/>
     <addaction name="action_ScriptStop"/>
-    <addaction name="action_LoadScript"/>
    </widget>
    <addaction name="menu"/>
    <addaction name="menu_2"/>

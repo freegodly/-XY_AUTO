@@ -157,11 +157,15 @@ var MapSwitchInfo =[
 	},
 ]
 
+var TaskState = new Array();
 
+var TaskList = new Array();
 
+var ClickSleep = 500
 
-
-
+TaskState.Run_Times = 0;
+TaskState.NowRunTaskIndex = 0;
+TaskState.CellTaskState =  new Array();
 
 function MouseMoveTo(Targ,NowState,CellTaskState,Direction){
 	if(CellTaskState.NowRun == null){
@@ -174,7 +178,7 @@ function MouseMoveTo(Targ,NowState,CellTaskState,Direction){
 		CellTaskState.PerMouseDiff = [-1,-1]
 		CellTaskState.PerMouseRate = [-1,-1]
 		CellTaskState.AddDirection = Direction
-		XY.Mouse_Move_To(320,240);
+		ST.Mouse_Move_To(320,240);
 		return false;
 	}
 
@@ -190,7 +194,7 @@ function MouseMoveTo(Targ,NowState,CellTaskState,Direction){
 	}
 	if(CellTaskState.RunStep == 1){
 		CellTaskState.PerState = NowState
-		XY.Mouse_Move_To(330,250);
+		ST.Mouse_Move_To(330,250);
 		CellTaskState.PerMouseLocation = [330,250]
 		CellTaskState.PerMouseDiff = [10,10]
 		return false
@@ -213,7 +217,7 @@ function MouseMoveTo(Targ,NowState,CellTaskState,Direction){
 		CellTaskState.NextMouseLocation[0] = new_diff_x + CellTaskState.PerMouseLocation[0]
 		CellTaskState.NextMouseLocation[1] = new_diff_y + CellTaskState.PerMouseLocation[1]
 		CellTaskState.PerMouseLocation = CellTaskState.NextMouseLocation
-		XY.Mouse_Move_To(CellTaskState.NextMouseLocation[0],CellTaskState.NextMouseLocation[1])
+		ST.Mouse_Move_To(CellTaskState.NextMouseLocation[0],CellTaskState.NextMouseLocation[1])
 
 		return false
 
@@ -245,7 +249,7 @@ function MouseMoveTo(Targ,NowState,CellTaskState,Direction){
 		CellTaskState.NextMouseLocation[0] = CellTaskState.PerMouseDiff[0] + CellTaskState.PerMouseLocation[0]
 		CellTaskState.NextMouseLocation[1] = CellTaskState.PerMouseDiff[1] + CellTaskState.PerMouseLocation[1]
 	
-		XY.Mouse_Move_To(CellTaskState.NextMouseLocation[0],CellTaskState.NextMouseLocation[1]);
+		ST.Mouse_Move_To(CellTaskState.NextMouseLocation[0],CellTaskState.NextMouseLocation[1]);
 		CellTaskState.PerMouseDiff[0] = CellTaskState.NextMouseLocation[0]-CellTaskState.PerMouseLocation[0]
 		CellTaskState.PerMouseDiff[1] = CellTaskState.NextMouseLocation[1]-CellTaskState.PerMouseLocation[1]
 		CellTaskState.PerMouseLocation = CellTaskState.NextMouseLocation
@@ -265,10 +269,12 @@ function GoPointMiniMap(Args,CellTaskState){
 		CellTaskState.RunInit = false
 		CellTaskState.PerHeroLocation = [-1,-1]
 		CellTaskState.MouseMoveTo_CellTaskState = []
-		XY.Mouse_Move_To(320,240);
-		var ConfirmRect = XY.Match_Image_Rect("feature/map/isopenminimap.png",0.85,1)
-		if(ConfirmRect[0] == -1){
-			XY.Key_Click(300,-1);
+		ST.Mouse_Move_To(320,240);
+		XY.Match_Image_Rect("feature/map/isopenminimap.png",0.85,1)
+		ST.Sleep(200)
+        var ConfirmRect = XY.TempValueList
+        if(ConfirmRect[0] == -1){
+			ST.Key_Click(300,-1,ClickSleep);
 		}
 		return false;
 	}
@@ -298,9 +304,11 @@ function GoPointMiniMap(Args,CellTaskState){
 		if(Math.abs(hero_x_diff) <3 && Math.abs(hero_y_diff) <3)
 		{
 			//到达目标位置
-			var ConfirmRect = XY.Match_Image_Rect("feature/map/isopenminimap.png",0.85,1)
-			if(ConfirmRect[0] != -1){
-				XY.Key_Click(300,-1);
+			XY.Match_Image_Rect("feature/map/isopenminimap.png",0.85,1)
+			ST.Sleep(200)
+            var ConfirmRect = XY.TempValueList
+            if(ConfirmRect[0] != -1){
+				ST.Key_Click(300,-1,ClickSleep);
 			}
 
 			XY.Add_Log_Msg("GoPointMiniMap.....OK");
@@ -310,7 +318,7 @@ function GoPointMiniMap(Args,CellTaskState){
 		{	
 			//判断人物是否移动
 			if(Math.abs(CellTaskState.PerHeroLocation[0]-XY.HeroLocation[0]) + Math.abs(CellTaskState.PerHeroLocation[1]-XY.HeroLocation[1]) <1){
-				XY.Mouse_Click(0);
+				ST.Mouse_Click(0,ClickSleep);
 			}
 			CellTaskState.PerHeroLocation = XY.HeroLocation
 			return false;
@@ -326,7 +334,6 @@ function GoPointMiniMap(Args,CellTaskState){
 
 //[srcmap,targmap]
 function GoSwitchMap(Args,CellTaskState){
-	XY.Add_Log_Msg("1111");
 	if(CellTaskState.NowRun == null){
 		XY.Add_Log_Msg("GoSwitchMap.....Start");
 		CellTaskState.NowRun = GoSwitchMap;
@@ -363,7 +370,7 @@ function GoSwitchMap(Args,CellTaskState){
 		XY.Add_Log_Msg("GoPointMiniMap");
 		if(GoPointMiniMap(CellTaskState.MapSwitchInfoStep.gopoint,CellTaskState.GoPointMiniMap_TaskState)){
 			CellTaskState.RunStep=CellTaskState.RunStep+1;
-			XY.Key_Click(109,-1)
+			ST.Key_Click(109,-1,ClickSleep)
 		}
 
 		return false;
@@ -371,8 +378,10 @@ function GoSwitchMap(Args,CellTaskState){
 	else if(CellTaskState.RunStep == 1){
 
 		if(CellTaskState.MouseMove[0]<1){
-			var ConfirmRect = XY.Match_Image_Rect(CellTaskState.MapSwitchInfoStep.npc_image,0.85,1)
-			if(ConfirmRect[0] > 1){
+			XY.Match_Image_Rect(CellTaskState.MapSwitchInfoStep.npc_image,0.85,1)
+			ST.Sleep(200)
+            var ConfirmRect = XY.TempValueList
+            if(ConfirmRect[0] > 1){
 				CellTaskState.MouseMove = [ConfirmRect[0]+ConfirmRect[2]/2,ConfirmRect[1]-70]
 				XY.Add_Log_Msg("X:"+ConfirmRect[0]+"  Y:"+ConfirmRect[1])
 			}
@@ -391,8 +400,8 @@ function GoSwitchMap(Args,CellTaskState){
 		return false;
 	}
 	else if(CellTaskState.RunStep == 3){
-		XY.Key_Click(109,-1)
-		XY.Mouse_Click(0);
+		ST.Key_Click(109,-1,ClickSleep)
+		ST.Mouse_Click(0,ClickSleep);
 		CellTaskState.RunStep=CellTaskState.RunStep+1;
 		return false;
 	}
@@ -410,18 +419,20 @@ function GoSwitchMap(Args,CellTaskState){
 		//判断是否有消息框
 		if(Rect[0] == -1)
 		{
-			XY.Mouse_Click(0);
+			ST.Mouse_Click(0,ClickSleep);
 			return false
 		}
 		else
 		{
-			CellTaskState.ConfirmRect = XY.Match_Image_Rect("feature/map/map_switch_confirm.png",0.95,1)
-			//不是对应的确认框，关闭
+			XY.Match_Image_Rect("feature/map/map_switch_confirm.png",0.95,1)
+			ST.Sleep(200)
+            CellTaskState.ConfirmRect = XY.TempValueList
+            //不是对应的确认框，关闭
 			if(CellTaskState.ConfirmRect[0] <1)
 			{
 				var Rect_Center = [Rect[0]+Rect[2]/2+5,Rect[1]+Rect[3]/2]
 				if(MouseMoveTo(Rect_Center,XY.MousePoint,CellTaskState.MouseMoveToGameScreen_TaskState_3,[1,1])){
-					XY.Mouse_Click(0);
+					ST.Mouse_Click(0,ClickSleep);
 				}
 			}else{
 				CellTaskState.RunStep=CellTaskState.RunStep+1;
@@ -440,14 +451,14 @@ function GoSwitchMap(Args,CellTaskState){
 			CellTaskState.RunStep=CellTaskState.RunStep+1;
 			CellTaskState.IsSwitchConfirm = false
 			
-			XY.Mouse_Click(0);
+			ST.Mouse_Click(0,ClickSleep);
 		}
 		
 		return false
 	}
 	else{
 		CellTaskState.RunStep=CellTaskState.RunStep+1;
-		XY.Mouse_Click(0);
+		ST.Mouse_Click(0,ClickSleep);
 		if(XY.MapName ==CellTaskState.MapSwitchInfoStep.to ){
 			XY.Add_Log_Msg("GoSwitchMap.....OK");
 			return true;
@@ -466,21 +477,10 @@ function GoSwitchMap(Args,CellTaskState){
 
 
 
-
-
-
-var TaskState = new Array();
-
-var TaskList = new Array();
-
-TaskState.Run_Times = 0;
-TaskState.NowRunTaskIndex = 0;
-TaskState.CellTaskState =  new Array();
-
 function FirstRun(){
 	XY.Clear_Log_Msg();
 	XY.Set_Gamge_ForegroundWindow();
-
+    ST.Mouse_Move_To(320,240);
 	XY.Add_Log_Msg("FirstRun")
 	//创建任务
 	TaskList.push(["GoPointMiniMap",GoPointMiniMap,[106,90]])
@@ -521,49 +521,40 @@ function FirstRun(){
 	// TaskList.push(["GoSwitchMap",GoSwitchMap,["建邺城","江南野外"]])
 	// TaskList.push(["GoSwitchMap",GoSwitchMap,["江南野外","长安城"]])
 
-	XY.Add_Log_Msg(XY.MapName);
-	
-	XY.Add_Log_Msg("FirstRun End")
 }
 
 
 
-///////////////
-//
-//会一直被调用
-//
-//////////////
-function dorun(){
-	TaskState.Run_Times = TaskState.Run_Times + 1 ;
-	if(TaskState.Run_Times==1){
-		FirstRun();
-		return 
-	}
 
-	XY.Draw_Gamge_Rect(320,240,20,20)
+function main()
+{
+    FirstRun()
+    while(1)
+    {
+        ST.Sleep(150)
 
-	if(TaskState.Run_Times>10)
-	{
-		if(TaskState.NowRunTaskIndex <= TaskList.length -1)
-		{
-			var taskname 	= 	TaskList[TaskState.NowRunTaskIndex][0]
-			var taskfunc 	= 	TaskList[TaskState.NowRunTaskIndex][1]
-			var taskarg 	= 	TaskList[TaskState.NowRunTaskIndex][2]
-		
-			var result = taskfunc(taskarg,TaskState.CellTaskState)
-		
-			if(result)
-			{
-				TaskState.CellTaskState = [];
-				XY.Add_Log_Msg("Task:"+TaskList[TaskState.NowRunTaskIndex][0]+".....OK");
-				TaskState.NowRunTaskIndex= TaskState.NowRunTaskIndex+1;
-			}
-		}
-		else if(TaskState.NowRunTaskIndex == TaskList.length)
-		{
-			XY.Add_Log_Msg("完成任务");
-			TaskState.NowRunTaskIndex= TaskState.NowRunTaskIndex+1;
-		}
-	}
-	
+        if(TaskState.NowRunTaskIndex <= TaskList.length -1)
+        {
+            var taskname    =   TaskList[TaskState.NowRunTaskIndex][0]
+            var taskfunc    =   TaskList[TaskState.NowRunTaskIndex][1]
+            var taskarg     =   TaskList[TaskState.NowRunTaskIndex][2]
+        
+            var result = taskfunc(taskarg,TaskState.CellTaskState)
+        
+            if(result)
+            {
+                TaskState.CellTaskState = [];
+                XY.Add_Log_Msg("Task:"+TaskList[TaskState.NowRunTaskIndex][0]+".....OK");
+                TaskState.NowRunTaskIndex= TaskState.NowRunTaskIndex+1;
+            }
+        }
+        else if(TaskState.NowRunTaskIndex == TaskList.length)
+        {
+            XY.Add_Log_Msg("完成任务");
+            TaskState.NowRunTaskIndex= TaskState.NowRunTaskIndex+1;
+            break
+        }
+    }
+    
+    
 }

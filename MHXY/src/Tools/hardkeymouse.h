@@ -9,16 +9,15 @@ class HardKeyMouse : public QObject
     Q_OBJECT
 public:
     explicit HardKeyMouse(QObject *parent = 0);
-    void KeyClick(int key1, int key2);
-    void MouseClick(int button);
+    void KeyClick(int key1, int key2,int sleep);
+    void MouseClick(int button,int sleep);
     void MouseMove(int x,int y);
 signals:
 
 public slots:
 
 private:
-  //QLibrary *dd;
-  HINSTANCE dd;
+  QLibrary *dd;
 };
 
 #endif // HARDKEYMOUSE_H

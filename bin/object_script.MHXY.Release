@@ -1,0 +1,13 @@
+INPUT(
+./release/main.o
+./release/mainwindow.o
+./release/tools.o
+./release/hardkeymouse.o
+./release/selectwindowdialog.o
+./release/scriptthread.o
+./release/moc_mainwindow.o
+./release/moc_tools.o
+./release/moc_hardkeymouse.o
+./release/moc_selectwindowdialog.o
+./release/moc_scriptthread.o
+);
