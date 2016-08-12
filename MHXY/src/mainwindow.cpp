@@ -66,19 +66,22 @@ void MainWindow::timerEvent(QTimerEvent *event)
         Game_originalPixmap=screen->grabWindow(QApplication::desktop()->winId(),rect.left+3,rect.top+26,640,480);
 
         QImage image = Game_originalPixmap.toImage();
+        cv::Mat mat = Tools::QImageTocvMat(image);
+        QImage m = Tools::cvMatToQImage(mat);
+        Game_originalPixmap = QPixmap::fromImage(m);
 
-        if(this->p_Game_Image!=NULL)
-        {
-            cvReleaseImage(&this->p_Game_Image);
-        }
-        this->p_Game_Image = Tools::QImageToIplImage(&image);
+//        if(this->p_Game_Image!=NULL)
+//        {
+//            cvReleaseImage(&this->p_Game_Image);
+//        }
+//        this->p_Game_Image = Tools::QImageToIplImage(&image);
 
 
-        find_obj(this->p_Game_Image);
+//        find_obj(this->p_Game_Image);
 
 
-        map_info_update();
-        ui_heroinfo_update();
+//        map_info_update();
+//        ui_heroinfo_update();
 
 
         QPainter painter(&Game_originalPixmap);

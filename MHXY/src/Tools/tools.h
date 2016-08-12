@@ -71,6 +71,20 @@ public:
                                                              int move_px = 1, int move_py = 1 );
 
 
+
+  static QImage cvMatToQImage(cv::Mat _small_mat);
+  static cv::Mat QImageTocvMat(QImage img);
+
+
+  static Find_Obj_Result cv_find_obj_hist_mask(cv::Mat trainImage,
+                                                      cv::Mat queryImage,
+                                                      cv::Mat mask,
+                                                      float max_sum,
+                                                      int bins ,
+                                                      int startx  ,int endx ,
+                                                      int starty  ,int endy,
+                                                      int move_px ,int move_py);
+
 signals:
 
 public slots:

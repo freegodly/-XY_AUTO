@@ -248,9 +248,21 @@ IplImage *Tools::QImageToIplImage(QImage * qImage)
 }
 
 
+QImage Tools::cvMatToQImage(cv::Mat _small_mat)
+{
+    QImage img =  QImage((const unsigned char*)_small_mat.data,  _small_mat.cols, _small_mat.rows,  _small_mat.cols * _small_mat.channels(),   //new add
+    QImage::Format_RGB888);
+    return img;
+}
 
 
+cv::Mat Tools::QImageTocvMat(QImage img)
+{
+    cv::Mat mat = cv::Mat(img.height(), img.width(), CV_8UC4, (uchar*)img.bits(), img.bytesPerLine());
+    cv::cvtColor(mat, mat, CV_BGR2RGB);
 
+    return mat;
+}
 
 
 Find_Obj_Result Tools::find_obj_hist_mask(IplImage * trainImage,
@@ -352,6 +364,91 @@ Find_Obj_Result Tools::find_obj_hist_mask(IplImage * trainImage,
 
     return result;
 }
+
+
+Find_Obj_Result Tools::cv_find_obj_hist_mask(cv::Mat trainImage,
+                            cv::Mat queryImage,
+                            cv::Mat mask,
+                            float max_sum,
+                            int bins ,
+                            int startx  ,int endx ,
+                            int starty  ,int endy,
+                            int move_px ,int move_py)
+{
+
+    int    w = trainImage.cols;
+    int    h = trainImage.rows;
+    int    h_f = queryImage.rows;
+    int    w_f = queryImage.cols;
+
+
+    int    start_px = -1;
+    int    start_py = -1;
+    int    my_endx  = endx;
+    int    my_endy  = endy;
+
+    if (my_endx==0)
+        my_endx = w;
+    if (my_endy==0)
+        my_endy = h;
+
+
+    cv::Mat queryImage_planes[3];
+    cv::split(queryImage,queryImage_planes);
+    int channels[] = {0};
+    int histSize[] = {bins};
+    const float range_one[] ={0,255};
+    const float* ranges[] = { range_one };
+
+    cv::MatND queryImage_b_hist,queryImage_g_hist,queryImage_r_hist;
+
+    cv::calcHist(&queryImage_planes[0],1,channels,mask,queryImage_b_hist,2,histSize,ranges);
+    cv::calcHist(&queryImage_planes[1],1,channels,mask,queryImage_g_hist,2,histSize,ranges);
+    cv::calcHist(&queryImage_planes[2],1,channels,mask,queryImage_r_hist,2,histSize,ranges);
+
+    double min_error  = max_sum;
+    Find_Obj_Result result{-1,-1,-1.0};
+    for(int  j =0; j< (int)((my_endy-starty-h_f)/move_py);j++ ){
+
+        start_py = j*move_py+starty;
+        for(int i=0;i< (int)((my_endx-startx-w_f)/move_px);i++ ){
+            start_px = i*move_px+startx;
+            cv::Mat imgroi(trainImage,cv::Rect((int)start_px,(int)start_py,w_f,h_f));
+
+
+            cv::Mat trainImage_planes[3];
+            cv::split(trainImage,trainImage_planes);
+
+            cv::MatND trainImage_b_hist,trainImage_g_hist,trainImage_r_hist;
+
+
+            cv::calcHist(&trainImage_planes[0],1,channels,mask,trainImage_b_hist,2,histSize,ranges);
+            cv::calcHist(&trainImage_planes[1],1,channels,mask,trainImage_g_hist,2,histSize,ranges);
+            cv::calcHist(&trainImage_planes[2],1,channels,mask,trainImage_r_hist,2,histSize,ranges);
+
+
+            float now_error = 0.0;
+            now_error = now_error + cv::compareHist(queryImage_b_hist,trainImage_b_hist,CV_COMP_CHISQR);
+            now_error = now_error + cv::compareHist(queryImage_g_hist,trainImage_g_hist,CV_COMP_CHISQR);
+            now_error = now_error + cv::compareHist(queryImage_r_hist,trainImage_r_hist,CV_COMP_CHISQR);
+
+            if (now_error < min_error ){
+                min_error = now_error;
+                result =  {start_px,start_py,min_error};
+               }
+         }
+    }
+
+    return result;
+}
+
+
+
+
+
+
+
+
 
 CvRect Tools::find_obj_matchtemplate(IplImage *trainImage, IplImage *queryImage, float min_value, int method)
 {
