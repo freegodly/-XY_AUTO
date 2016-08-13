@@ -72,18 +72,33 @@ public:
 
 
 
-  static QImage cvMatToQImage(cv::Mat _small_mat);
-  static cv::Mat QImageTocvMat(QImage img);
+  static QImage cvMatToQImage(cv::Mat& mat);
+  static cv::Mat QImageTocvMat(QImage &img);
 
 
-  static Find_Obj_Result cv_find_obj_hist_mask(cv::Mat trainImage,
-                                                      cv::Mat queryImage,
-                                                      cv::Mat mask,
-                                                      float max_sum,
-                                                      int bins ,
-                                                      int startx  ,int endx ,
-                                                      int starty  ,int endy,
-                                                      int move_px ,int move_py);
+  static Find_Obj_Result cv_find_obj_hist_mask(cv::Mat &trainImage,
+                                                      cv::Mat& queryImage,
+                                                      cv::Mat& mask,
+                                                       float max_sum=100,
+                                                       int bins = 30,
+                                                       int startx = 0 ,int endx = 0,
+                                                       int starty = 0 ,int endy = 0,
+                                                       int move_px = 5,int move_py = 5);
+   static CvRect cv_find_obj_matchtemplate(cv::Mat &trainImage, cv::Mat &queryImage, float min_value, int method);
+
+   static QList<Find_Obj_Result> cv_comparehits_bin_min(cv::Mat& image_bin,
+                                                               cv::Mat& featureimage_bin,
+                                                                int max_sum =1,int startx =0,
+                                                                int endx = 0,int move_px =1);
+
+   static QList<Find_Obj_Result> cv_comparehits_bin_min_x(cv::Mat& image_bin,
+                                                              cv::Mat& featureimage_bin, cv::Mat featureimage_bin_mask,
+                                                              int max_sum = 255, int startx =0 ,
+                                                              int endx=0,
+                                                              int starty  = 0 , int endy=0,
+                                                              int move_px = 1, int move_py = 1 );
+   static cv::Mat cvGetSubImage( cv::Mat &img, cv::Rect rect);
+
 
 signals:
 

@@ -259,6 +259,36 @@ function MouseMoveTo(Targ,NowState,CellTaskState,Direction){
 }
 
 
+function ClickImage(ImagePath,CellTaskState){
+	if(CellTaskState.NowRun == null){
+		XY.Add_Log_Msg("ClickImage"+Args+".....Start");
+		CellTaskState.NowRun = ClickImage;
+		CellTaskState.RunStep = 0
+		CellTaskState.RunInit = false
+		CellTaskState.ImageRect = [-1,-1,0,0]
+		CellTaskState.MouseMoveTo_CellTaskState = []
+		CellTaskState.ImageRect =XY.Match_Image_Rect(ImagePath,0.85,1)
+		CellTaskState.ImageCenterPoint = [-1,-1]
+        if(CellTaskState.ImageRect == -1){
+			return true
+		}
+		else{
+			CellTaskState.ImageCenterPoint = [CellTaskState.ImageRect[0]+CellTaskState.ImageRect[2]/2,CellTaskState.ImageRect[1]+CellTaskState.ImageRect[3]/2] 
+			return false
+		}
+		
+	}
+	CellTaskState.RunStep  = CellTaskState.RunStep + 1
+
+	if(MouseMoveTo(CellTaskState.ImageCenterPoint,XY.MousePoint,CellTaskState.MouseMoveTo_CellTaskState,[1,1])){
+		ST.Mouse_Click(0,ClickSleep);
+	}else{
+		Draw_Gamge_Rect(CellTaskState.ImageRect[0],CellTaskState.ImageRect[1],CellTaskState.ImageRect[2],CellTaskState.ImageRect[3])
+		return false
+	}
+
+}
+
 //[x,y]
 function GoPointMiniMap(Args,CellTaskState){
 	CellTaskState.GoPoint = Args
@@ -270,9 +300,8 @@ function GoPointMiniMap(Args,CellTaskState){
 		CellTaskState.PerHeroLocation = [-1,-1]
 		CellTaskState.MouseMoveTo_CellTaskState = []
 		ST.Mouse_Move_To(320,240);
-		XY.Match_Image_Rect("feature/map/isopenminimap.png",0.85,1)
-		ST.Sleep(200)
-        var ConfirmRect = XY.TempValueList
+		var ConfirmRect =XY.Match_Image_Rect("feature/map/isopenminimap.png",0.85,1)
+		
         if(ConfirmRect[0] == -1){
 			ST.Key_Click(300,-1,ClickSleep);
 		}
@@ -304,9 +333,8 @@ function GoPointMiniMap(Args,CellTaskState){
 		if(Math.abs(hero_x_diff) <3 && Math.abs(hero_y_diff) <3)
 		{
 			//到达目标位置
-			XY.Match_Image_Rect("feature/map/isopenminimap.png",0.85,1)
-			ST.Sleep(200)
-            var ConfirmRect = XY.TempValueList
+			var ConfirmRect =XY.Match_Image_Rect("feature/map/isopenminimap.png",0.85,1)
+			
             if(ConfirmRect[0] != -1){
 				ST.Key_Click(300,-1,ClickSleep);
 			}
@@ -367,7 +395,6 @@ function GoSwitchMap(Args,CellTaskState){
 		}
 	}
 	else if(CellTaskState.RunStep == 0){
-		XY.Add_Log_Msg("GoPointMiniMap");
 		if(GoPointMiniMap(CellTaskState.MapSwitchInfoStep.gopoint,CellTaskState.GoPointMiniMap_TaskState)){
 			CellTaskState.RunStep=CellTaskState.RunStep+1;
 			ST.Key_Click(109,-1,ClickSleep)
@@ -378,9 +405,8 @@ function GoSwitchMap(Args,CellTaskState){
 	else if(CellTaskState.RunStep == 1){
 
 		if(CellTaskState.MouseMove[0]<1){
-			XY.Match_Image_Rect(CellTaskState.MapSwitchInfoStep.npc_image,0.85,1)
-			ST.Sleep(200)
-            var ConfirmRect = XY.TempValueList
+			var ConfirmRect =XY.Match_Image_Rect(CellTaskState.MapSwitchInfoStep.npc_image,0.85,1)
+			
             if(ConfirmRect[0] > 1){
 				CellTaskState.MouseMove = [ConfirmRect[0]+ConfirmRect[2]/2,ConfirmRect[1]-70]
 				XY.Add_Log_Msg("X:"+ConfirmRect[0]+"  Y:"+ConfirmRect[1])
@@ -424,9 +450,8 @@ function GoSwitchMap(Args,CellTaskState){
 		}
 		else
 		{
-			XY.Match_Image_Rect("feature/map/map_switch_confirm.png",0.95,1)
-			ST.Sleep(200)
-            CellTaskState.ConfirmRect = XY.TempValueList
+			CellTaskState.ConfirmRect = XY.Match_Image_Rect("feature/map/map_switch_confirm.png",0.95,1)
+			
             //不是对应的确认框，关闭
 			if(CellTaskState.ConfirmRect[0] <1)
 			{
@@ -481,9 +506,10 @@ function FirstRun(){
 	XY.Clear_Log_Msg();
 	XY.Set_Gamge_ForegroundWindow();
     ST.Mouse_Move_To(320,240);
+    ST.Sleep(3000)
 	XY.Add_Log_Msg("FirstRun")
 	//创建任务
-	TaskList.push(["GoPointMiniMap",GoPointMiniMap,[106,90]])
+	//TaskList.push(["GoPointMiniMap",GoPointMiniMap,[106,90]])
 	// TaskList.push(["GoSwitchMap",GoSwitchMap,["长安城","江南野外"]])
 	// TaskList.push(["GoSwitchMap",GoSwitchMap,["江南野外","建邺城"]])
 	// TaskList.push(["GoSwitchMap",GoSwitchMap,["建邺城","江南野外"]])
@@ -503,14 +529,14 @@ function FirstRun(){
 	//TaskList.push(["GoSwitchMap",GoSwitchMap,["东海湾","建邺城"]])
 	//TaskList.push(["GoSwitchMap",GoSwitchMap,["东海湾","傲来国"]])
 	//return 
- // 	TaskList.push(["GoSwitchMap",GoSwitchMap,["长安城","江南野外"]])
- // 	TaskList.push(["GoSwitchMap",GoSwitchMap,["江南野外","建邺城"]])
- // 	TaskList.push(["GoSwitchMap",GoSwitchMap,["建邺城","东海湾"]])
- // 	TaskList.push(["GoSwitchMap",GoSwitchMap,["东海湾","傲来国"]])
- // 	TaskList.push(["GoSwitchMap",GoSwitchMap,["傲来国","花果山"]])
- // 	TaskList.push(["GoSwitchMap",GoSwitchMap,["花果山","北俱芦洲"]])
- // 	TaskList.push(["GoSwitchMap",GoSwitchMap,["北俱芦洲","长寿郊外"]])
- // 	TaskList.push(["GoSwitchMap",GoSwitchMap,["长寿郊外","长寿村"]])
+ 	TaskList.push(["GoSwitchMap",GoSwitchMap,["长安城","江南野外"]])
+ 	TaskList.push(["GoSwitchMap",GoSwitchMap,["江南野外","建邺城"]])
+ 	TaskList.push(["GoSwitchMap",GoSwitchMap,["建邺城","东海湾"]])
+ 	TaskList.push(["GoSwitchMap",GoSwitchMap,["东海湾","傲来国"]])
+ 	TaskList.push(["GoSwitchMap",GoSwitchMap,["傲来国","花果山"]])
+ 	TaskList.push(["GoSwitchMap",GoSwitchMap,["花果山","北俱芦洲"]])
+ 	TaskList.push(["GoSwitchMap",GoSwitchMap,["北俱芦洲","长寿郊外"]])
+ 	TaskList.push(["GoSwitchMap",GoSwitchMap,["长寿郊外","长寿村"]])
 
 	// TaskList.push(["GoSwitchMap",GoSwitchMap,["长寿村","长寿郊外"]])
 	// TaskList.push(["GoSwitchMap",GoSwitchMap,["长寿郊外","北俱芦洲"]])
@@ -528,11 +554,12 @@ function FirstRun(){
 
 function main()
 {
+
     FirstRun()
     while(1)
     {
-        ST.Sleep(150)
-
+    	ST.Sleep(200)
+    	
         if(TaskState.NowRunTaskIndex <= TaskList.length -1)
         {
             var taskname    =   TaskList[TaskState.NowRunTaskIndex][0]

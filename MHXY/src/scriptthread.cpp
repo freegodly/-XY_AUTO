@@ -59,7 +59,7 @@ void ScriptThread::Sleep(int value)
 
 void ScriptThread::Mouse_Move_To(int x, int y)
 {
-    hardKeyMouse.MouseMove(x,y);
+    hardKeyMouse.MouseMove(mw->GameRect.left()+ x,mw->GameRect.top()+y);
 }
 
 void ScriptThread::Mouse_Click(int type, int sleep)

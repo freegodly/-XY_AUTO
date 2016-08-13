@@ -30,16 +30,13 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this,SIGNAL(SIGNAL_Clear_Log_Msg()),this,SLOT(SLOT_Clear_Log_Msg()));
 
     connect(this,SIGNAL(SIGNAL_Draw_Gamge_Rect(int,int,int,int)),this,SLOT(SLOT_Draw_Gamge_Rect(int,int,int,int)));
-    connect(this,SIGNAL(SIGNAL_Match_Image_Rect(QString,float,int)),this,SLOT(SLOT_Match_Image_Rect(QString,float,int)));
 
    timer_status = false;
 
 
-   this->imgData = new uchar[640*480*3];
 
    GameHwnd = FindWindow(L"WSGAME",NULL);
 
-   this->p_Game_Image = NULL;
 
    script  = NULL;
 }
@@ -67,21 +64,17 @@ void MainWindow::timerEvent(QTimerEvent *event)
 
         QImage image = Game_originalPixmap.toImage();
         cv::Mat mat = Tools::QImageTocvMat(image);
-        QImage m = Tools::cvMatToQImage(mat);
-        Game_originalPixmap = QPixmap::fromImage(m);
-
-//        if(this->p_Game_Image!=NULL)
-//        {
-//            cvReleaseImage(&this->p_Game_Image);
-//        }
-//        this->p_Game_Image = Tools::QImageToIplImage(&image);
 
 
-//        find_obj(this->p_Game_Image);
+
+        p_Game_Image = mat;
 
 
-//        map_info_update();
-//        ui_heroinfo_update();
+        find_obj(p_Game_Image);
+
+
+        map_info_update();
+        ui_heroinfo_update();
 
 
         QPainter painter(&Game_originalPixmap);
@@ -131,9 +124,16 @@ void MainWindow::Clear_Log_Msg()
     emit SIGNAL_Clear_Log_Msg();
 }
 
-void MainWindow::Match_Image_Rect(QString image_name, float mini_value, int method)
+QList<int> MainWindow::Match_Image_Rect(QString image_name, float mini_value, int method)
 {
-    emit SIGNAL_Match_Image_Rect(image_name,mini_value,method);
+    QList<int> qrect={-1,-1,0,0};
+
+    cv::Mat  p_image_mouse = cv::imread(image_name.toStdString().c_str(),cv::IMREAD_COLOR);
+    cv::Mat Game_Image = this->p_Game_Image.clone();
+    CvRect rect=  Tools::cv_find_obj_matchtemplate(Game_Image,p_image_mouse,mini_value,method);
+
+    qrect = {rect.x,rect.y,rect.width,rect.height};
+    return qrect;
 }
 
 void MainWindow::Set_Gamge_ForegroundWindow()
@@ -161,20 +161,7 @@ void MainWindow::SLOT_Clear_Log_Msg()
      ui->t_RunLog->clear();
 }
 
-void MainWindow::SLOT_Match_Image_Rect(QString image_name, float mini_value, int method)
-{
-   QList<int> qrect={-1,-1,0,0};
 
-    IplImage* p_image_mouse = cvLoadImage(image_name.toStdString().c_str(),CV_LOAD_IMAGE_COLOR);
-
-    if(p_image_mouse != NULL) {
-        CvRect rect=  Tools::find_obj_matchtemplate(this->p_Game_Image,p_image_mouse,mini_value,method);
-        cvReleaseImage(&p_image_mouse);
-        qrect = {rect.x,rect.y,rect.width,rect.height};
-    }
-
-    TempValueList = qrect;
-}
 
 void MainWindow::SLOT_Draw_Gamge_Rect(int x, int y, int w, int h)
 {
@@ -241,7 +228,7 @@ void MainWindow::on_actionSelectWindow_triggered()
 
 //########################################  主要方法
 
-void MainWindow::find_obj(IplImage* Ipl_image)
+void MainWindow::find_obj(cv::Mat &Ipl_image)
 {
     clock_t _start=clock();
 
@@ -271,7 +258,7 @@ void MainWindow::find_obj(IplImage* Ipl_image)
     //qDebug()<<"Time:"<< float(clock() - _start) / CLK_TCK;
 }
 
-void MainWindow::find_mouse_location(IplImage *Ipl_image)
+void MainWindow::find_mouse_location(cv::Mat &Ipl_image)
 {
     // function 1
 
@@ -286,47 +273,53 @@ void MainWindow::find_mouse_location(IplImage *Ipl_image)
 
 
     // function 2
-    IplImage* p_image_mouse = cvLoadImage("feature/other/mouse_s.png",CV_LOAD_IMAGE_COLOR);
+    //IplImage* p_image_mouse = cvLoadImage("feature/other/mouse_s.png",CV_LOAD_IMAGE_COLOR);
 
-    CvRect rect=  Tools::find_obj_matchtemplate(Ipl_image,p_image_mouse,0.97,1);
+    cv::Mat p_image_mouse = cv::imread("feature/other/mouse_s.png",cv::IMREAD_COLOR);
 
-    cvReleaseImage(&p_image_mouse);
+    CvRect rect=  Tools::cv_find_obj_matchtemplate(Ipl_image,p_image_mouse,0.97,0);
+
 
     this->MousePoint.setX(rect.x-10);
     this->MousePoint.setY(rect.y-10);
 
 }
 
-void MainWindow::find_hero_location(IplImage *Ipl_image)
+void MainWindow::find_hero_location(cv::Mat &Ipl_image)
 {
     QSettings settings("feature/coordinates/coordinates.ini", QSettings::IniFormat);
     settings.setIniCodec("UTF8");
 
-    IplImage* sub_image = Tools::GetSubImage(Ipl_image,cvRect(20, 27,110,12));
-    IplImage *  sub_image_gray = cvCreateImage(CvSize(sub_image->width,sub_image->height),sub_image->depth,1);
+    cv::Mat sub_image = Tools::cvGetSubImage(Ipl_image,cv::Rect(20, 27,110,12));
+    cv::Mat sub_image_gray =cv::Mat(sub_image.rows,sub_image.cols,CV_8UC1);
 
-    cvCvtColor(sub_image,sub_image_gray,CV_BGR2GRAY); //关键
+    cv::cvtColor(sub_image,sub_image_gray,CV_BGR2GRAY);
 
-    cvThreshold(sub_image_gray, sub_image_gray, 200, 255, CV_THRESH_BINARY);
+    cv::threshold(sub_image_gray,sub_image_gray,200,255,CV_THRESH_BINARY);
 
     //cvSaveImage("test.png",sub_image_gray);
 
     QList<Find_Obj_Result> find_list;
     //#先查找数字和汉字的分隔符
-    IplImage* p_image_left = cvLoadImage("feature/coordinates/left.png",CV_LOAD_IMAGE_GRAYSCALE);
-    cvThreshold(p_image_left, p_image_left, 200, 255, CV_THRESH_BINARY);
-    find_list =  Tools::comparehits_bin_min(sub_image_gray,p_image_left,3);
-    cvReleaseImage(&p_image_left);
+    //IplImage* p_image_left = cvLoadImage("feature/coordinates/left.png",CV_LOAD_IMAGE_GRAYSCALE);
+    cv::Mat p_image_left = cv::imread("feature/coordinates/left.png",cv::IMREAD_GRAYSCALE);
+    cv::threshold(p_image_left,p_image_left,200,255,CV_THRESH_BINARY);
+    //cvThreshold(p_image_left, p_image_left, 200, 255, CV_THRESH_BINARY);
+    find_list =  Tools::cv_comparehits_bin_min(sub_image_gray,p_image_left,3);
 
     if(find_list.count() < 1) return;
     int left_x = find_list[0].x;
     //qDebug()<<"left_x:"<< left_x;
 
     find_list.clear();
-    IplImage* p_image_right = cvLoadImage("feature/coordinates/right.png",CV_LOAD_IMAGE_GRAYSCALE);
-    cvThreshold(p_image_right, p_image_right, 200, 255, CV_THRESH_BINARY);
-    find_list =  Tools::comparehits_bin_min(sub_image_gray,p_image_right,3);
-    cvReleaseImage(&p_image_right);
+    //IplImage* p_image_right = cvLoadImage("feature/coordinates/right.png",CV_LOAD_IMAGE_GRAYSCALE);
+    //cvThreshold(p_image_right, p_image_right, 200, 255, CV_THRESH_BINARY);
+
+    cv::Mat p_image_right = cv::imread("feature/coordinates/right.png",cv::IMREAD_GRAYSCALE);
+    cv::threshold(p_image_right,p_image_right,200,255,CV_THRESH_BINARY);
+
+    find_list =  Tools::cv_comparehits_bin_min(sub_image_gray,p_image_right,3);
+
     if(find_list.count() < 1) return;
     int right_x = find_list[0].x;
     //qDebug()<<"right_x:"<< right_x;
@@ -340,11 +333,13 @@ void MainWindow::find_hero_location(IplImage *Ipl_image)
     settings.beginGroup("names");
     QStringList names_keys = settings.childKeys();
     for(int i = 0 ; i< names_keys.count() ;i++){
-        IplImage* p_image = cvLoadImage((QString("feature/coordinates/")+names_keys[i]).toStdString().c_str(),CV_LOAD_IMAGE_GRAYSCALE);
-        cvThreshold(p_image, p_image, 200, 255, CV_THRESH_BINARY);
+        //IplImage* p_image = cvLoadImage((QString("feature/coordinates/")+names_keys[i]).toStdString().c_str(),CV_LOAD_IMAGE_GRAYSCALE);
+        //cvThreshold(p_image, p_image, 200, 255, CV_THRESH_BINARY);
+        cv::Mat p_image = cv::imread((QString("feature/coordinates/")+names_keys[i]).toStdString().c_str(),cv::IMREAD_GRAYSCALE);
+        cv::threshold(p_image,p_image,200,255,CV_THRESH_BINARY);
         find_list.clear();
-        find_list =  Tools::comparehits_bin_min(sub_image_gray,p_image,2,0,left_x);
-        cvReleaseImage(&p_image);
+        find_list =  Tools::cv_comparehits_bin_min(sub_image_gray,p_image,2,0,left_x);
+
         foreach(Find_Obj_Result result, find_list){
             RFI.append({result,settings.value(names_keys[i]).toString()});
         }
@@ -355,20 +350,18 @@ void MainWindow::find_hero_location(IplImage *Ipl_image)
     settings.beginGroup("numbers");
     QStringList numbers_keys = settings.childKeys();
     for(int i = 0 ; i< numbers_keys.count() ;i++){
-        IplImage* p_image = cvLoadImage((QString("feature/coordinates/")+numbers_keys[i]).toStdString().c_str(),CV_LOAD_IMAGE_GRAYSCALE);
-        cvThreshold(p_image, p_image, 200, 255, CV_THRESH_BINARY);
+        //IplImage* p_image = cvLoadImage((QString("feature/coordinates/")+numbers_keys[i]).toStdString().c_str(),CV_LOAD_IMAGE_GRAYSCALE);
+        //cvThreshold(p_image, p_image, 200, 255, CV_THRESH_BINARY);
+        cv::Mat p_image = cv::imread((QString("feature/coordinates/")+numbers_keys[i]).toStdString().c_str(),cv::IMREAD_GRAYSCALE);
+        cv::threshold(p_image,p_image,200,255,CV_THRESH_BINARY);
         find_list.clear();
-        find_list =  Tools::comparehits_bin_min(sub_image_gray,p_image,2,left_x,0);
-        cvReleaseImage(&p_image);
+        find_list =  Tools::cv_comparehits_bin_min(sub_image_gray,p_image,2,left_x,0);
+
         foreach(Find_Obj_Result result, find_list){
             RFI.append({result,settings.value(numbers_keys[i]).toString()});
         }
     }
     settings.endGroup();
-
-    //释放资源
-    cvReleaseImage(&sub_image);
-    cvReleaseImage(&sub_image_gray);
 
 
     if (RFI.count()<1) return;
@@ -399,7 +392,7 @@ void MainWindow::find_hero_location(IplImage *Ipl_image)
 
 }
 
-void MainWindow::find_minimapmouse_location(IplImage *Ipl_image)
+void MainWindow::find_minimapmouse_location(cv::Mat &Ipl_image)
 {
     QPoint minimap ={-1,-1};
     if(this->MousePoint.x() < 0 || this->MousePoint.x() < 0) {
@@ -422,7 +415,7 @@ void MainWindow::find_minimapmouse_location(IplImage *Ipl_image)
 
 }
 
-QPoint MainWindow::minimapmouse_location_sub(IplImage *Ipl_image, int type)
+QPoint MainWindow::minimapmouse_location_sub(cv::Mat &Ipl_image, int type)
 {
     QPoint minimap ={-1,-1};
 
@@ -436,18 +429,18 @@ QPoint MainWindow::minimapmouse_location_sub(IplImage *Ipl_image, int type)
 
 
     if(startx < 0 || starty<0) return minimap;
-    if(startx+68 > Ipl_image->width || starty+26 >Ipl_image->height ) return minimap;
+    if(startx+68 > Ipl_image.cols || starty+26 >Ipl_image.rows ) return minimap;
 
 
     QSettings settings("feature/minimaplocation/minimaplocation.ini", QSettings::IniFormat);
 
-    IplImage* sub_image = Tools::GetSubImage(Ipl_image,cvRect(startx,starty ,68,26));
-    IplImage *  sub_image_gray = cvCreateImage(CvSize(sub_image->width,sub_image->height),sub_image->depth,1);
+    cv::Mat sub_image = Tools::cvGetSubImage(Ipl_image,cv::Rect(startx,starty ,68,26));
 
-    cvCvtColor(sub_image,sub_image_gray,CV_BGR2GRAY); //关键
+    cv::Mat sub_image_gray =cv::Mat(sub_image.rows,sub_image.cols,CV_8UC1);
 
-    cvThreshold(sub_image_gray, sub_image_gray, 200, 255, CV_THRESH_BINARY);
+    cv::cvtColor(sub_image,sub_image_gray,CV_BGR2GRAY);
 
+    cv::threshold(sub_image_gray,sub_image_gray,200,255,CV_THRESH_BINARY);
 
     QList<Find_Obj_Result> find_list;
 
@@ -458,20 +451,17 @@ QPoint MainWindow::minimapmouse_location_sub(IplImage *Ipl_image, int type)
     settings.beginGroup("numbers");
     QStringList numbers_keys = settings.childKeys();
     for(int i = 0 ; i< numbers_keys.count() ;i++){
-        IplImage* p_image = cvLoadImage((QString("feature/minimaplocation/")+numbers_keys[i]).toStdString().c_str(),CV_LOAD_IMAGE_GRAYSCALE);
-        cvThreshold(p_image, p_image, 200, 255, CV_THRESH_BINARY);
+
+        cv::Mat p_image = cv::imread((QString("feature/minimaplocation/")+numbers_keys[i]).toStdString().c_str(),cv::IMREAD_GRAYSCALE);
+        cv::threshold(p_image,p_image,200,255,CV_THRESH_BINARY);
         find_list.clear();
-        find_list =  Tools::comparehits_bin_min_x(sub_image_gray,p_image,NULL,1,0,0);
-        cvReleaseImage(&p_image);
+        find_list =  Tools::cv_comparehits_bin_min_x(sub_image_gray,p_image,cv::Mat(),1,0,0);
+
         foreach(Find_Obj_Result result, find_list){
             RFI.append({result,settings.value(numbers_keys[i]).toString()});
         }
     }
     settings.endGroup();
-
-    //释放资源
-    cvReleaseImage(&sub_image);
-    cvReleaseImage(&sub_image_gray);
 
     if(RFI.count() < 3) return minimap;
     //排序

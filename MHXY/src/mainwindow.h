@@ -47,7 +47,6 @@ protected:
 signals:
     void SIGNAL_Add_Log_Msg(QString msg);
     void SIGNAL_Clear_Log_Msg();
-    void SIGNAL_Match_Image_Rect(QString image_name,float mini_value = 0.8,int method=0);
     void SIGNAL_Draw_Gamge_Rect(int x,int y,int w,int h);
 
 public slots:
@@ -55,7 +54,7 @@ public slots:
 
     void Clear_Log_Msg();
 
-    void Match_Image_Rect(QString image_name,float mini_value = 0.8,int method=0);
+    QList<int> Match_Image_Rect(QString image_name,float mini_value = 0.8,int method=0);
 
     void Set_Gamge_ForegroundWindow();
 
@@ -65,7 +64,6 @@ private slots:
 
     void SLOT_Add_Log_Msg(QString msg);
     void SLOT_Clear_Log_Msg();
-    void SLOT_Match_Image_Rect( QString image_name, float mini_value = 0.8, int method=0);
     void SLOT_Draw_Gamge_Rect(int x,int y,int w,int h);
 
     void on_pushButton_Test_clicked();
@@ -82,16 +80,13 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    uchar *imgData;
     int timer_id;
     ScriptThread *script;
 
     bool timer_status;
     HWND GameHwnd;
-    QRect GameRect;
 
-
-    IplImage* p_Game_Image;
+    cv::Mat p_Game_Image;
     QPixmap Game_originalPixmap;
     QList<QRect> PaintRectList;
 
@@ -99,6 +94,9 @@ private:
 
 
 public:
+
+    QRect GameRect;
+
     QPoint MousePoint;
     QString MapName;
     QSize   MapSize;
@@ -118,11 +116,11 @@ private:
 
 
 private:
-    void find_obj(IplImage *Ipl_image);
-    void find_mouse_location(IplImage *Ipl_image);
-    void find_hero_location(IplImage *Ipl_image);
-    void find_minimapmouse_location(IplImage *Ipl_image);
-    QPoint minimapmouse_location_sub(IplImage *Ipl_image,int type);
+    void find_obj(cv::Mat& Ipl_image);
+    void find_mouse_location(cv::Mat& Ipl_image);
+    void find_hero_location(cv::Mat& Ipl_image);
+    void find_minimapmouse_location(cv::Mat& Ipl_image);
+    QPoint minimapmouse_location_sub(cv::Mat& Ipl_image,int type);
     void map_info_update();
     void ui_heroinfo_update();
 
